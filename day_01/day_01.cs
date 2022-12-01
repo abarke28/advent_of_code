@@ -8,14 +8,14 @@ namespace aoc.day_01
 {
     internal class day_01
     {
-        public static int FindMaxCalories()
+        internal static int FindMaxCalories()
         {
             var cals = GetElfCalories();
 
             return cals.Max();
         }
 
-        public static int FindMaxNCalories(int n)
+        internal static int FindMaxNCalories(int n)
         {
             if (n <= 0) throw new ArgumentOutOfRangeException(nameof(n));
 
