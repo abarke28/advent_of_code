@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace aoc.day_01
 {
+    // https://adventofcode.com/2022/day/1
     internal class day_01
     {
         internal static int FindMaxCalories()
