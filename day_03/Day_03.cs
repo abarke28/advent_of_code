@@ -1,5 +1,6 @@
 ﻿namespace aoc.day_03
 {
+    // https://adventofcode.com/2022/day/3
     public static class Day_03
     {
         public static int GetResult()

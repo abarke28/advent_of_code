@@ -1,5 +1,6 @@
 ﻿namespace aoc.day_02
 {
+    // https://adventofcode.com/2022/day/2
     public static class Day_02
     {
         private enum Rps
