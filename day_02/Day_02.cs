@@ -30,17 +30,17 @@
             {
                 if (Opponent == You)
                 {
-                    return 3;
+                    return (int)Outcome.Draw;
                 }
 
                 if (Opponent == Rps.Rock && You == Rps.Paper ||
                     Opponent == Rps.Paper && You == Rps.Scissors ||
                     Opponent == Rps.Scissors && You == Rps.Rock)
                 {
-                    return 6;
+                    return (int)Outcome.Win;
                 }
 
-                return 0;
+                return (int)Outcome.Lose;
             }
         }
 
@@ -92,7 +92,7 @@
 
         private static RpsRound GetRoundV2(string roundLine)
         {
-            if(roundLine.Length != 3)
+            if (roundLine.Length != 3)
             {
                 throw new ArgumentException(nameof(roundLine));
             }
