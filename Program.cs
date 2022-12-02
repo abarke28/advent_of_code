@@ -1,6 +1,5 @@
-﻿using aoc.day_01;
+﻿using aoc.Day_01;
 
-Console.WriteLine("Hello, World!");
+Console.WriteLine(Day_01.FindMaxCalories());
+Console.WriteLine(Day_01.FindMaxNCalories(3));
 
-Console.WriteLine(day_01.FindMaxCalories());
-Console.WriteLine(day_01.FindMaxNCalories(3));

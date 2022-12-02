@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace aoc.day_01
+﻿namespace aoc.Day_01
 {
     // https://adventofcode.com/2022/day/1
-    internal class day_01
+    internal class Day_01
     {
         internal static int FindMaxCalories()
         {
