@@ -1,4 +1,3 @@
-﻿using aoc.day_03;
+﻿using aoc.day_04;
 
-Console.WriteLine(Day_03.GetResult());
-Console.WriteLine(Day_03.GetResult2());
+Console.WriteLine(Day_04.GetResult());
