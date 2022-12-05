@@ -9,7 +9,6 @@ namespace aoc.day_06
         {
             var lines = FileUtils.ReadAllLines("day_06/input.txt");
 
-
         }
     }
 }
