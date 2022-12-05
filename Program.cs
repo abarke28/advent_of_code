@@ -1,3 +1,3 @@
-﻿using aoc.day_05;
+﻿using aoc.day_06;
 
-Day_05.GetResult();
+Day_06.GetResult();
