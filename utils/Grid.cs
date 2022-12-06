@@ -47,12 +47,9 @@
             return _grid[x, y];
         }
 
-        public void SetItem(int x, int y, T item)
+        public void SetItem(int x, int y, T? item)
         {
-            if (!IsCoordValid(x, y))
-            {
-                throw new Exception("Invalid co-ords");
-            }
+            ValidateCoords(x, y);
 
             _grid[x, y] = item;
         }
@@ -86,13 +83,18 @@
         {
             const int maxNeighbours = 8;
 
+            ValidateCoords(x, y);
+
             var neighbours = new List<GridItem<T?>>(maxNeighbours);
 
             for (int i = x - 1; i <= x + 1; i++)
             {
                 for (int j = y - 1; j <= y + 1; j++)
                 {
-                    if ((i >= 0 && i < _width) && (j >= 0 && j < _height))
+                    // Validate x & y in bounds, and exclude self
+                    if ((i >= 0 && i < _width) &&
+                        (j >= 0 && j < _height) &&
+                        !(i == x && j == y))
                     {
                         neighbours.Add(new GridItem<T?>(i, j, _grid[i, j]));
                     }
@@ -102,6 +104,14 @@
             return predicate == null
                 ? neighbours
                 : neighbours.Where(n => predicate(n.Item)).ToList();
+        }
+
+        private void ValidateCoords(int x, int y)
+        {
+            if (!IsCoordValid(x, y))
+            {
+                throw new Exception("Invalid co-ords");
+            }
         }
     }
 }
