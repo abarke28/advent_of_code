@@ -38,9 +38,7 @@
                 }
             }
         }
-
         
-
         public T? GetItem(int x, int y)
         {
             if (x >= _width) throw new ArgumentOutOfRangeException(nameof(x));
@@ -92,9 +90,11 @@
                 }
                 Console.WriteLine();
             }
+
+            Console.WriteLine();
         }
 
-        public static Grid<char> FromStrings(string[] input)
+        public static Grid<char> FromStrings(string[] input, Func<char, char>? mapper = null)
         {
             if (input.Select(s => s.Trim().Length).ToHashSet().Count != 1)
             {
@@ -110,7 +110,9 @@
             {
                 for (int j = 0; j < height; j++)
                 {
-                    grid.SetItem(i, j, input[j][i]);
+                    var inputChar = input[j][i];
+
+                    grid.SetItem(i, j, mapper is null ? inputChar : mapper(inputChar));
                 }
             }
 
