@@ -11,18 +11,18 @@ namespace aoc.day_06
 
             var input = lines[0];
 
-            var num1 = FindIndexOfFirstFourUniqueChars(input, 4);
-            var num2 = FindIndexOfFirstFourUniqueChars(input, 14);
+            var num1 = FindIndexOfFirstNUniqueChars(input, 4);
+            var num2 = FindIndexOfFirstNUniqueChars(input, 14);
 
             Console.WriteLine(num1);
             Console.WriteLine(num2);
         }
 
-        private static int FindIndexOfFirstFourUniqueChars(string s, int numOfChars)
+        private static int FindIndexOfFirstNUniqueChars(string s, int numOfChars)
         {
             var lastN = new Queue<char>(numOfChars);
 
-            for(int i=0;  i<= s.Length; i++)
+            for(int i=0; i<= s.Length; i++)
             {
                 if (lastN.Count < numOfChars)
                 {
