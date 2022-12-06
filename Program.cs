@@ -1,3 +1,3 @@
-﻿using aoc.day_06;
+﻿using aoc.day_07;
 
-Day_06.GetResult();
+Day_07.GetResult();
