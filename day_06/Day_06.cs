@@ -16,6 +16,9 @@ namespace aoc.day_06
 
             Console.WriteLine(num1);
             Console.WriteLine(num2);
+
+            Console.WriteLine(FindIndexOfFirstNUniqueCharsV2(input, 4));
+            Console.WriteLine(FindIndexOfFirstNUniqueCharsV2(input, 14));
         }
 
         private static int FindIndexOfFirstNUniqueChars(string s, int numOfChars)
@@ -40,6 +43,21 @@ namespace aoc.day_06
                         lastN.Dequeue();
                         lastN.Enqueue(s[i]);
                     }
+                }
+            }
+
+            return -1;
+        }
+
+        private static int FindIndexOfFirstNUniqueCharsV2(string s, int numOfChars)
+        {
+            for (int i = 0; i < (s.Length - numOfChars); i++)
+            {
+                var window = s.Skip(i).Take(numOfChars);
+
+                if (window.Count() == window.ToHashSet().Count)
+                {
+                    return i + numOfChars;
                 }
             }
 
