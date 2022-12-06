@@ -39,6 +39,8 @@
             }
         }
 
+        
+
         public T? GetItem(int x, int y)
         {
             if (x >= _width) throw new ArgumentOutOfRangeException(nameof(x));
@@ -77,6 +79,42 @@
         public bool IsCoordValid(int x, int y)
         {
             return ((x >= 0 && x < _width) && (y >= 0 && y < _height));
+        }
+
+        public void PrintGrid()
+        {
+            for (int j = 0; j < _height; j++)
+            {
+                for (int i = 0; i < _width; i++)
+                {
+                    Console.Write(_grid[i, j]?.ToString() ?? "NULL");
+                    Console.Write(' ');
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public static Grid<char> FromStrings(string[] input)
+        {
+            if (input.Select(s => s.Trim().Length).ToHashSet().Count != 1)
+            {
+                throw new ArgumentException("Input strings not of the same length");
+            }
+
+            var width = input.First().Length;
+            var height = input.Count();
+
+            var grid = new Grid<char>(width, height);
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    grid.SetItem(i, j, input[j][i]);
+                }
+            }
+
+            return grid;
         }
 
         private List<GridItem<T?>> GetNeighboursWithCoordsImplementation(int x, int y, Func<T?, bool>? predicate = null)
