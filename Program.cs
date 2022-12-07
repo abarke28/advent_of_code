@@ -1,5 +1,7 @@
 ﻿using aoc.utils;
 
+Console.WriteLine("Advent Of Code - 2022\n");
+
 if (args.Any())
 {
     var input = args[0];
