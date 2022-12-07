@@ -137,7 +137,7 @@ namespace aoc.day_07
                     else
                     {
                         var newFileSize = int.Parse(listing[sizeIndex]);
-                        var newFileName = listing[1];
+                        var newFileName = listing[nameIndex];
 
                         currentFolder.Files.Add(newFileName, new ElfFile { Name = newFileName, Size = newFileSize });
                     }
