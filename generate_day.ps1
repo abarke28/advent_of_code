@@ -3,11 +3,21 @@ param(
 	[string]$day
 )
 
-Write-Output "Generating files for day $day..."
+Write-Output "Generating files for day $day...`n"
 
+$projectPath = "C:\git\aoc"
 $folderName = "day_$day"
 $className = "Day_$day.cs"
 $inputName = "input.txt"
+
+Push-Location $projectPath
+
+if (Test-Path $folderName){
+    Write-Output "Directory for $day already exists, exiting..."
+    
+    Pop-Location
+    Exit -1
+}
 
 New-Item -Path $folderName -ItemType Directory | Out-Null
 

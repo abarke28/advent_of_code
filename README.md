@@ -16,3 +16,6 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 6 | [Tuning Trouble](https://adventofcode.com/2022/day/6) | ⭐ | ⭐ | `dotnet run 6` | ⭐⭐ | Windowing strategies for enumerables.
 | 7 | [File System Building](https://adventofcode.com/2022/day/7) | ⭐ | ⭐ | `dotnet run 7` | ⭐⭐⭐ | Tree structure and recursion.
 | 8 | [TBD](https://adventofcode.com/2022/day/8) |  |  | `dotnet run 8` |  | 
+
+To generate the files for a new day's problem', run:
+`.\generate_day.ps1 <day_number>`
