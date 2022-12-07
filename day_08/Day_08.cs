@@ -9,7 +9,7 @@ namespace aoc.day_08
         {
             var lines = FileUtils.ReadAllLines("day_08/input.txt");
 
-
+            Console.WriteLine("Hello World");
         }
     }
 }

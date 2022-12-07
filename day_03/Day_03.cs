@@ -1,7 +1,7 @@
 ﻿namespace aoc.day_03
 {
     // https://adventofcode.com/2022/day/3
-    public static class Day_03
+    public class Day_03
     {
         private class Bag
         {
@@ -16,22 +16,19 @@
             public string ThirdBag { get; set; } = string.Empty;
         }
 
-        public static int GetResult()
+        public static void GetResult()
         {
             var bags = GetBags();
 
             var scores = bags.Select(b => GetBagDuplicatePriorityScore(b));
 
-            return scores.Sum();
-        }
+            Console.WriteLine(scores.Sum());
 
-        public static int GetResult2()
-        {
             var groups = GetElfGroups();
 
-            var scores = groups.Select(g => GetElfGroupDuplicatePriorityScore(g));
+            var groupScores = groups.Select(g => GetElfGroupDuplicatePriorityScore(g));
 
-            return scores.Sum();
+            Console.WriteLine(groupScores.Sum()); ;
         }
 
         private static List<Bag> GetBags()

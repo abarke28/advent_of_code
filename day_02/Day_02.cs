@@ -1,7 +1,7 @@
 ﻿namespace aoc.day_02
 {
     // https://adventofcode.com/2022/day/2
-    public static class Day_02
+    public class Day_02
     {
         private enum Rps
         {
@@ -45,12 +45,18 @@
             }
         }
 
-        public static int GetScore()
+        public static void GetResult()
+        {
+            Console.WriteLine(GetScore());
+            Console.WriteLine(GetScoreV2());
+        }
+
+        private static int GetScore()
         {
             return GetRounds().Select(r => r.GetScore()).Sum();
         }
 
-        public static int GetScoreV2()
+        private static int GetScoreV2()
         {
             return GetRoundsV2().Select(r => r.GetScore()).Sum();
         }

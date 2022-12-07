@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "aoc": {
+      "commandName": "Project",
+      "commandLineArgs": ""
+    },
+    "aoc-debug": {
+      "commandName": "Project",
+      "commandLineArgs": "8"
+    }
+  }
+}

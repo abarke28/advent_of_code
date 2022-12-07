@@ -15,3 +15,4 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 5 | [Supply Stacks](https://adventofcode.com/2022/day/5) | ✔️ | ✔️ | `dotnet run 5`| ⭐⭐ | Queue exercise.
 | 6 | [Tuning Trouble](https://adventofcode.com/2022/day/6) | ✔️ | ✔️ | `dotnet run 6` | ⭐⭐ | Windowing strategies for enumerables.
 | 7 | [File System Building](https://adventofcode.com/2022/day/7) | ✔️ | ✔️ | `dotnet run 7` | ⭐⭐⭐ | Tree structure and recursion.
+| 8 | [TBD](https://adventofcode.com/2022/day/8) |  |  | `dotnet run 8` |  | 

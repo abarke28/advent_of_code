@@ -11,12 +11,6 @@ namespace aoc.day_06
 
             var input = lines[0];
 
-            var num1 = FindIndexOfFirstNUniqueChars(input, 4);
-            var num2 = FindIndexOfFirstNUniqueChars(input, 14);
-
-            Console.WriteLine(num1);
-            Console.WriteLine(num2);
-
             Console.WriteLine(FindIndexOfFirstNUniqueCharsV2(input, 4));
             Console.WriteLine(FindIndexOfFirstNUniqueCharsV2(input, 14));
         }

@@ -1,16 +1,22 @@
-﻿namespace aoc.Day_01
+﻿namespace aoc.day_01
 {
     // https://adventofcode.com/2022/day/1
-    internal class Day_01
+    public class Day_01
     {
-        internal static int FindMaxCalories()
+        public static void GetResult()
+        {
+            Console.WriteLine(FindMaxCalories());
+            Console.WriteLine(FindMaxNCalories(3));
+        }
+
+        private static int FindMaxCalories()
         {
             var cals = GetElfCalories();
 
             return cals.Max();
         }
 
-        internal static int FindMaxNCalories(int n)
+        private static int FindMaxNCalories(int n)
         {
             if (n <= 0) throw new ArgumentOutOfRangeException(nameof(n));
 
