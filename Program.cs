@@ -12,3 +12,5 @@ else
     Console.WriteLine("No input provided, exiting. Try specifying a problem.");
     Console.WriteLine("Example: dotnet run 7\n");
 }
+
+Console.WriteLine();

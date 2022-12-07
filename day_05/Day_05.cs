@@ -35,6 +35,7 @@ namespace aoc.day_05
             {
                 Console.Write(stack.Peek());
             }
+            Console.WriteLine();
         }
 
         private static void PerformLineOperation(string l, int crateMoveStrat = 1)
