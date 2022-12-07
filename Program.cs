@@ -10,5 +10,5 @@ if (args.Any())
 else
 {
     Console.WriteLine("No input provided, exiting. Try specifying a problem.");
-    Console.WriteLine("Example: dotnet run 1");
+    Console.WriteLine("Example: dotnet run 7\n");
 }
