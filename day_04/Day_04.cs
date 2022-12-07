@@ -46,8 +46,6 @@ namespace aoc.day_04
             Console.WriteLine(partialOverlappers.Count());
         }
 
-
-
         private static ElfPair ParseCleaningAssignments(string s)
         {
             var assignments = s.Split(',');

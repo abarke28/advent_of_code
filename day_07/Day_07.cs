@@ -5,7 +5,7 @@ namespace aoc.day_07
     // https://adventofcode.com/2022/day/7
     public class Day_07
     {
-        private const char Command = '$';
+        private const string Command = "$";
         private const string Ls = "ls";
         private const string Cd = "cd";
         private const string Back = "..";
@@ -95,13 +95,12 @@ namespace aoc.day_07
             for (var i = 1; i < lines.Count; i++)
             {
                 var currentLine = lines[i];
+                var words = currentLine.Split(' ');
 
                 var currentFolder = foldersVisited.Peek();
 
-                if (currentLine[dollarIndex] == Command)
+                if (words[dollarIndex] == Command)
                 {
-                    var words = currentLine.Split(' ');
-
                     var commandWord = words[commandIndex];
 
                     switch (commandWord)
