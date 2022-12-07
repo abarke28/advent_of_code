@@ -1,5 +1,17 @@
-# Advent Of Code 2022
+﻿# Advent Of Code 2022
 
 Solutions for AoC 2022.
 
 Details: [Advent of Code](https://adventofcode.com/2022/about)
+
+A daily coding challenge for each day in December leading up to Christmas. Each day & challenge consists of two related problems. This is my first year doing this.
+
+| Day | Story | Part 1 | Part 2 | command to run | challenge level | What I learnt/used
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | [Calorie Counting](https://adventofcode.com/2022/day/1) | ✔️ | ✔️  | `dotnet solve 1` | ⭐ | Iteration strategies.
+| 2 | [Rock Paper Scissors](https://adventofcode.com/2022/day/2) | ✔️ | ✔️ | `dotnet solve 2` | ⭐⭐ | Modulo math.
+| 3 | [Rucksack Reorganization](https://adventofcode.com/2022/day/3) | ✔️ | ✔️ | `dotnet solve 3` | ⭐⭐ | Set theory.
+| 4 | [Camp Cleanup](https://adventofcode.com/2022/day/4) | ✔️ | ✔️ | `dotnet solve 4` | ⭐⭐ | Text parsing.
+| 5 | [Supply Stacks](https://adventofcode.com/2022/day/5) | ✔️ | ✔️ | `dotnet solve 5`| ⭐⭐ | Queue exercise.
+| 6 | [Tuning Trouble](https://adventofcode.com/2022/day/6) | ✔️ | ✔️ | `dotnet solve 6` | ⭐⭐ | Windowing strategies for enumerables.
+| 7 | [File System Building](https://adventofcode.com/2022/day/7) | ✔️ | ✔️ | `dotnet solve 7` | ⭐⭐⭐ | Tree structure and recursion.
