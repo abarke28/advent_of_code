@@ -48,3 +48,4 @@ Write-Output "Generated files:"
 Get-ChildItem
 
 Pop-Location
+Pop-Location
