@@ -3,17 +3,17 @@ param(
 	[string]$day
 )
 
-Write-Output "Generating files for day $day...`n"
+Write-Output "Generating files for day $day..."
 
 $folderName = "day_$day"
 $className = "Day_$day.cs"
 $inputName = "input.txt"
 
-New-Item -Path $folderName -ItemType Directory
+New-Item -Path $folderName -ItemType Directory | Out-Null
 
 Push-Location $folderName
 
-New-Item -Name $inputName
+New-Item -Name $inputName | Out-Null
 New-Item -Name $className -Value `
 "using aoc.common;
 using aoc.utils;
@@ -31,9 +31,10 @@ namespace aoc.day_$day
         }
     }
 }
-"
+" | Out-Null
 
-Write-Output "Generated files for day $day`:"
+Write-Output "Generated files:"
+
 Get-ChildItem
 
 Pop-Location
