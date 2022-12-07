@@ -1,7 +1,9 @@
-﻿namespace aoc.day_02
+﻿using aoc.common;
+
+namespace aoc.day_02
 {
     // https://adventofcode.com/2022/day/2
-    public class Day_02
+    public class Day_02 : ISolver
     {
         private enum Rps
         {
@@ -45,7 +47,7 @@
             }
         }
 
-        public static void GetResult()
+        public void Solve()
         {
             Console.WriteLine(GetScore());
             Console.WriteLine(GetScoreV2());

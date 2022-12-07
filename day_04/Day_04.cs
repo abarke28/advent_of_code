@@ -1,9 +1,10 @@
-﻿using aoc.utils;
+﻿using aoc.common;
+using aoc.utils;
 
 namespace aoc.day_04
 {
     // https://adventofcode.com/2022/day/4
-    public class Day_04
+    public class Day_04 : ISolver
     {
         private class CleaningAssignment
         {
@@ -33,7 +34,7 @@ namespace aoc.day_04
             }
         }
 
-        public static void GetResult()
+        public void Solve()
         {
             var lines = FileUtils.ReadAllLines("day_04/input.txt");
 

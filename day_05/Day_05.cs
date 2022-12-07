@@ -1,13 +1,14 @@
-﻿using aoc.utils;
+﻿using aoc.common;
+using aoc.utils;
 
 namespace aoc.day_05
 {
     // https://adventofcode.com/2022/day/5
-    public class Day_05
+    public class Day_05 : ISolver
     {
         private static List<Stack<char>> CrateStacks = BuildCrateStacksInitialState();
 
-        public static void GetResult()
+        public void Solve()
         {
             var lines = FileUtils.ReadAllLines("day_05/input_2.txt");
 

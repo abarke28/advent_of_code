@@ -1,7 +1,9 @@
-﻿namespace aoc.day_03
+﻿using aoc.common;
+
+namespace aoc.day_03
 {
     // https://adventofcode.com/2022/day/3
-    public class Day_03
+    public class Day_03 : ISolver
     {
         private class Bag
         {
@@ -16,7 +18,7 @@
             public string ThirdBag { get; set; } = string.Empty;
         }
 
-        public static void GetResult()
+        public void Solve()
         {
             var bags = GetBags();
 

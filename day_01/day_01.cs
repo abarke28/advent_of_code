@@ -1,9 +1,11 @@
-﻿namespace aoc.day_01
+﻿using aoc.common;
+
+namespace aoc.day_01
 {
     // https://adventofcode.com/2022/day/1
-    public class Day_01
+    public class Day_01 : ISolver
     {
-        public static void GetResult()
+        public void Solve()
         {
             Console.WriteLine(FindMaxCalories());
             Console.WriteLine(FindMaxNCalories(3));

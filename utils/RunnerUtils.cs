@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using aoc.common;
+using System.Reflection;
 
 namespace aoc.utils;
 
@@ -6,7 +7,7 @@ public static class RunnerUtils
 {
     public static void RunProblem(string input)
     {
-        const string methodName = "GetResult";
+        const string methodName = "Solve";
         const string solutionPath = "aoc.day_{0}.Day_{0}";
 
         if (!TryParseProblemNumber(input, out var problem))
@@ -24,9 +25,17 @@ public static class RunnerUtils
             return;
         }
 
-        var solver = Activator.CreateInstance(type);
+        var problemSolution = Activator.CreateInstance(type);
+
+        if (problemSolution is not ISolver solver)
+        {
+            Console.WriteLine("Problem solution does not follow expected pattern - it must implement ISolver. Exiting.");
+            return;
+        }
 
         var methodInfo = solver!.GetType().GetMethod(methodName);
+
+        Console.WriteLine($"Running solver for problem {problem}:\n");
         methodInfo!.Invoke(solver, Array.Empty<object>());
     }
 
