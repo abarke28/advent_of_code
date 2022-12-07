@@ -2,7 +2,7 @@
 {
     public static class StringUtils
     {
-        public static IEnumerable<int> ReadAllNumbers(string s, char delimiter = ' ')
+        public static IEnumerable<int> ReadAllNumbers(this string s, char delimiter = ' ')
         {
             var words = s.Split(delimiter);
 
