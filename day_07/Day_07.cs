@@ -41,14 +41,7 @@ namespace aoc.day_07
 
                 foreach (var childDir in Directories)
                 {
-                    if (childDir.Value.Directories.Any())
-                    {
-                        directories.AddRange(childDir.Value.GetDirectories());
-                    }
-                    else
-                    {
-                        directories.Add(childDir.Value);
-                    }
+                    directories.AddRange(childDir.Value.GetDirectories());
                 }
 
                 return directories;
