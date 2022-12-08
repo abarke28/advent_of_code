@@ -6,7 +6,7 @@ Details: [Advent of Code](https://adventofcode.com/2022/about)
 
 A daily coding challenge for each day in December leading up to Christmas. Each day & challenge consists of two related problems. This is my first year doing this.
 
-| Day | Story | Part 1 | Part 2 | command to run | challenge level | What I learnt/used
+| Day | Story | Q1 | Q2 | Command to run | Challenge level | What I learnt/used
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | [Calorie Counting](https://adventofcode.com/2022/day/1) | ⭐ | ⭐ | `dotnet run 1` | ⭐ | Iteration strategies.
 | 2 | [Rock Paper Scissors](https://adventofcode.com/2022/day/2) | ⭐ | ⭐ | `dotnet run 2` | ⭐⭐ | Modulo math.
