@@ -179,6 +179,38 @@
         }
 
         /// <summary>
+        /// Generate a grid from an array of strings. Each string must have the same length.
+        /// </summary>
+        /// <param name="input">Source input strings.</param>
+        /// <param name="mapper">Mandatory function to transform the chars to the desired type when filling the grid.</param>
+        /// <returns>A grid of the desired type.</returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static Grid<T> FromStrings(string[] input, Func<char, T> mapper)
+        {
+            if (input.Select(s => s.Trim().Length).ToHashSet().Count != 1)
+            {
+                throw new ArgumentException("Input strings not of uniform length.");
+            }
+
+            var width = input.First().Length;
+            var height = input.Count();
+
+            var grid = new Grid<T>(width, height);
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    var inputChar = input[y][x];
+
+                    grid.SetValue(x, y, mapper(inputChar));
+                }
+            }
+
+            return grid;
+        }
+
+        /// <summary>
         /// Fill all spaces in the grid with the supplied value
         /// </summary>
         /// <param name="value"></param>

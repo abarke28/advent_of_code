@@ -4,7 +4,8 @@ Solutions for AoC 2022.
 
 Details: [Advent of Code](https://adventofcode.com/2022/about)
 
-A daily coding challenge for each day in December leading up to Christmas. Each day & challenge consists of two related problems. This is my first year doing this.
+A daily coding challenge for each day in December leading up to Christmas. Each day & challenge consists of two related problems.
+This is my first year doing this.
 
 | Day | Story | Q1 | Q2 | Command to run | Challenge level | What I learnt/used
 | --- | --- | --- | --- | --- | --- | --- |
@@ -14,8 +15,8 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 4 | [Camp Cleanup](https://adventofcode.com/2022/day/4) | ⭐ | ⭐ | `dotnet run 4` | ⭐⭐ | Text parsing.
 | 5 | [Supply Stacks](https://adventofcode.com/2022/day/5) | ⭐ | ⭐ | `dotnet run 5`| ⭐⭐ | Stack data structure exercise.
 | 6 | [Tuning Trouble](https://adventofcode.com/2022/day/6) | ⭐ | ⭐ | `dotnet run 6` | ⭐ | Windowing strategies for enumerables.
-| 7 | [File System Building](https://adventofcode.com/2022/day/7) | ⭐ | ⭐ | `dotnet run 7` | ⭐⭐⭐ | Tree structure and recursion.
-| 8 | [TBD](https://adventofcode.com/2022/day/8) |  |  | `dotnet run 8` |  | 
+| 7 | [No Space Left On Device](https://adventofcode.com/2022/day/7) | ⭐ | ⭐ | `dotnet run 7` | ⭐⭐⭐ | Tree structure and recursion.
+| 8 | [Treetop Tree House](https://adventofcode.com/2022/day/8) | ⭐ | ⭐ | `dotnet run 8` | ⭐⭐⭐ | 2D array parsing & navigation. 
 
 To generate the files for a new day's problem, run:
 
