@@ -1,5 +1,5 @@
 param(
-	[Parameter()]
+	[Parameter(Mandatory=$true)]
 	[string]$day
 )
 
