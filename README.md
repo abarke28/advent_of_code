@@ -8,7 +8,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 
 | Day | Story | Part 1 | Part 2 | command to run | challenge level | What I learnt/used
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | [Calorie Counting](https://adventofcode.com/2022/day/1) | ⭐ | ⭐  | `dotnet run 1` | ⭐ | Iteration strategies.
+| 1 | [Calorie Counting](https://adventofcode.com/2022/day/1) | ⭐ | ⭐ | `dotnet run 1` | ⭐ | Iteration strategies.
 | 2 | [Rock Paper Scissors](https://adventofcode.com/2022/day/2) | ⭐ | ⭐ | `dotnet run 2` | ⭐⭐ | Modulo math.
 | 3 | [Rucksack Reorganization](https://adventofcode.com/2022/day/3) | ⭐ | ⭐ | `dotnet run 3` | ⭐⭐ | Set theory.
 | 4 | [Camp Cleanup](https://adventofcode.com/2022/day/4) | ⭐ | ⭐ | `dotnet run 4` | ⭐⭐ | Text parsing.
