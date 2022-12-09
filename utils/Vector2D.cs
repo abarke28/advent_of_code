@@ -1,4 +1,4 @@
-﻿namespace v1oc.utils
+﻿namespace aoc.utils
 {
     public readonly struct Vector2D : IEquatable<Vector2D>
     {
