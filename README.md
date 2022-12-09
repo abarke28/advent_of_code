@@ -16,7 +16,8 @@ This is my first year doing this.
 | 5 | [Supply Stacks](https://adventofcode.com/2022/day/5) | ⭐ | ⭐ | `dotnet run 5`| ⭐⭐ | Stack data structure exercise.
 | 6 | [Tuning Trouble](https://adventofcode.com/2022/day/6) | ⭐ | ⭐ | `dotnet run 6` | ⭐ | Windowing strategies for enumerables.
 | 7 | [No Space Left On Device](https://adventofcode.com/2022/day/7) | ⭐ | ⭐ | `dotnet run 7` | ⭐⭐⭐ | Tree structure and recursion.
-| 8 | [Treetop Tree House](https://adventofcode.com/2022/day/8) | ⭐ | ⭐ | `dotnet run 8` | ⭐⭐⭐ | 2D array parsing & navigation. 
+| 8 | [Treetop Tree House](https://adventofcode.com/2022/day/8) | ⭐ | ⭐ | `dotnet run 8` | ⭐⭐⭐ | 2D array parsing & navigation.
+| 9 | [](https://adventofcode.com/2022/day/9) | ⭐ | ⭐ | `dotnet run 9` |  | .
 
 To generate the files for a new day's problem, run:
 
