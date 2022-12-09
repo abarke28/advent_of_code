@@ -9,12 +9,12 @@ namespace aoc.utils
             return Math.Abs(v.X - other.X) <= 1 && Math.Abs(v.Y - other.Y) <= 1;
         }
 
-        public static bool IsInSameRow(this Vector2D v, Vector2D other)
+        public static bool IsOnSameRow(this Vector2D v, Vector2D other)
         {
             return v.Y == other.Y;
         }
 
-        public static bool IsInSameColumn(this Vector2D v, Vector2D other)
+        public static bool IsOnSameColumn(this Vector2D v, Vector2D other)
         {
             return v.X == other.X;
         }

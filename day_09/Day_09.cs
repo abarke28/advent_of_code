@@ -6,17 +6,17 @@ namespace aoc.day_09
     // https://adventofcode.com/2022/day/09
     public class Day_09 : ISolver
     {
-        private enum Direction
+        private static readonly Dictionary<char, Vector2D> InstructionMoveMap = new Dictionary<char, Vector2D>()
         {
-            Right = 'R',
-            Left = 'L',
-            Up = 'U',
-            Down = 'D'
-        }
+            { 'R', Vector2D.Right },
+            { 'L', Vector2D.Left },
+            { 'U', Vector2D.Up },
+            { 'D', Vector2D.Down }
+        };
 
         private class RopeInstruction
         {
-            public Direction Direction { get; set; }
+            public Vector2D Direction { get; set; }
             public int Count { get; set; }
 
             public static RopeInstruction FromString(string s)
@@ -25,7 +25,7 @@ namespace aoc.day_09
 
                 return new RopeInstruction
                 {
-                    Direction = (Direction)words[0].Single(),
+                    Direction = InstructionMoveMap[words[0].Single()],
                     Count = int.Parse(words[1])
                 };
             }
@@ -48,16 +48,16 @@ namespace aoc.day_09
             Console.WriteLine(finalLocations.Select(l => l.ToString()).ToHashSet().Count);
         }
 
-        private static List<Coordinate> ComputeFollowerLocationsForNKnots(List<Coordinate> locations, int numFollowers)
+        private static List<Vector2D> ComputeFollowerLocationsForNKnots(List<Vector2D> locations, int numFollowers)
         {
-            var knotLocations = new List<List<Coordinate>>(numFollowers);
+            var knotLocations = new List<List<Vector2D>>(numFollowers);
             knotLocations.Add(locations);
 
             for (var i = 1; i < numFollowers; i++)
             {
-                var followerLocations = new List<Coordinate>();
+                var followerLocations = new List<Vector2D>();
 
-                var followerCurrentLocation = new Coordinate(0, 0);
+                var followerCurrentLocation = new Vector2D(0, 0);
 
                 followerLocations.Add(followerCurrentLocation);
 
@@ -79,17 +79,17 @@ namespace aoc.day_09
             return finalTailLocations;
         }
 
-        private static List<Coordinate> ComputeTailLocationsFromMoves(IEnumerable<Direction> moves)
+        private static List<Vector2D> ComputeTailLocationsFromMoves(IEnumerable<Vector2D> moves)
         {
-            var head = new Coordinate(0, 0);
-            var tail = new Coordinate(0, 0);
+            var head = new Vector2D(0, 0);
+            var tail = new Vector2D(0, 0);
 
-            var tailVisits = new List<Coordinate>();
+            var tailVisits = new List<Vector2D>();
             tailVisits.Add(tail);
 
             foreach (var move in moves)
             {
-                var newHeadLocation = ComputeHeadLocation(head, move);
+                var newHeadLocation = head + move;
                 var newTailLocation = ComputeTailLocation(tail, newHeadLocation);
 
                 tailVisits.Add(newTailLocation);
@@ -101,57 +101,37 @@ namespace aoc.day_09
             return tailVisits;
         }
 
-        private static Coordinate ComputeHeadLocation(Coordinate startingLocation, Direction move)
+        private static Vector2D ComputeTailLocation(Vector2D tail, Vector2D head)
         {
-            var x = startingLocation.X;
-            var y = startingLocation.Y;
-
-            switch (move)
-            {
-                case Direction.Left:
-                    return new Coordinate(x - 1, y);
-                case Direction.Right:
-                    return new Coordinate(x + 1, y);
-                case Direction.Up:
-                    return new Coordinate(x, y + 1);
-                case Direction.Down:
-                    return new Coordinate(x, y - 1);
-                default:
-                    throw new ArgumentException(nameof(move));
-            }
-        }
-
-        private static Coordinate ComputeTailLocation(Coordinate tail, Coordinate head)
-        {
-            if (tail.IsTouching(head))
+            if (tail.IsAdjacent(head))
             {
                 return tail;
             }
             else if (tail.IsOnSameRow(head))
             {
-                return new Coordinate((head.X + tail.X)/2, tail.Y);
+                return new Vector2D((head.X + tail.X)/2, tail.Y);
             }
             else if (tail.IsOnSameColumn(head))
             {
-                return new Coordinate(tail.X, (head.Y + tail.Y)/2);
+                return new Vector2D(tail.X, (head.Y + tail.Y)/2);
             }
             else if (Math.Abs(tail.X - head.X) == 1)
             {
-                return new Coordinate(head.X, (head.Y + tail.Y)/2);
+                return new Vector2D(head.X, (head.Y + tail.Y)/2);
             }
             else if (Math.Abs(tail.Y - head.Y) == 1)
             {
-                return new Coordinate((head.X + tail.X)/2, head.Y);
+                return new Vector2D((head.X + tail.X)/2, head.Y);
             }
             else
             {
-                return new Coordinate((head.X + tail.X) / 2, (head.Y + tail.Y) / 2);
+                return new Vector2D((head.X + tail.X) / 2, (head.Y + tail.Y) / 2);
             }
         }
 
-        private static IEnumerable<Direction> ParseInstructionToMoves(RopeInstruction instruction)
+        private static IEnumerable<Vector2D> ParseInstructionToMoves(RopeInstruction instruction)
         {
-            var moves = new List<Direction>();
+            var moves = new List<Vector2D>();
 
             while (instruction.Count-- > 0)
             {
