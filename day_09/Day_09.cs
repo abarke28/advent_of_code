@@ -42,12 +42,45 @@ namespace aoc.day_09
             var tailLocations = ComputeTailLocationsFromMoves(moves);
 
             Console.WriteLine(tailLocations.Select(tl => tl.ToString()).ToHashSet().Count);
+
+            var finalLocations = ComputeFollowerLocationsForNKnots(tailLocations, 9);
+
+            Console.WriteLine(finalLocations.Select(l => l.ToString()).ToHashSet().Count);
+        }
+
+        private static List<Coordinate> ComputeFollowerLocationsForNKnots(List<Coordinate> locations, int numFollowers)
+        {
+            var knotLocations = new List<List<Coordinate>>(numFollowers);
+            knotLocations.Add(locations);
+
+            for (var i = 1; i < numFollowers; i++)
+            {
+                var followerLocations = new List<Coordinate>();
+
+                var followerCurrentLocation = new Coordinate(0, 0);
+
+                followerLocations.Add(followerCurrentLocation);
+
+                for (var j = 0; j < knotLocations[i - 1].Count; j++)
+                {
+                    var leaderCurrentLocation = knotLocations[i - 1][j];
+                    var newFollowerLocation = ComputeTailLocation(followerCurrentLocation, leaderCurrentLocation);
+
+                    followerLocations.Add(newFollowerLocation);
+
+                    followerCurrentLocation = newFollowerLocation;
+                }
+
+                knotLocations.Add(followerLocations);
+            }
+
+            var finalTailLocations = knotLocations.Last();
+
+            return finalTailLocations;
         }
 
         private static List<Coordinate> ComputeTailLocationsFromMoves(IEnumerable<Direction> moves)
         {
-            //var knots = new List<Coordinate>(Enumerable.Repeat<Coordinate>(new Coordinate(0, 0), numKnots));
-
             var head = new Coordinate(0, 0);
             var tail = new Coordinate(0, 0);
 
@@ -94,27 +127,25 @@ namespace aoc.day_09
             {
                 return tail;
             }
+            else if (tail.IsOnSameRow(head))
+            {
+                return new Coordinate((head.X + tail.X)/2, tail.Y);
+            }
+            else if (tail.IsOnSameColumn(head))
+            {
+                return new Coordinate(tail.X, (head.Y + tail.Y)/2);
+            }
+            else if (Math.Abs(tail.X - head.X) == 1)
+            {
+                return new Coordinate(head.X, (head.Y + tail.Y)/2);
+            }
+            else if (Math.Abs(tail.Y - head.Y) == 1)
+            {
+                return new Coordinate((head.X + tail.X)/2, head.Y);
+            }
             else
             {
-                if (tail.IsOnSameRow(head))
-                {
-                    return new Coordinate((head.X + tail.X)/2, tail.Y);
-                }
-
-                if (tail.IsOnSameColumn(head))
-                {
-                    return new Coordinate(tail.X, (head.Y + tail.Y)/2);
-                }
-
-                // Head must be diagnol away from tail
-                if (Math.Abs(tail.X - head.X) == 1)
-                {
-                    return new Coordinate(head.X, (head.Y + tail.Y)/2);
-                }
-                else
-                {
-                    return new Coordinate((head.X + tail.X)/2, head.Y);
-                }
+                return new Coordinate((head.X + tail.X) / 2, (head.Y + tail.Y) / 2);
             }
         }
 
