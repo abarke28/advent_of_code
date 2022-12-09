@@ -41,6 +41,9 @@ public static class RunnerUtils
 
     private static bool TryParseProblemNumber(string input, out string problemString)
     {
+        const int dayLength = 2;
+        const char dayPadChar = '0';
+
         if (!int.TryParse(input, out var problem))
         {
             Console.WriteLine($"Could not parse input '{input}' into a problem number. Exiting.");
@@ -49,7 +52,7 @@ public static class RunnerUtils
             return false;
         }
 
-        var paddedProblem = problem.ToString().PadLeft(2, '0');
+        var paddedProblem = problem.ToString().PadLeft(dayLength, dayPadChar);
         problemString = paddedProblem;
 
         return true;
