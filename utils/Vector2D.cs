@@ -36,7 +36,7 @@
 
         public override int GetHashCode()
         {
-            return 17 * X + 31 * Y;
+            return 353 * X + 359 * Y;
         }
 
         public override string ToString()
