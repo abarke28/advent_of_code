@@ -25,7 +25,7 @@ namespace aoc.day_09
 
                 return new RopeInstruction
                 {
-                    Direction = ParseStringToDirection(words[0]),
+                    Direction = (Direction)words[0].Single(),
                     Count = int.Parse(words[1])
                 };
             }
@@ -159,23 +159,6 @@ namespace aoc.day_09
             }
 
             return moves;
-        }
-
-        private static Direction ParseStringToDirection(string s)
-        {
-            switch (s)
-            {
-                case "U":
-                    return Direction.Up;
-                case "D":
-                    return Direction.Down;
-                case "L":
-                    return Direction.Left;
-                case "R":
-                    return Direction.Right;
-                default:
-                    throw new ArgumentException(nameof(s));
-            }
         }
     }
 }
