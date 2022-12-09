@@ -50,21 +50,23 @@ namespace aoc.day_09
 
         private static List<Vector2D> ComputeFollowerLocationsForNKnots(List<Vector2D> locations, int numFollowers)
         {
-            var knotLocations = new List<List<Vector2D>>(numFollowers);
-            knotLocations.Add(locations);
+            var knotLocations = new List<List<Vector2D>>(numFollowers)
+            {
+                locations
+            };
 
             for (var i = 1; i < numFollowers; i++)
             {
                 var followerLocations = new List<Vector2D>();
 
-                var followerCurrentLocation = new Vector2D(0, 0);
+                var followerCurrentLocation = Vector2D.Zero;
 
                 followerLocations.Add(followerCurrentLocation);
 
                 for (var j = 0; j < knotLocations[i - 1].Count; j++)
                 {
                     var leaderCurrentLocation = knotLocations[i - 1][j];
-                    var newFollowerLocation = ComputeTailLocation(followerCurrentLocation, leaderCurrentLocation);
+                    var newFollowerLocation = ComputeFollowerLocation(followerCurrentLocation, leaderCurrentLocation);
 
                     followerLocations.Add(newFollowerLocation);
 
@@ -81,16 +83,18 @@ namespace aoc.day_09
 
         private static List<Vector2D> ComputeTailLocationsFromMoves(IEnumerable<Vector2D> moves)
         {
-            var head = new Vector2D(0, 0);
-            var tail = new Vector2D(0, 0);
+            var head = Vector2D.Zero;
+            var tail = Vector2D.Zero;
 
-            var tailVisits = new List<Vector2D>();
-            tailVisits.Add(tail);
+            var tailVisits = new List<Vector2D>
+            {
+                tail
+            };
 
             foreach (var move in moves)
             {
                 var newHeadLocation = head + move;
-                var newTailLocation = ComputeTailLocation(tail, newHeadLocation);
+                var newTailLocation = ComputeFollowerLocation(tail, newHeadLocation);
 
                 tailVisits.Add(newTailLocation);
 
@@ -101,32 +105,17 @@ namespace aoc.day_09
             return tailVisits;
         }
 
-        private static Vector2D ComputeTailLocation(Vector2D tail, Vector2D head)
+        private static Vector2D ComputeFollowerLocation(Vector2D tail, Vector2D head)
         {
             if (tail.IsAdjacent(head))
             {
                 return tail;
             }
-            else if (tail.IsOnSameRow(head))
-            {
-                return new Vector2D((head.X + tail.X)/2, tail.Y);
-            }
-            else if (tail.IsOnSameColumn(head))
-            {
-                return new Vector2D(tail.X, (head.Y + tail.Y)/2);
-            }
-            else if (Math.Abs(tail.X - head.X) == 1)
-            {
-                return new Vector2D(head.X, (head.Y + tail.Y)/2);
-            }
-            else if (Math.Abs(tail.Y - head.Y) == 1)
-            {
-                return new Vector2D((head.X + tail.X)/2, head.Y);
-            }
-            else
-            {
-                return new Vector2D((head.X + tail.X) / 2, (head.Y + tail.Y) / 2);
-            }
+
+            var delta = head - tail;
+            var move = new Vector2D(Math.Clamp(delta.X, -1, 1), Math.Clamp(delta.Y, -1, 1));
+
+            return tail + move;
         }
 
         private static IEnumerable<Vector2D> ParseInstructionToMoves(RopeInstruction instruction)
