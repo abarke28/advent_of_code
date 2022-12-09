@@ -41,18 +41,18 @@ namespace aoc.day_09
 
             var len2Locations = ComputeTailLocationsFromMoves(moves, 2);
 
-            Console.WriteLine(len2Locations.Select(tl => tl.ToString()).ToHashSet().Count);
+            Console.WriteLine(len2Locations.Count);
 
             var len10Locations = ComputeTailLocationsFromMoves(moves, 10);
 
-            Console.WriteLine(len10Locations.Select(l => l.ToString()).ToHashSet().Count);
+            Console.WriteLine(len10Locations.Count);
         }
 
-        private static List<Vector2D> ComputeTailLocationsFromMoves(IEnumerable<Vector2D> moves, int numSegments)
+        private static HashSet<Vector2D> ComputeTailLocationsFromMoves(IEnumerable<Vector2D> moves, int numSegments)
         {
             var segments = Enumerable.Repeat(Vector2D.Zero, numSegments).ToList();
 
-            var tailVisits = new List<Vector2D>
+            var tailVisits = new HashSet<Vector2D>
             {
                 segments[^1]
             };
@@ -72,17 +72,17 @@ namespace aoc.day_09
             return tailVisits;
         }
 
-        private static Vector2D ComputeFollowerLocation(Vector2D tail, Vector2D head)
+        private static Vector2D ComputeFollowerLocation(Vector2D follower, Vector2D leader)
         {
-            if (tail.IsAdjacent(head))
+            if (follower.IsAdjacent(leader))
             {
-                return tail;
+                return follower;
             }
 
-            var delta = head - tail;
+            var delta = leader - follower;
             var move = new Vector2D(Math.Clamp(delta.X, -1, 1), Math.Clamp(delta.Y, -1, 1));
 
-            return tail + move;
+            return follower + move;
         }
 
         private static IEnumerable<Vector2D> ParseInstructionToMoves(RopeInstruction instruction)
