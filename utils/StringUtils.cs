@@ -2,7 +2,9 @@
 {
     public static class StringUtils
     {
-        public static IEnumerable<int> ReadAllNumbers(this string s, char delimiter = ' ')
+        public const char Space = ' ';
+
+        public static IEnumerable<int> ReadAllNumbers(this string s, char delimiter = Space)
         {
             var words = s.Split(delimiter);
 
@@ -13,6 +15,11 @@
                     yield return num;
                 }
             }
+        }
+
+        public static IEnumerable<string> GetWords(this string s, char delimiter = Space)
+        {
+            return s.Split(delimiter);
         }
     }
 }

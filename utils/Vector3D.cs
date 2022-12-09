@@ -66,6 +66,15 @@
             return !(v1 == v2);
         }
 
+        public static Vector3D operator *(Vector3D v1, Vector3D v2)
+        {
+            var x = v1.Y * v2.Z - v1.Z * v2.Y;
+            var y = v1.Z * v2.X - v1.X * v2.Z;
+            var z = v1.X * v2.Y - v1.Y * v2.X;
+
+            return new Vector3D(x, y, z);
+        }
+
         public static Vector3D operator *(int k, Vector3D v)
         {
             return new Vector3D(k * v.X, k * v.Y, k * v.Z);
