@@ -9,6 +9,7 @@ $projectPath = "C:\git\aoc"
 $folderName = "day_$day"
 $className = "Day_$day.cs"
 $inputName = "input.txt"
+$input2Name = "input2.txt"
 
 Push-Location $projectPath
 
@@ -24,6 +25,7 @@ New-Item -Path $folderName -ItemType Directory | Out-Null
 Push-Location $folderName
 
 New-Item -Name $inputName | Out-Null
+New-Item -Name $input2Name | Out-Null
 New-Item -Name $className -Value `
 "using aoc.common;
 using aoc.utils;
