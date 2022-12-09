@@ -39,67 +39,34 @@ namespace aoc.day_09
 
             var moves = instructions.SelectMany(i => ParseInstructionToMoves(i));
 
-            var tailLocations = ComputeTailLocationsFromMoves(moves);
+            var len2Locations = ComputeTailLocationsFromMoves(moves, 2);
 
-            Console.WriteLine(tailLocations.Select(tl => tl.ToString()).ToHashSet().Count);
+            Console.WriteLine(len2Locations.Select(tl => tl.ToString()).ToHashSet().Count);
 
-            var finalLocations = ComputeFollowerLocationsForNKnots(tailLocations, 9);
+            var len10Locations = ComputeTailLocationsFromMoves(moves, 10);
 
-            Console.WriteLine(finalLocations.Select(l => l.ToString()).ToHashSet().Count);
+            Console.WriteLine(len10Locations.Select(l => l.ToString()).ToHashSet().Count);
         }
 
-        private static List<Vector2D> ComputeFollowerLocationsForNKnots(List<Vector2D> locations, int numFollowers)
+        private static List<Vector2D> ComputeTailLocationsFromMoves(IEnumerable<Vector2D> moves, int numSegments)
         {
-            var knotLocations = new List<List<Vector2D>>(numFollowers)
-            {
-                locations
-            };
-
-            for (var i = 1; i < numFollowers; i++)
-            {
-                var followerLocations = new List<Vector2D>();
-
-                var followerCurrentLocation = Vector2D.Zero;
-
-                followerLocations.Add(followerCurrentLocation);
-
-                for (var j = 0; j < knotLocations[i - 1].Count; j++)
-                {
-                    var leaderCurrentLocation = knotLocations[i - 1][j];
-                    var newFollowerLocation = ComputeFollowerLocation(followerCurrentLocation, leaderCurrentLocation);
-
-                    followerLocations.Add(newFollowerLocation);
-
-                    followerCurrentLocation = newFollowerLocation;
-                }
-
-                knotLocations.Add(followerLocations);
-            }
-
-            var finalTailLocations = knotLocations.Last();
-
-            return finalTailLocations;
-        }
-
-        private static List<Vector2D> ComputeTailLocationsFromMoves(IEnumerable<Vector2D> moves)
-        {
-            var head = Vector2D.Zero;
-            var tail = Vector2D.Zero;
+            var segments = Enumerable.Repeat(Vector2D.Zero, numSegments).ToList();
 
             var tailVisits = new List<Vector2D>
             {
-                tail
+                segments[^1]
             };
 
             foreach (var move in moves)
             {
-                var newHeadLocation = head + move;
-                var newTailLocation = ComputeFollowerLocation(tail, newHeadLocation);
+                segments[0] += move;
 
-                tailVisits.Add(newTailLocation);
+                for (var i = 1; i < segments.Count; i++)
+                {
+                    segments[i] = ComputeFollowerLocation(segments[i], segments[i-1]);
+                }
 
-                head = newHeadLocation;
-                tail = newTailLocation;
+                tailVisits.Add(segments[^1]);
             }
 
             return tailVisits;
