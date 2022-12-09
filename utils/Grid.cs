@@ -247,10 +247,10 @@
         }
 
         /// <summary>
-        /// Fill all spaces in the grid with the supplied value, if the coordinates satisfy a predicate.
+        /// Fill all spaces in the grid with the supplied value, if the Vector2Ds satisfy a predicate.
         /// </summary>
         /// <param name="value">The value to fill with.</param>
-        /// <param name="predicate">Predicate to determine if the grid space should be filled, based on the space coordinates (x, y)</param>
+        /// <param name="predicate">Predicate to determine if the grid space should be filled, based on the space Vector2Ds (x, y)</param>
         public void Fill(T value, Func<int, int, bool> predicate)
         {
             for (int y = 0; y < Height; y++)
@@ -268,7 +268,7 @@
         /// <summary>
         /// Fills all spaces in the grid by way of a generator function.
         /// </summary>
-        /// <param name="generator">Function to compute grid values from coordinates (x, y).</param>
+        /// <param name="generator">Function to compute grid values from Vector2Ds (x, y).</param>
         public void Fill(Func<int, int, T?> generator)
         {
             for (int y = 0; y < Height; y++)
@@ -281,11 +281,11 @@
         }
 
         /// <summary>
-        /// Finds the coordinates of grid spaces the fulfill a predicate.
+        /// Finds the Vector2Ds of grid spaces the fulfill a predicate.
         /// </summary>
-        /// <param name="predicate">Predicate which takes coordinates as input (x, y)</param>
-        /// <returns>Enumerable of coordinates.</returns>
-        public IEnumerable<Coordinate> FindAll(Func<int, int, bool> predicate)
+        /// <param name="predicate">Predicate which takes Vector2Ds as input (x, y)</param>
+        /// <returns>Enumerable of Vector2Ds.</returns>
+        public IEnumerable<Vector2D> FindAll(Func<int, int, bool> predicate)
         {
             for (int y = 0; y < Height; y++)
             {
@@ -293,7 +293,7 @@
                 {
                     if (predicate(x, y))
                     {
-                        yield return new Coordinate(x, y);
+                        yield return new Vector2D(x, y);
                     }
                 }
             }

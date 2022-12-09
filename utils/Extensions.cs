@@ -1,12 +1,20 @@
-﻿using aoc.utils;
-
-namespace aoc.utils
+﻿namespace aoc.utils
 {
     public static class Extensions
     {
         public static bool IsAdjacent(this Vector2D v, Vector2D other)
         {
             return Math.Abs(v.X - other.X) <= 1 && Math.Abs(v.Y - other.Y) <= 1;
+        }
+
+        public static bool IsCardinal(this Vector2D v, Vector2D other)
+        {
+            return IsOnSameRow(v, other) ^ IsOnSameColumn(v, other);
+        }
+
+        public static bool IsCoincident(this Vector2D v, Vector2D other)
+        {
+            return v.Equals(other);
         }
 
         public static bool IsOnSameRow(this Vector2D v, Vector2D other)
