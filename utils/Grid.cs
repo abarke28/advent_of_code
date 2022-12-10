@@ -45,6 +45,29 @@
 
             Fill(generatingFunction);
         }
+
+        public Grid(List<List<T>> inputLists)
+        {
+            if (inputLists.Select(l => l.Count).Distinct().Count() > 1)
+            {
+                throw new ArgumentException("All input lists must be of the same length.");
+            }
+
+            var height = inputLists.Count;
+            var width = inputLists.First().Count;
+
+            _height = height;
+            _width = width;
+            _grid = new T?[width, height];
+
+            for (var y = 0; y < height; y++)
+            {
+                for (var x = 0; x < width; x++)
+                {
+                    SetValue(x, y, inputLists[y][x]);
+                }
+            }
+        }
         
         public T? GetValue(int x, int y)
         {
@@ -135,18 +158,36 @@
             return row;
         }
 
+        public List<List<T?>> GetRows()
+        {
+            var rows = new List<List<T?>>(Height);
+
+            for (var i = 0; i < Height; i++)
+            {
+                rows.Add(GetRow(i));
+            }
+
+            return rows;
+        }
+
         public bool IsInBounds(int x, int y)
         {
             return ((x >= 0 && x < Width) && (y >= 0 && y < Height));
         }
 
-        public void PrintGrid()
+        public void PrintGrid(Func<T?, string>? printer = null)
         {
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    Console.Write(_grid[x, y]?.ToString() ?? "NULL");
+                    var value = GetValue(x, y);
+
+                    var printValue = printer == null
+                        ? value?.ToString() ?? "NULL"
+                        : printer(value);
+
+                    Console.Write(printValue);
                     Console.Write(' ');
                 }
                 Console.WriteLine();

@@ -65,5 +65,17 @@ namespace aoc.utils
 
             return source;
         }
+
+        public static BitArray Duplicate(this BitArray source)
+        {
+            return (source.Clone() as BitArray)!;
+        }
+
+        public static int ReadAsBinary(this IEnumerable<int> bits)
+        {
+            var bitArray = new BitArray(bits.Select(b => b == 1).ToArray());
+
+            return bitArray.ConvertToInt();
+        }
     }
 }
