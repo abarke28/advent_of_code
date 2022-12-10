@@ -6,7 +6,7 @@ namespace aoc.y2021.day_02
     // https://adventofcode.com/2021/day/02
     public class Day_02 : ISolver
     {
-        private static readonly Dictionary<string, Vector2D> DirectionVectorMap2D = new Dictionary<string, Vector2D>
+        private static readonly Dictionary<string, Vector2D> DirectionVectorMap2D = new()
         {
             { "forward", Vector2D.Right },
             { "up", Vector2D.Down },

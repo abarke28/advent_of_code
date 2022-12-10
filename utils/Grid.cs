@@ -101,6 +101,40 @@
             return Get8NeighboursWithCoordsImplementation(x, y, predicate);
         }
 
+        public List<T?> GetColumn(int columnIndex)
+        {
+            if (!IsInBounds(columnIndex, 0))
+            {
+                throw new ArgumentOutOfRangeException(nameof(columnIndex));
+            }
+
+            var column = new List<T?>(Height);
+
+            for (var i = 0; i < Height; i++)
+            {
+                column.Add(GetValue(columnIndex, i));
+            }
+
+            return column;
+        }
+
+        public List<T?> GetRow(int rowIndex)
+        {
+            if (!IsInBounds(0, rowIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(rowIndex));
+            }
+
+            var row = new List<T?>(Width);
+
+            for (var i = 0; i < Width; i++)
+            {
+                row.Add(GetValue(i, rowIndex));
+            }
+
+            return row;
+        }
+
         public bool IsInBounds(int x, int y)
         {
             return ((x >= 0 && x < Width) && (y >= 0 && y < Height));
@@ -145,38 +179,6 @@
             return itemsCount;
         }
 
-        /// <summary>
-        /// Generate a grid from an array of strings. Each string must have the same length.
-        /// Each string will be trimmed.
-        /// </summary>
-        /// <param name="input">Source input strings.</param>
-        /// <param name="mapper">Optional function to transform source characters when filling the grid.</param>
-        /// <returns>A grid of chars.</returns>
-        /// <exception cref="ArgumentException"></exception>
-        public static Grid<char> FromStrings(string[] input, Func<char, char>? mapper = null)
-        {
-            if (input.Select(s => s.Trim().Length).ToHashSet().Count != 1)
-            {
-                throw new ArgumentException("Input strings not of uniform length.");
-            }
-
-            var width = input.First().Length;
-            var height = input.Count();
-
-            var grid = new Grid<char>(width, height);
-
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    var inputChar = input[y][x];
-
-                    grid.SetValue(x, y, mapper is null ? inputChar : mapper(inputChar));
-                }
-            }
-
-            return grid;
-        }
 
         /// <summary>
         /// Generate a grid from an array of strings. Each string must have the same length.
@@ -185,7 +187,7 @@
         /// <param name="mapper">Mandatory function to transform the chars to the desired type when filling the grid.</param>
         /// <returns>A grid of the desired type.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static Grid<T> FromStrings(string[] input, Func<char, T> mapper)
+        public static Grid<T> FromStrings(IList<string> input, Func<char, T> mapper)
         {
             if (input.Select(s => s.Trim().Length).ToHashSet().Count != 1)
             {
