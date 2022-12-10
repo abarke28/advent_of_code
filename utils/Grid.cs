@@ -342,6 +342,24 @@
             }
         }
 
+        public bool TryFind(T value, out Vector2D location)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (GetValue(x, y)?.Equals(value) == true)
+                    {
+                        location = new Vector2D(x, y);
+                        return true;
+                    }
+                }
+            }
+
+            location = Vector2D.Zero;
+            return false;
+        }
+
         private List<GridItem<T?>> Get4NeighboursWithCoordsImplementation(int x, int y, Func<T?, bool>? predicate = null)
         {
             const int maxNeighbours = 4;
