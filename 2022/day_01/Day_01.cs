@@ -1,6 +1,6 @@
 ﻿using aoc.common;
 
-namespace aoc.day_01
+namespace aoc.y2022.day_01
 {
     // https://adventofcode.com/2022/day/1
     public class Day_01 : ISolver
@@ -60,7 +60,7 @@ namespace aoc.day_01
 
         private static string[] ReadInputLines()
         {
-            const string fileName = "day_01/day_01_input.txt";
+            const string fileName = "2022/day_01/day_01_input.txt";
 
             var lines = File.ReadAllLines(fileName);
 

@@ -5,23 +5,24 @@ namespace aoc.utils;
 
 public static class RunnerUtils
 {
-    public static void RunProblem(string input)
-    {
-        const string methodName = "Solve";
-        const string solutionPath = "aoc.day_{0}.Day_{0}";
+    private const string DefaultYear = "2022";
+    private const string MethodName = "Solve";
+    private const string SolutionPath = "aoc.y{0}.day_{1}.Day_{1}";
 
-        if (!TryParseProblemNumber(input, out var problem))
+    public static void RunProblem(string[] input)
+    {
+        if (!TryParseProblemNumber(input, out var problem, out var year))
         {
             return;
         }
 
-        var fqTypeName = string.Format(solutionPath, problem);
+        var fqTypeName = string.Format(SolutionPath, year, problem);
 
         var type = Assembly.GetExecutingAssembly().GetType(fqTypeName);
 
         if (type is null)
         {
-            Console.WriteLine($"Could not locate problem '{problem}'. Exiting.");
+            Console.WriteLine($"Could not locate problem '{year}-{problem}'. Exiting.");
             return;
         }
 
@@ -33,18 +34,23 @@ public static class RunnerUtils
             return;
         }
 
-        var methodInfo = solver!.GetType().GetMethod(methodName);
+        var methodInfo = solver!.GetType().GetMethod(MethodName);
 
-        Console.WriteLine($"Running solver for problem {problem}:\n");
+        Console.WriteLine($"Running solver for problem {year}-{problem}:\n");
         methodInfo!.Invoke(solver, Array.Empty<object>());
     }
 
-    private static bool TryParseProblemNumber(string input, out string problemString)
+    private static bool TryParseProblemNumber(string[] input, out string problemString, out string yearString)
     {
         const int dayLength = 2;
         const char dayPadChar = '0';
 
-        if (!int.TryParse(input, out var problem))
+        var inputCount = input.Length;
+        var dayIndex = inputCount - 1;
+        
+        yearString = inputCount > 1 ? input[0] : DefaultYear;
+
+        if (!int.TryParse(input[dayIndex], out var problem))
         {
             Console.WriteLine($"Could not parse input '{input}' into a problem number. Exiting.");
 

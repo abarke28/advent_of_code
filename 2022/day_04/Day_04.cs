@@ -1,7 +1,7 @@
 ﻿using aoc.common;
 using aoc.utils;
 
-namespace aoc.day_04
+namespace aoc.y2022.day_04
 {
     // https://adventofcode.com/2022/day/4
     public class Day_04 : ISolver
@@ -36,7 +36,7 @@ namespace aoc.day_04
 
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("day_04/input.txt");
+            var lines = FileUtils.ReadAllLines("2022/day_04/input.txt");
 
             var elfPairs = lines.Select(l => ParseCleaningAssignments(l));
 

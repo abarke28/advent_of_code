@@ -1,6 +1,6 @@
 ﻿using aoc.common;
 
-namespace aoc.day_03
+namespace aoc.y2022.day_03
 {
     // https://adventofcode.com/2022/day/3
     public class Day_03 : ISolver
@@ -118,7 +118,7 @@ namespace aoc.day_03
 
         private static string[] GetLines()
         {
-            return File.ReadAllLines("day_03/input.txt");
+            return File.ReadAllLines("2022/day_03/input.txt");
         }
     }
 }

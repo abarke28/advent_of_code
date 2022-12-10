@@ -1,14 +1,14 @@
 ﻿using aoc.common;
 using aoc.utils;
 
-namespace aoc.day_08
+namespace aoc.y2022.day_08
 {
     // https://adventofcode.com/2022/day/8
     public class Day_08 : ISolver
     {
         public void Solve()
         {
-            var lines = File.ReadAllLines("day_08/input.txt");
+            var lines = File.ReadAllLines("2022/day_08/input.txt");
 
             var grid = Grid<int>.FromStrings(lines, c => int.Parse(c.ToString()));
 

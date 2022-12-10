@@ -1,7 +1,7 @@
 ﻿using aoc.common;
 using aoc.utils;
 
-namespace aoc.day_05
+namespace aoc.y2022.day_05
 {
     // https://adventofcode.com/2022/day/5
     public class Day_05 : ISolver
@@ -10,7 +10,7 @@ namespace aoc.day_05
 
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("day_05/input_2.txt");
+            var lines = FileUtils.ReadAllLines("2022/day_05/input_2.txt");
 
             // Part 1
             foreach(var line in lines)

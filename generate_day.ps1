@@ -1,9 +1,11 @@
 param(
+    [Parameter(Mandatory=$true)]
+	[string]$year,
 	[Parameter(Mandatory=$true)]
 	[string]$day
 )
 
-Write-Output "Generating files for day $day...`n"
+Write-Output "Generating files for problem $year-$day...`n"
 
 $projectPath = "C:\git\aoc"
 $folderName = "day_$day"
@@ -12,6 +14,12 @@ $inputName = "input.txt"
 $input2Name = "input2.txt"
 
 Push-Location $projectPath
+
+if (!($Test-Path $year)){
+    New-Item -Path $year -ItemType Directory | Out-Null
+}
+
+Push-Location $year
 
 if (Test-Path $folderName){
     Write-Output "Directory for $day already exists, exiting..."
@@ -30,14 +38,14 @@ New-Item -Name $className -Value `
 "using aoc.common;
 using aoc.utils;
 
-namespace aoc.day_$day
+namespace aoc.y$year.day_$day
 {
-    // https://adventofcode.com/2022/day/$day
+    // https://adventofcode.com/$year/day/$day
     public class Day_$day : ISolver
     {
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines(`"day_$day/input.txt`");
+            var lines = FileUtils.ReadAllLines(`"$year/day_$day/input.txt`");
 
             Console.WriteLine(`"Hello World`");
         }
@@ -49,5 +57,6 @@ Write-Output "Generated files:"
 
 Get-ChildItem
 
+Pop-Location
 Pop-Location
 Pop-Location

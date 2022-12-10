@@ -1,11 +1,13 @@
-﻿# Advent Of Code 2022
+﻿# Advent Of Code
 
-Solutions for AoC 2022.
+Solutions for Advent of Code problems.
 
 Details: [Advent of Code](https://adventofcode.com/2022/about)
 
 A daily coding challenge for each day in December leading up to Christmas. Each day & challenge consists of two related problems.
 This is my first year doing this.
+
+## 2022
 
 | Day | Story | Q1 | Q2 | Command to run | Challenge level | What I learnt/used
 | --- | --- | --- | --- | --- | --- | --- |
@@ -22,4 +24,4 @@ This is my first year doing this.
 
 To generate the files for a new day's problem, run:
 
-`.\generate_day.ps1 <day_number>`
+`.\generate_day.ps1 <year_number> <day_number>`

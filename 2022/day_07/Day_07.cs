@@ -1,7 +1,7 @@
 ﻿using aoc.common;
 using aoc.utils;
 
-namespace aoc.day_07
+namespace aoc.y2022.day_07
 {
     // https://adventofcode.com/2022/day/7
     public class Day_07 : ISolver
@@ -50,7 +50,7 @@ namespace aoc.day_07
 
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("day_07/input.txt");
+            var lines = FileUtils.ReadAllLines("2022/day_07/input.txt");
 
             var fileSystem = BuildFileSystem(lines);
 
