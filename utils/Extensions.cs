@@ -26,5 +26,17 @@
         {
             return v.X == other.X;
         }
+
+        public static Vector2D Sum(this IEnumerable<Vector2D> source)
+        {
+            var sum = Vector2D.Zero;
+
+            foreach (var v in source)
+            {
+                sum += v;
+            }
+
+            return sum;
+        }
     }
 }
