@@ -15,7 +15,8 @@ $input2Name = "input2.txt"
 
 Push-Location $projectPath
 
-if (!($Test-Path $year)){
+$yearExists = Test-Path $year
+if (!$yearExists){
     New-Item -Path $year -ItemType Directory | Out-Null
 }
 
