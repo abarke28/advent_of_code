@@ -41,7 +41,7 @@ namespace aoc.day_10
 
             var result = ComputeCyclesScoreSum(regValues, cycles);
 
-            Console.WriteLine($"\n\nCycle score sum one is equal to: '{result}'");
+            Console.WriteLine($"\n\nCycle score sum is equal to: '{result}'");
         }
 
         private static List<int> GetCycleRegisterValues(IEnumerable<Instruction> instructions)
