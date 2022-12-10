@@ -30,7 +30,7 @@ namespace aoc.y2021.day_03
             {
                 var column = input.GetColumn(i);
 
-                mcbs[i] = column.Sum() > input.Height / 2 ? true : false;
+                mcbs[i] = column.Sum() > input.Height / 2;
             }
 
             return mcbs;
