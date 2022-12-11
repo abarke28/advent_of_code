@@ -1,6 +1,6 @@
 ﻿namespace aoc.utils
 {
-    public readonly struct Vector2D : IEquatable<Vector2D>
+    public readonly struct Vector2D : IEquatable<Vector2D>, IComparable<Vector2D>
     {
         public static readonly Vector2D Zero = new(0, 0);
         public static readonly Vector2D Up = new(0, 1);
@@ -44,6 +44,13 @@
             return $"[{X},{Y}]";
         }
 
+        public int CompareTo(Vector2D other)
+        {
+            return X.CompareTo(other.X) == 0
+                ? Y.CompareTo(other.Y)
+                : X.CompareTo(other.X);
+        }
+
         public static Vector2D operator +(Vector2D v1, Vector2D v2)
         {
             return new Vector2D(v1.X + v2.X, v1.Y + v2.Y);
@@ -72,6 +79,11 @@
         public static Vector2D operator *(Vector2D v, int k)
         {
             return k * v;
+        }
+
+        public static Vector2D Normalize(Vector2D v)
+        {
+            return new Vector2D(Math.Sign(v.X), Math.Sign(v.Y));
         }
     }
 }

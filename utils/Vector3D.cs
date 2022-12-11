@@ -84,5 +84,10 @@
         {
             return k * v;
         }
+
+        public static Vector3D Normalize(Vector3D v)
+        {
+            return new Vector3D(Math.Sign(v.X), Math.Sign(v.Y), Math.Sign(v.Z));
+        }
     }
 }

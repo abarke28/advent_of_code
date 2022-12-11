@@ -11,7 +11,12 @@ namespace aoc.utils
 
         public static bool IsCardinal(this Vector2D v, Vector2D other)
         {
-            return IsOnSameRow(v, other) ^ IsOnSameColumn(v, other);
+            return IsOnSameRow(v, other) != IsOnSameColumn(v, other);
+        }
+
+        public static bool IsDiagonal(this Vector2D v, Vector2D other)
+        {
+            return !v.IsCardinal(other);
         }
 
         public static bool IsCoincident(this Vector2D v, Vector2D other)
