@@ -68,7 +68,19 @@
                 }
             }
         }
-        
+
+        public T? this[int x, int y]
+        {
+            get { return GetValue(x, y); }
+            set { SetValue(x, y, value); }
+        }
+
+        public T? this[Vector2D v]
+        {
+            get { return GetValue(v); }
+            set { SetValue(v, value); }
+        }
+
         public T? GetValue(int x, int y)
         {
             if (x >= Width) throw new ArgumentOutOfRangeException(nameof(x));
@@ -77,11 +89,25 @@
             return _grid[x, y];
         }
 
+        public T? GetValue(Vector2D v)
+        {
+            ValidateCoords(v);
+
+            return _grid[v.X, v.Y];
+        }
+
         public void SetValue(int x, int y, T? item)
         {
             ValidateCoords(x, y);
 
             _grid[x, y] = item;
+        }
+
+        public void SetValue(Vector2D v, T? item)
+        {
+            ValidateCoords(v);
+
+            _grid[v.X, v.Y] = item;
         }
 
         public List<T?> Get4Neighbours(int x, int y)
@@ -141,6 +167,18 @@
             return column;
         }
 
+        public List<List<T?>> GetColumns()
+        {
+            var cols = new List<List<T?>>();
+
+            for (var x = 0; x < Width; x++)
+            {
+                cols.Add(GetColumn(x));
+            }
+
+            return cols;
+        }
+
         public List<T?> GetRow(int rowIndex)
         {
             if (!IsInBounds(0, rowIndex))
@@ -170,9 +208,25 @@
             return rows;
         }
 
+        public IEnumerable<Vector2D> GetAllPoints()
+        {
+            for (var y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    yield return new Vector2D(x, y);
+                }
+            }
+        }
+
         public bool IsInBounds(int x, int y)
         {
             return ((x >= 0 && x < Width) && (y >= 0 && y < Height));
+        }
+
+        public bool IsInBounds(Vector2D v)
+        {
+            return ((v.X >= 0 && v.X < Width) && (v.Y >= 0 && v.Y < Height));
         }
 
         public void PrintGrid(Func<T?, string>? printer = null)
@@ -220,7 +274,6 @@
             return itemsCount;
         }
 
-
         /// <summary>
         /// Generate a grid from an array of strings. Each string must have the same length.
         /// </summary>
@@ -261,7 +314,7 @@
         {
             for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x <= Width; x++)
+                for (int x = 0; x < Width; x++)
                 {
                     SetValue(x, y, value);
                 }
@@ -319,6 +372,22 @@
                 for (int x = 0; x <= Width; x++)
                 {
                     SetValue(x, y, generator(x, y));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Transforms all spaces in the grid by way of a generator function.
+        /// </summary>
+        /// <param name="generator">Function to compute grid values from current values.</param>
+        public void Transform(Func<T?, T?> generator)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x <= Width; x++)
+                {
+                    var value = GetValue(x, y);
+                    SetValue(x, y, generator(value));
                 }
             }
         }
@@ -411,6 +480,14 @@
         private void ValidateCoords(int x, int y)
         {
             if (!IsInBounds(x, y))
+            {
+                throw new Exception("Invalid coordinates");
+            }
+        }
+
+        private void ValidateCoords(Vector2D v)
+        {
+            if (!IsInBounds(v))
             {
                 throw new Exception("Invalid coordinates");
             }

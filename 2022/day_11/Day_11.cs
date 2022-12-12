@@ -12,10 +12,10 @@ namespace aoc.y2022.day_11
             public long ItemsHandled { get; set; } = 0;
 
             public Queue<long> Items { get; set; } = new Queue<long>();
-            
-            public Func<long, long> MonkeyAction { get; set; }
 
-            public Func<long, int> PassTo { get; set; }
+            public Func<long, long> MonkeyAction { get; set; } = l => l;
+
+            public Func<long, int> PassTo { get; set; } = l => (int)l;
         }
 
         private static readonly long Modulo = 5 * 7 * 13 * 11 * 3 * 2 * 17 * 19;

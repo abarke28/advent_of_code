@@ -22,6 +22,7 @@ This is my first year doing this.
 | 9 | [Rope Bridge](https://adventofcode.com/2022/day/9) | ⭐ | ⭐ | `dotnet run 2022 9` | ⭐⭐⭐ | Vector logic and complex pattern matching use cases.
 | 10 | [Cathode-Ray Tube](https://adventofcode.com/2022/day/10) | ⭐ | ⭐ | `dotnet run 2022 10` | ⭐ | Modulo arithmetic.
 | 11 | [Monkey In The Middle](https://adventofcode.com/2022/day/11) | ⭐ | ⭐ | `dotnet run 2022 11` | ⭐⭐ | Modulo arithmetic & int overflows.
+| 12 | [Hill Climbing Algorithm](https://adventofcode.com/2022/day/12) | ⭐ | ⭐ | `dotnet run 2022 11` | ⭐⭐⭐⭐ | Graphs & Dijkastra's Algorithm.
 
 To generate the files for a new day's problem, run:
 
