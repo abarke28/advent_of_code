@@ -94,7 +94,9 @@
             return distances;
         }
 
-        public static Graph FromGrid<T>(Grid<T> grid,Func<Vector2D, IEnumerable<Vector2D>> adjacentNodeSelctor, Func<T, T, int> edgeWeightSelector)
+        public static Graph FromGrid<T>(Grid<T> grid,
+                                        Func<Vector2D,IEnumerable<Vector2D>> adjacentNodeSelctor,
+                                        Func<T, T, int> edgeWeightSelector)
         {
             var graph = new Graph(grid.Width * grid.Height);
 

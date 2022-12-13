@@ -289,7 +289,7 @@
             }
 
             var width = input.First().Length;
-            var height = input.Count();
+            var height = input.Count;
 
             var grid = new Grid<T>(width, height);
 

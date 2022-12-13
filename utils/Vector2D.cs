@@ -24,6 +24,11 @@
             Y = other.Y;
         }
 
+        public Vector2D Transpose()
+        {
+            return new Vector2D(Y, X);
+        }
+
         public bool Equals(Vector2D other)
         {
             return X == other.X && Y == other.Y;
