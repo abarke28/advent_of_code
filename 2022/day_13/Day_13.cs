@@ -7,7 +7,7 @@ namespace aoc.y2022.day_13
     // https://adventofcode.com/2022/day/13
     public class Day_13 : ISolver
     {
-        private class Packet { }
+        private abstract class Packet { }
 
         private class NumPacket : Packet
         {
@@ -16,6 +16,11 @@ namespace aoc.y2022.day_13
             public NumPacket(int num)
             {
                 Num = num;
+            }
+
+            public ListPacket ToListPacket()
+            {
+                return new ListPacket(new List<Packet> { new NumPacket(Num) });
             }
         }
 
@@ -68,7 +73,7 @@ namespace aoc.y2022.day_13
         {
             var count = 0;
 
-            for (var i = 0; i < packetPairs.Count(); i++)
+            for (var i = 0; i < packetPairs.Count; i++)
             {
                 if (Compare(packetPairs[i].Left, packetPairs[i].Right) == -1)
                 {
@@ -79,7 +84,7 @@ namespace aoc.y2022.day_13
             return count;
         }
 
-        // Need to use this singature that implements IComparator<Packet> for ordering.
+        // Need to use this singature that implements IComparator<Packet> for sorting.
         private static int Compare(Packet left, Packet right)
         {
             return (left, right) switch
@@ -87,8 +92,8 @@ namespace aoc.y2022.day_13
                 (Packet _, null) => 1,
                 (null, Packet _) => -1,
                 (NumPacket l, NumPacket r) => l.Num.CompareTo(r.Num),
-                (ListPacket l, NumPacket r) => Compare(l, new ListPacket(new List<Packet> { r })),
-                (NumPacket l, ListPacket r) => Compare(new ListPacket(new List<Packet> { l }), r),
+                (ListPacket l, NumPacket r) => Compare(l, r.ToListPacket()),
+                (NumPacket l, ListPacket r) => Compare(l.ToListPacket(), r),
                 (ListPacket l, ListPacket r) => CompareArrays(l, r),
                 _ => throw new Exception("Unexpected comparison case")
             };
@@ -131,9 +136,14 @@ namespace aoc.y2022.day_13
 
         private static Packet ParseJsonToPacket(JsonElement json)
         {
-            return json.ValueKind == JsonValueKind.Number
-                ? new NumPacket(json.GetInt32())
-                : new ListPacket(json.EnumerateArray().Select(j => ParseJsonToPacket(j)).ToList());
+            return (json.ValueKind) switch
+            {
+                JsonValueKind.Number => new NumPacket(json.GetInt32()),
+                JsonValueKind.Array => new ListPacket(json.EnumerateArray()
+                                                          .Select(ja => ParseJsonToPacket(ja))
+                                                          .ToList()),
+                _ => throw new Exception("Unexpected json token type"),
+            };
         }
 
         private static IEnumerable<Packet> GetPackets(IEnumerable<string> lines)
