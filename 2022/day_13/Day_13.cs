@@ -7,7 +7,52 @@ namespace aoc.y2022.day_13
     // https://adventofcode.com/2022/day/13
     public class Day_13 : ISolver
     {
-        private abstract class Packet { }
+        private abstract class Packet : IComparable<Packet>
+        {
+            public int CompareTo(Packet? other)
+            {
+                return (this, other) switch
+                {
+                    (Packet _, null) => 1,
+                    (null, Packet _) => -1,
+                    (NumPacket l, NumPacket r) => l.Num.CompareTo(r.Num),
+                    (ListPacket l, NumPacket r) => l.CompareTo(r.ToListPacket()),
+                    (NumPacket l, ListPacket r) => l.ToListPacket().CompareTo(r),
+                    (ListPacket l, ListPacket r) => CompareArrays(l, r),
+                    _ => throw new Exception("Unexpected comparison case")
+                };
+            }
+
+            private static int CompareArrays(ListPacket left, ListPacket right)
+            {
+                var leftCount = left.Packets.Count;
+                var rightCount = right.Packets.Count;
+                var deltaExists = leftCount != rightCount;
+
+                for (var i = 0; i < Math.Max(left.Packets.Count, right.Packets.Count); i++)
+                {
+                    if (deltaExists && i == leftCount)
+                    {
+                        return -1;
+                    }
+                    else if (deltaExists && i == rightCount)
+                    {
+                        return 1;
+                    }
+
+                    var compareResult = left.Packets[i].CompareTo(right.Packets[i]);
+
+                    if (compareResult == 0)
+                    {
+                        continue;
+                    }
+
+                    return compareResult;
+                }
+
+                return 0;
+            }
+        }
 
         private class NumPacket : Packet
         {
@@ -60,12 +105,12 @@ namespace aoc.y2022.day_13
             var newPacket1 = new ListPacket(new List<Packet> { new NumPacket(2) });
             var newPacket2 = new ListPacket(new List<Packet> { new NumPacket(6) });
 
-            var newPacketList = packets.Append(newPacket1).Append(newPacket2);
+            var newPacketList = packets.Append(newPacket1).Append(newPacket2).ToList();
 
-            var orderedPackets = newPacketList.Order(Comparer<Packet>.Create(Compare)).ToList();
+            newPacketList.Sort();
 
-            var newPacket1Index = orderedPackets.IndexOf(newPacket1) + 1;
-            var newPacket2Index = orderedPackets.IndexOf(newPacket2) + 1;
+            var newPacket1Index = newPacketList.IndexOf(newPacket1) + 1;
+            var newPacket2Index = newPacketList.IndexOf(newPacket2) + 1;
             Console.WriteLine(newPacket1Index * newPacket2Index);
         }
 
@@ -75,58 +120,13 @@ namespace aoc.y2022.day_13
 
             for (var i = 0; i < packetPairs.Count; i++)
             {
-                if (Compare(packetPairs[i].Left, packetPairs[i].Right) == -1)
+                if (packetPairs[i].Left.CompareTo(packetPairs[i].Right) == -1)
                 {
                     count += (i + 1);
                 }
             }
 
             return count;
-        }
-
-        // Need to use this singature that implements IComparator<Packet> for sorting.
-        private static int Compare(Packet left, Packet right)
-        {
-            return (left, right) switch
-            {
-                (Packet _, null) => 1,
-                (null, Packet _) => -1,
-                (NumPacket l, NumPacket r) => l.Num.CompareTo(r.Num),
-                (ListPacket l, NumPacket r) => Compare(l, r.ToListPacket()),
-                (NumPacket l, ListPacket r) => Compare(l.ToListPacket(), r),
-                (ListPacket l, ListPacket r) => CompareArrays(l, r),
-                _ => throw new Exception("Unexpected comparison case")
-            };
-        }
-
-        private static int CompareArrays(ListPacket left, ListPacket right)
-        {
-            var leftCount = left.Packets.Count;
-            var rightCount = right.Packets.Count;
-            var deltaExists = leftCount != rightCount;
-
-            for (var i = 0; i < Math.Max(left.Packets.Count, right.Packets.Count); i++)
-            {
-                if (deltaExists && i == leftCount)
-                {
-                    return -1;
-                }
-                else if (deltaExists && i == rightCount)
-                {
-                    return 1;
-                }
-
-                var compareResult = Compare(left.Packets[i], right.Packets[i]);
-
-                if (compareResult == 0)
-                {
-                    continue;
-                }
-
-                return compareResult;
-            }
-
-            return 0;
         }
 
         private static JsonElement ParseStringToJson(string value)
