@@ -1,5 +1,6 @@
 using aoc.common;
 using aoc.utils;
+using aoc.utils.extensions;
 
 namespace aoc.y2021.day_06
 {

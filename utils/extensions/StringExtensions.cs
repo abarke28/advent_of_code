@@ -1,4 +1,4 @@
-﻿namespace aoc.utils
+﻿namespace aoc.utils.extensions
 {
     public static class StringUtils
     {
