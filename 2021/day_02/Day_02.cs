@@ -1,5 +1,6 @@
 using aoc.common;
 using aoc.utils;
+using aoc.utils.extensions;
 
 namespace aoc.y2021.day_02
 {
@@ -46,17 +47,13 @@ namespace aoc.y2021.day_02
             var direction = s.GetWords().First();
             var distance = s.ReadAllNumbers().Single();
 
-            switch (direction)
+            return direction switch
             {
-                case "up":
-                    return currentPosition - (distance * Vector3D.ZHat);
-                case "down":
-                    return currentPosition + (distance * Vector3D.ZHat);
-                case "forward":
-                    return currentPosition + (distance * Vector3D.XHat) + (distance * currentPosition.Z * Vector3D.YHat);
-                default:
-                    throw new Exception("Unknown direction");
-            }
+                "up" => currentPosition - (distance * Vector3D.ZHat),
+                "down" => currentPosition + (distance * Vector3D.ZHat),
+                "forward" => currentPosition + (distance * Vector3D.XHat) + (distance * currentPosition.Z * Vector3D.YHat),
+                _ => throw new Exception("Unknown direction"),
+            };
         }
     }
 }
