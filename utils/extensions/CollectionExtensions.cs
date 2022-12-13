@@ -11,11 +11,14 @@ namespace aoc.utils.extensions
             return bitArray.ConvertToInt();
         }
 
+        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> source, int indexOffset = 0)
+        {
+            return source.Select<T, (T item, int index)>((item, index) => new(item, index + indexOffset));
+        }
+
         public static IDictionary<int, T> ToIndexedDictionary<T>(this IEnumerable<T> source, int indexOffset = 0)
         {
-            var tupleList = source.Select<T, (T Item, int Index)>((x, n) => new (x, n + indexOffset));
-
-            var dict = tupleList.ToDictionary(i => i.Index, i => i.Item);
+            var dict = source.WithIndex(indexOffset).ToDictionary(i => i.index, i => i.item);
 
             return dict;
         }
