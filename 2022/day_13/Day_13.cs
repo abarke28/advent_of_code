@@ -96,7 +96,6 @@ namespace aoc.y2022.day_13
             var lines = FileUtils.ReadAllLines("2022/day_13/input.txt");
 
             var packets = GetPackets(lines);
-
             var packetPairs = packets.Chunk(2).Select(pp => new PacketPair(pp[0], pp[1]));
 
             var count = ComputeSumOfOrderedPacketPairIndices(packetPairs.ToList());
@@ -106,7 +105,6 @@ namespace aoc.y2022.day_13
             var newPacket2 = new ListPacket(new List<Packet> { new NumPacket(6) });
 
             var newPacketList = packets.Append(newPacket1).Append(newPacket2).ToList();
-
             newPacketList.Sort();
 
             var newPacket1Index = newPacketList.IndexOf(newPacket1) + 1;
