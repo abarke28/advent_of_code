@@ -79,6 +79,7 @@ namespace aoc.y2022.day_13
             return count;
         }
 
+        // Need to use this singature that implements IComparator<Packet> for ordering.
         private static int Compare(Packet left, Packet right)
         {
             return (left, right) switch
