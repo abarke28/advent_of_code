@@ -24,6 +24,7 @@ This is my first year doing this.
 | 11 | [Monkey In The Middle](https://adventofcode.com/2022/day/11) | ⭐ | ⭐ | `dotnet run 2022 11` | ⭐⭐ | Modulo arithmetic & int overflows.
 | 12 | [Hill Climbing Algorithm](https://adventofcode.com/2022/day/12) | ⭐ | ⭐ | `dotnet run 2022 12` | ⭐⭐⭐⭐ | Graphs & Dijkstra's Algorithm.
 | 13 | [Distress Signal](https://adventofcode.com/2022/day/13) | ⭐ | ⭐ | `dotnet run 2022 13` | ⭐⭐⭐⭐ | Polymorphism, pattern matching, JSON parsing, Comparators.
+| 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | ⭐ | ⭐ | `dotnet run 2022 14` | ⭐⭐ | Vector math (fun!).
 
 To generate the files for a new day's problem, run:
 
