@@ -19,9 +19,14 @@
             _vertexMatrix = new Grid<int>(numOfVertices, numOfVertices, 0);
         }
 
-        public void AddEdge(int v1, int v2, int weight)
+        public void AddEdge(int v1, int v2, int weight = 1, bool directed = true)
         {
             _vertexMatrix.SetValue(v1, v2, weight);
+
+            if (!directed)
+            {
+                _vertexMatrix.SetValue(v2, v1, weight);
+            }
         }
 
         public IEnumerable<int> GetAdjacentVertices(int v)
@@ -55,6 +60,11 @@
 
         public int GetEdgeWeight(int v1, int v2)
         {
+            if (!_vertexMatrix.IsInBounds(v1, v2))
+            {
+                throw new ArgumentOutOfRangeException("Vertices out of range.");
+            }
+
             var edgeValue = _vertexMatrix.GetValue(v1, v2);
 
             return edgeValue;
@@ -92,6 +102,72 @@
             }
 
             return distances;
+        }
+
+        /// <summary>
+        /// Returns a path from start to end via DFS
+        /// </summary>
+        public IEnumerable<int> GetPath(int start, int end)
+        {
+            var path = new Stack<int>();
+            var visited = new HashSet<int>();
+
+            var currentVertex = start;
+            path.Push(currentVertex);
+            visited.Add(currentVertex);
+
+            while (currentVertex != end)
+            {
+                var adjacentVertices = GetAdjacentVertices(currentVertex).Where(v => !visited.Contains(v));
+
+                if (!adjacentVertices.Any())
+                {
+                    path.Pop();
+
+                    if (path.Count == 0)
+                    {
+                        break;
+                    }
+
+                    currentVertex = path.Peek();
+                }
+                else
+                {
+                    var nextVertex = adjacentVertices.First();
+                    path.Push(nextVertex);
+                    visited.Add(nextVertex);
+                    currentVertex = nextVertex;
+
+                    if (currentVertex == end)
+                    {
+                        var resultPath = path.ToList();
+                        resultPath.Reverse();
+
+                        return resultPath;
+                    }
+                }
+            }
+
+            throw new Exception("No path exists");
+        }
+
+        public int CalculatePathCost(IList<int> path)
+        {
+            var cost = 0;
+
+            for (var i = 0; i < path.Count - 1; i++)
+            {
+                var edge = GetEdgeWeight(path[i], path[i + 1]);
+
+                if (edge == 0)
+                {
+                    throw new Exception($"Path contains invalid traversal from node {i} to node {i + 1}.");
+                }
+
+                cost += edge;
+            }
+
+            return cost;
         }
 
         public static Graph FromGrid<T>(Grid<T> grid,

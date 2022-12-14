@@ -35,7 +35,8 @@ namespace aoc.y2022.day_14
             var sandPoints2 = sandPaths.SelectMany(sp => GenerateSandPoints(sp)).ToHashSet();
             var numSand2 = CountAmountOfSandBeforeOverflow(SandOrigin,
                                                            sandPoints2,
-                                                           v => v == SandOrigin, lowestPoint + 2);
+                                                           v => v == SandOrigin,
+                                                           lowestPoint + 2);
             Console.WriteLine(numSand2 );
         }
 
