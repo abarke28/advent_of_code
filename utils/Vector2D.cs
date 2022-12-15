@@ -90,5 +90,10 @@
         {
             return new Vector2D(Math.Sign(v.X), Math.Sign(v.Y));
         }
+
+        public static int ManhattanDistance(Vector2D v1, Vector2D v2)
+        {
+            return Math.Abs(v1.X - v2.X) + Math.Abs(v1.Y - v2.Y);
+        }
     }
 }

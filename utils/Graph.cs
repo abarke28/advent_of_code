@@ -110,7 +110,7 @@
         public IEnumerable<int> GetPath(int start, int end)
         {
             var path = new Stack<int>();
-            var visited = new HashSet<int>();
+            var visited = new HashSet<int>(VerticesCount);
 
             var currentVertex = start;
             path.Push(currentVertex);
@@ -149,6 +149,51 @@
             }
 
             throw new Exception("No path exists");
+        }
+
+        /// <summary>
+        /// Executes a BFS to produce an ordered sequence of vertices.
+        /// </summary>
+        /// <param name="start">Starting vertex.</param>
+        /// <param name="vertexComparer">Optional delegate to compute the sorting of same-level vertices. Default is int comparison of the vertex number.</param>
+        /// <returns></returns>
+        public IEnumerable<int> GetGraphTraversal(int start, Func<int, int, int>? vertexComparer = null)
+        {
+            var comparer = vertexComparer == null 
+                ? Comparer<int>.Default
+                : new VertexComparer(vertexComparer) as IComparer<int>;
+
+            var path = new Queue<int>();
+            var traversalOrder = new Queue<int>();
+            var visited = new HashSet<int>(VerticesCount);
+
+            int currentVertex;
+
+            path.Enqueue(start);
+            traversalOrder.Enqueue(start);
+
+            visited.Add(start);
+
+            while (path.Count > 0)
+            {
+                currentVertex = path.Dequeue();
+
+                var adjacentVertices = GetAdjacentVertices(currentVertex).Where(v => !visited.Contains(v))
+                                                                         .ToList();
+                if (adjacentVertices.Any())
+                {
+                    adjacentVertices.Sort(comparer);
+
+                    foreach(var vertex in adjacentVertices)
+                    {
+                        path.Enqueue(vertex);
+                        traversalOrder.Enqueue(vertex);
+                        visited.Add(currentVertex);
+                    }
+                }
+            }
+
+            return traversalOrder.ToList();
         }
 
         public int CalculatePathCost(IList<int> path)
