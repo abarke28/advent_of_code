@@ -32,21 +32,20 @@ namespace aoc.y2022.day_15
 
             var sensorBeacons = ParseSensorBeaconPairs(lines);
 
-            var row = 10;
-            //var row = 2000000;
-            var points = ComputePointsThatCannotHaveBeaconForRow2(row, sensorBeacons);
+            var row = 2_000_000;
+            var points = ComputePointsThatCannotHaveBeaconForRow(row, sensorBeacons);
 
             Console.WriteLine(points.Count);
 
             //var minCoordinate = 0;
             //var maxCoordinate = 20;
-            var minCoordinate = 0;
-            var maxCoordinate = 4_000_000;
+            //var minCoordinate = 0;
+            //var maxCoordinate = 4_000_000;
 
-            var point = FindBeaconLocation3(minCoordinate, maxCoordinate, sensorBeacons);
+            //var point = FindBeaconLocation3(minCoordinate, maxCoordinate, sensorBeacons);
 
-            Console.WriteLine(point.ToString());
-            Console.WriteLine((point.X * maxCoordinate) + point.Y);
+            //Console.WriteLine(point.ToString());
+            //Console.WriteLine((point.X * maxCoordinate) + point.Y);
 
         }
 
@@ -196,32 +195,6 @@ namespace aoc.y2022.day_15
         }
 
         private static HashSet<Vector2D> ComputePointsThatCannotHaveBeaconForRow(int rowIndex, IEnumerable<SensorBeaconPair> sensorBeacons)
-        {
-            var points = new HashSet<Vector2D>();
-
-            var minX = sensorBeacons.Select(sb => sb.Sensor.X - sb.ManhattanDistance).Min() - 1;
-            var maxX = sensorBeacons.Select(sb => sb.Sensor.X + sb.ManhattanDistance).Max() + 1;
-
-            Console.WriteLine($"Computing for min x {minX} & max x {maxX}:");
-
-            for (int i = minX; i <= maxX; i++)
-            {
-                var candidatePoint = new Vector2D(i, rowIndex);
-
-                foreach (var sb in sensorBeacons)
-                {
-                    if (sb.PointIsCoveredBySensor(candidatePoint) && sb.ClosestBeacon != candidatePoint)
-                    {
-                        points.Add(candidatePoint);
-                        break;
-                    }
-                }
-            }
-
-            return points;
-        }
-
-        private static HashSet<Vector2D> ComputePointsThatCannotHaveBeaconForRow2(int rowIndex, IEnumerable<SensorBeaconPair> sensorBeacons)
         {
             var minX = sensorBeacons.Select(sb => sb.Sensor.X - sb.ManhattanDistance).Min() - 1;
             var maxX = sensorBeacons.Select(sb => sb.Sensor.X + sb.ManhattanDistance).Max() + 1;
