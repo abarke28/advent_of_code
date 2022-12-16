@@ -7,10 +7,32 @@ namespace aoc.y2021.day_08
     // https://adventofcode.com/2021/day/08
     public class Day_08 : ISolver
     {
+        private const int SegmentCount069 = 6;
+        private const int SegmentCount235 = 5;
+
+        private const int OutputCount = 4;
+
+        [Flags]
+        private enum Segment
+        {
+            None = 0,
+            Top = 1,
+            TopLeft = 2,
+            TopRight = 4,
+            Center = 8,
+            BottomLeft = 16,
+            BottomRight = 32,
+            Bottom = 64
+        }
+
         private class InputOutput
         {
             public List<string> Inputs { get; set; } = new List<string>();
             public List<string> Outputs { get; set; } = new List<string>();
+
+            public IEnumerable<string> Set069 => Inputs.Where(l => l.Length == SegmentCount069);
+            public IEnumerable<string> Set235 => Inputs.Where(l => l.Length == SegmentCount235);
+            public IEnumerable<string> Set1478 => Inputs.Where(l => l.Length != SegmentCount235 && l.Length != SegmentCount069);
 
             public static InputOutput FromString(string s)
             {
@@ -26,110 +48,120 @@ namespace aoc.y2021.day_08
             }
         }
 
-        [Flags]
-        private enum Segments
+        private static readonly List<char> Signals = new()
         {
-            Top,
-            TopLeft,
-            TopRight,
-            Center,
-            BottomLeft,
-            BottomRight,
-            Bottom
-        }
-
-        private static readonly Dictionary<int, int> DigitSegmentCounts = new()
-        {
-            { 0, 6 },
-            { 1, 2 }, // Unique
-            { 2, 5 },
-            { 3, 5 },
-            { 4, 4 }, // Unique
-            { 5, 5 },
-            { 6, 6 },
-            { 7, 3 }, // Unique
-            { 8, 7 }, // Unique
-            { 9, 5 }
+            'a',
+            'b',
+            'c',
+            'd',
+            'e',
+            'f',
+            'g'
         };
 
-        private static readonly Dictionary<int, Segments> DigitSegments = new()
+        private static readonly Dictionary<Segment, int> SegmentsDigitMap = new()
         {
-            { 0, Segments.Top & Segments.TopLeft & Segments.TopRight & Segments.BottomLeft & Segments.BottomRight & Segments.Bottom },
-            { 1, Segments.TopRight & Segments.BottomRight },
-            { 2, Segments.Top & Segments.TopRight & Segments.Center & Segments.BottomLeft & Segments.Bottom },
-            { 3, Segments.Top & Segments.TopRight & Segments.Center & Segments.BottomRight & Segments.Bottom },
-            { 4, Segments.TopLeft & Segments.TopRight & Segments.Center & Segments.BottomRight },
-            { 5, Segments.Top & Segments.TopLeft & Segments.Center & Segments.BottomRight & Segments.Bottom },
-            { 6, Segments.Top & Segments.TopLeft & Segments.Center & Segments.BottomRight & Segments.Bottom & Segments.BottomLeft },
-            { 7, Segments.Top & Segments.TopRight & Segments.BottomRight },
-            { 8, Segments.Top & Segments.TopLeft & Segments.TopRight & Segments.Center & Segments.BottomLeft & Segments.BottomRight & Segments.Bottom },
-            { 9, Segments.Top & Segments.TopLeft & Segments.TopRight & Segments.Center & Segments.BottomRight & Segments.Bottom }
+            { Segment.Top | Segment.TopLeft | Segment.TopRight | Segment.BottomLeft | Segment.BottomRight | Segment.Bottom, 0 },
+            { Segment.TopRight | Segment.BottomRight, 1 },
+            { Segment.Top | Segment.TopRight | Segment.Center | Segment.BottomLeft | Segment.Bottom, 2 },
+            { Segment.Top | Segment.TopRight | Segment.Center | Segment.BottomRight | Segment.Bottom , 3},
+            { Segment.TopLeft | Segment.TopRight | Segment.Center | Segment.BottomRight, 4 },
+            { Segment.Top | Segment.TopLeft | Segment.Center | Segment.BottomRight | Segment.Bottom, 5},
+            { Segment.Top | Segment.TopLeft | Segment.Center | Segment.BottomRight | Segment.Bottom | Segment.BottomLeft, 6 },
+            { Segment.Top | Segment.TopRight | Segment.BottomRight, 7 },
+            { Segment.Top | Segment.TopLeft | Segment.TopRight | Segment.Center | Segment.BottomLeft | Segment.BottomRight | Segment.Bottom, 8 },
+            { Segment.Top | Segment.TopLeft | Segment.TopRight | Segment.Center | Segment.BottomRight | Segment.Bottom, 9}
         };
 
-        private static readonly Dictionary<Segments, int> Digit = new()
+        private static readonly Dictionary<Segment, List<int>> SegmentDigits = new()
         {
-            { Segments.Top & Segments.TopLeft & Segments.TopRight & Segments.BottomLeft & Segments.BottomRight & Segments.Bottom, 0 },
-            { Segments.TopRight & Segments.BottomRight, 1 },
-            { Segments.Top & Segments.TopRight & Segments.Center & Segments.BottomLeft & Segments.Bottom, 2 },
-            { Segments.Top & Segments.TopRight & Segments.Center & Segments.BottomRight & Segments.Bottom , 3},
-            { Segments.TopLeft & Segments.TopRight & Segments.Center & Segments.BottomRight, 4 },
-            { Segments.Top & Segments.TopLeft & Segments.Center & Segments.BottomRight & Segments.Bottom, 5},
-            { Segments.Top & Segments.TopLeft & Segments.Center & Segments.BottomRight & Segments.Bottom & Segments.BottomLeft, 6 },
-            { Segments.Top & Segments.TopRight & Segments.BottomRight, 7 },
-            { Segments.Top & Segments.TopLeft & Segments.TopRight & Segments.Center & Segments.BottomLeft & Segments.BottomRight & Segments.Bottom, 8 },
-            { Segments.Top & Segments.TopLeft & Segments.TopRight & Segments.Center & Segments.BottomRight & Segments.Bottom, 9}
-        };
-
-        private static readonly Dictionary<Segments, List<int>> SegmentDigits = new()
-        {
-            { Segments.Top, new List<int> { 0, 2, 3, 5, 6, 7, 8, 9 } },
-            { Segments.TopLeft, new List<int> { 0, 4, 5, 6, 8, 9 } },
-            { Segments.TopRight, new List<int> { 0, 1, 2, 3, 4, 7, 8, 9} },
-            { Segments.Center, new List<int> { 2, 3, 4, 5, 6, 8, 9 } },
-            { Segments.BottomLeft, new List<int> { 0, 2, 6, 8 } },
-            { Segments.BottomRight, new List<int> { 0, 1, 3, 4, 5, 6, 7, 8, 9 } },
-            { Segments.Bottom, new List<int> { 0, 2, 3, 5, 6, 8, 9 } }
+            { Segment.Top, new List<int> { 0, 2, 3, 5, 6, 7, 8, 9 } },
+            { Segment.TopLeft, new List<int> { 0, 4, 5, 6, 8, 9 } },
+            { Segment.TopRight, new List<int> { 0, 1, 2, 3, 4, 7, 8, 9} },
+            { Segment.Center, new List<int> { 2, 3, 4, 5, 6, 8, 9 } },
+            { Segment.BottomLeft, new List<int> { 0, 2, 6, 8 } },
+            { Segment.BottomRight, new List<int> { 0, 1, 3, 4, 5, 6, 7, 8, 9 } },
+            { Segment.Bottom, new List<int> { 0, 2, 3, 5, 6, 8, 9 } }
         };
 
         public void Solve()
         {
             var lines = FileUtils.ReadAllLines("2021/day_08/input.txt");
 
-            Console.WriteLine(CalculateUniqueCharsInAllOutputs(lines));
-
             var inputOutputs = lines.Select(l => InputOutput.FromString(l)).ToList();
 
+            var decodedOutputs = inputOutputs.Select(io => GetOutputNums(io));
+            var outputNums = decodedOutputs.Select(dos => GetOutputNum(dos.ToList()));
+
+            Console.WriteLine(outputNums.Sum());
         }
 
-        private static int DecodeOutput(InputOutput entry)
+        private static int GetOutputNum(IList<int> digits)
         {
-            var inputs = entry.Inputs;
-            var outputs = entry.Outputs;
+            if (digits.Count != OutputCount)
+            {
+                throw new Exception("Invalid output");
+            }
 
-            var one = inputs.Single(i => i.Length == DigitSegmentCounts[1]);
-            var four = inputs.Single(i => i.Length == DigitSegmentCounts[4]);
-            var seven = inputs.Single(i => i.Length == DigitSegmentCounts[7]);
-            var eight = inputs.Single(i => i.Length == DigitSegmentCounts[8]);
-
-
-
-            return 0;
+            return int.Parse($"{digits[0]}{digits[1]}{digits[2]}{digits[3]}");
         }
 
-        private static int CalculateUniqueCharsInAllOutputs(IEnumerable<string> lines)
+        private static IEnumerable<int> GetOutputNums(InputOutput entry)
         {
-            var inputOutputs = lines.Select(l => l.GetWords('|'));
-            var inputs = inputOutputs.Select(io => io.ToArray()[0].Trim().GetWords());
-            var outputs = inputOutputs.Select(io => io.ToArray()[1].Trim().GetWords());
+            var segmentMap = DecodeSegments(entry);
+            var digits = DecodeOutput(entry, segmentMap);
 
-            var flatOutputs = outputs.SelectMany(o => o);
+            return digits;
+        }
 
-            var countOfUnique = flatOutputs.Count(o => o.Length == 2 ||
-                                                       o.Length == 3 ||
-                                                       o.Length == 4 ||
-                                                       o.Length == 7);
+        private static Dictionary<char, Segment> DecodeSegments(InputOutput segmentSignals)
+        {
+            var charSegmentMap = new Dictionary<char, Segment>();
 
-            return countOfUnique;
+            foreach (var signal in Signals)
+            {
+                var segment069Count = segmentSignals.Set069.Count(s => s.Contains(signal));
+                var segment235Count = segmentSignals.Set235.Count(s => s.Contains(signal));
+                var segment1478Count = segmentSignals.Set1478.Count(s => s.Contains(signal));
+
+                var segment = (segment069Count, segment235Count, segment1478Count) switch
+                {
+                    (3, 3, 2) => Segment.Top,
+                    (3, 1, 2) => Segment.TopLeft,
+                    (2, 2, 4) => Segment.TopRight,
+                    (2, 3, 2) => Segment.Center,
+                    (2, 1, 1) => Segment.BottomLeft,
+                    (3, 2, 4) => Segment.BottomRight,
+                    (3, 3, 1) => Segment.Bottom,
+                    _ => throw new Exception("Unexpected segment pattern.")
+                };
+
+                charSegmentMap.Add(signal, segment);
+            }
+
+            return charSegmentMap;
+        }
+
+        private static IEnumerable<int> DecodeOutput(InputOutput entry, Dictionary<char, Segment> segmentMap)
+        {
+            var nums = new List<int>(OutputCount);
+
+            foreach (var output in entry.Outputs)
+            {
+                var segments = Segment.None;
+
+                foreach (var c in output)
+                {
+                    var newSegment = segmentMap[c];
+
+                    segments = segments | newSegment;
+                }
+
+                var num = SegmentsDigitMap[segments];
+                nums.Add(num);
+            }
+
+            return nums;
         }
     }
 }
