@@ -73,17 +73,6 @@ namespace aoc.y2021.day_08
             { Segment.Top | Segment.TopLeft | Segment.TopRight | Segment.Center | Segment.BottomRight | Segment.Bottom, 9}
         };
 
-        private static readonly Dictionary<Segment, List<int>> SegmentDigits = new()
-        {
-            { Segment.Top, new List<int> { 0, 2, 3, 5, 6, 7, 8, 9 } },
-            { Segment.TopLeft, new List<int> { 0, 4, 5, 6, 8, 9 } },
-            { Segment.TopRight, new List<int> { 0, 1, 2, 3, 4, 7, 8, 9} },
-            { Segment.Center, new List<int> { 2, 3, 4, 5, 6, 8, 9 } },
-            { Segment.BottomLeft, new List<int> { 0, 2, 6, 8 } },
-            { Segment.BottomRight, new List<int> { 0, 1, 3, 4, 5, 6, 7, 8, 9 } },
-            { Segment.Bottom, new List<int> { 0, 2, 3, 5, 6, 8, 9 } }
-        };
-
         public void Solve()
         {
             var lines = FileUtils.ReadAllLines("2021/day_08/input.txt");
@@ -154,7 +143,7 @@ namespace aoc.y2021.day_08
                 {
                     var newSegment = segmentMap[c];
 
-                    segments = segments | newSegment;
+                    segments |= newSegment;
                 }
 
                 var num = SegmentsDigitMap[segments];
