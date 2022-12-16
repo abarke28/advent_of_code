@@ -39,69 +39,24 @@ namespace aoc.y2022.day_15
 
             //var minCoordinate = 0;
             //var maxCoordinate = 20;
-            //var minCoordinate = 0;
-            //var maxCoordinate = 4_000_000;
+            var minCoordinate = 0;
+            var maxCoordinate = 4_000_000;
 
-            //var point = FindBeaconLocation3(minCoordinate, maxCoordinate, sensorBeacons);
+            var point = FindBeaconLocation2(minCoordinate, maxCoordinate, sensorBeacons);
 
-            //Console.WriteLine(point.ToString());
-            //Console.WriteLine((point.X * maxCoordinate) + point.Y);
-
+            Console.WriteLine(point.ToString());
+            Console.WriteLine(((long)point.X * (long)maxCoordinate) + (long)point.Y);
         }
 
         private static Vector2D FindBeaconLocation(int minCoordinate, int maxCoordinate, IEnumerable<SensorBeaconPair> sensorBeaconPairs)
         {
-            for (var x = minCoordinate; x <= maxCoordinate; x++)
+            var pointsList = GetCandidateBeaconPoints(minCoordinate, maxCoordinate, sensorBeaconPairs);
+
+            var points = new HashSet<Vector2D>(pointsList.Sum(pl => pl.Count));
+
+            foreach (var pointList in pointsList)
             {
-                for (var y = minCoordinate; y <= maxCoordinate; y++)
-                {
-                    var candidatePoint = new Vector2D(x, y);
-                    var evasionCount = 0;
-
-                    foreach (var sb in sensorBeaconPairs)
-                    {
-                        if (sb.PointIsCoveredBySensor(candidatePoint))
-                        {
-                            break;
-                        }
-
-                        evasionCount++;
-                    }
-
-                    if (evasionCount == sensorBeaconPairs.Count())
-                    {
-                        return candidatePoint;
-                    }
-                }
-            }
-
-            throw new Exception("No point found");
-        }
-
-        private static Vector2D FindBeaconLocation2(int minCoordinate, int maxCoordinate, IEnumerable<SensorBeaconPair> sensorBeaconPairs)
-        {
-            var points = new HashSet<Vector2D>();
-
-            foreach (var sb in sensorBeaconPairs)
-            {
-                var minX = sb.Sensor.X - sb.ManhattanDistance - 1;
-                var maxX = sb.Sensor.X + sb.ManhattanDistance + 1;
-
-                var minY = sb.Sensor.Y - sb.ManhattanDistance - 1;
-                var maxY = sb.Sensor.Y + sb.ManhattanDistance + 1;
-
-                for (var x = Math.Max(minX, minCoordinate); x <= Math.Min(maxX, maxCoordinate); x++)
-                {
-                    for (var y = Math.Max(minY, minCoordinate); y <= Math.Min(maxY, maxCoordinate); y++)
-                    {
-                        var v = new Vector2D(x, y);
-
-                        if (Vector2D.ManhattanDistance(sb.Sensor, v) == (sb.ManhattanDistance + 1))
-                        {
-                            points.Add(v);
-                        }
-                    }
-                }
+                points.AddRange(pointList);
             }
 
             foreach (var point in points)
@@ -125,44 +80,20 @@ namespace aoc.y2022.day_15
             throw new Exception("No point found");
         }
 
-        private static Vector2D FindBeaconLocation3(int minCoordinate, int maxCoordinate, IEnumerable<SensorBeaconPair> sensorBeaconPairs)
+        private static Vector2D FindBeaconLocation2(int minCoordinate, int maxCoordinate, IEnumerable<SensorBeaconPair> sensorBeaconPairs)
         {
-            var points = new List<List<Vector2D>>(sensorBeaconPairs.Count());
-
-            foreach (var sb in sensorBeaconPairs)
-            {
-                var currentPoints = new HashSet<Vector2D>();
-
-                var minX = sb.Sensor.X - sb.ManhattanDistance - 1;
-                var maxX = sb.Sensor.X + sb.ManhattanDistance + 1;
-
-                var minY = sb.Sensor.Y - sb.ManhattanDistance - 1;
-                var maxY = sb.Sensor.Y + sb.ManhattanDistance + 1;
-
-                for (var x = Math.Max(minX, minCoordinate); x <= Math.Min(maxX, maxCoordinate); x++)
-                {
-                    for (var y = Math.Max(minY, minCoordinate); y <= Math.Min(maxY, maxCoordinate); y++)
-                    {
-                        var v = new Vector2D(x, y);
-
-                        if (Vector2D.ManhattanDistance(sb.Sensor, v) == (sb.ManhattanDistance + 1))
-                        {
-                            currentPoints.Add(v);
-                        }
-                    }
-                }
-
-                points.Add(currentPoints.ToList());
-            }
+            var points = GetCandidateBeaconPoints(minCoordinate, maxCoordinate, sensorBeaconPairs);
 
             var candidatePoints = new HashSet<Vector2D>();
 
-            for (var i = 0; i < points.Count(); i++)
+            for (var i = 0; i < points.Count; i++)
             {
-                for (var j = 0; j < points.Count(); j++)
+                for (var j = 0; j < points.Count; j++)
                 {
                     if (i != j)
                     {
+                        Console.WriteLine($"Intersecting {i} & {j}");
+
                         var intersectPoints = points[i].Intersect(points[j]);
 
                         foreach (var intersection in intersectPoints)
@@ -223,6 +154,41 @@ namespace aoc.y2022.day_15
                         }
                     }
                 }
+            }
+
+            return points;
+        }
+
+        private static List<HashSet<Vector2D>> GetCandidateBeaconPoints(int minCoordinate, int maxCoordinate, IEnumerable<SensorBeaconPair> sensorBeacons)
+        {
+            var points = new List<HashSet<Vector2D>>(sensorBeacons.Count());
+
+            foreach (var sb in sensorBeacons)
+            {
+                var currentPoints = new HashSet<Vector2D>();
+
+                var minX = sb.Sensor.X - sb.ManhattanDistance - 1;
+                var maxX = sb.Sensor.X + sb.ManhattanDistance + 1;
+
+                var minY = sb.Sensor.Y - sb.ManhattanDistance - 1;
+                var maxY = sb.Sensor.Y + sb.ManhattanDistance + 1;
+
+                var top = new Vector2D(sb.Sensor.X, maxY);
+                var left = new Vector2D(minX, sb.Sensor.Y);
+                var bottom = new Vector2D(sb.Sensor.X, minY);
+                var right = new Vector2D(maxX, sb.Sensor.Y);
+
+                Func<Vector2D, bool> pointPredicate = p => minCoordinate <= p.X &&
+                                                           minCoordinate <= p.Y &&
+                                                           maxCoordinate >= p.X &&
+                                                           maxCoordinate >= p.Y;
+
+                currentPoints.AddRange(Vector2D.GetPointsBetween(top, left).Where(pointPredicate));
+                currentPoints.AddRange(Vector2D.GetPointsBetween(left, bottom).Where(pointPredicate));
+                currentPoints.AddRange(Vector2D.GetPointsBetween(bottom, right).Where(pointPredicate));
+                currentPoints.AddRange(Vector2D.GetPointsBetween(right, top).Where(pointPredicate));
+
+                points.Add(currentPoints);
             }
 
             return points;

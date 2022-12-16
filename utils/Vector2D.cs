@@ -91,6 +91,32 @@
             return new Vector2D(Math.Sign(v.X), Math.Sign(v.Y));
         }
 
+        public static IList<Vector2D> GetPointsBetween(Vector2D v1, Vector2D v2)
+        {
+            var delta = v2 - v1;
+
+            if (delta.X != 0 && delta.Y != 0 && Math.Abs(delta.X) != Math.Abs(delta.Y))
+            {
+                throw new Exception("Vectors not rectolinear or diagonal");
+            }
+
+            var increment = Normalize(delta);
+            var current = v1 + increment;
+
+            var points = new List<Vector2D>(Math.Max(Math.Abs(delta.X), Math.Abs(delta.Y)) + 1)
+            {
+                current
+            };
+
+            while (current != v2)
+            {
+                current += increment;
+                points.Add(current);
+            }
+
+            return points;
+        }
+
         public static int ManhattanDistance(Vector2D v1, Vector2D v2)
         {
             return Math.Abs(v1.X - v2.X) + Math.Abs(v1.Y - v2.Y);

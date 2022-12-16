@@ -23,6 +23,14 @@ namespace aoc.utils.extensions
             return dict;
         }
 
+        public static void AddRange<T>(this ICollection<T> source, IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                source.Add(item);
+            }
+        }
+
         public static IEnumerable<(T1? First, T2? Second)> ZipAll<T1, T2>(this IEnumerable<T1> first, IEnumerable<T2> second)
         {
             var firstCount = first.Count();
