@@ -10,7 +10,7 @@ This is my first year doing this.
 ## 2022
 
 | Day | Story | Enjoyment | Challenge | What I Learnt/Used
-| --- | --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | 1 | [Calorie Counting](https://adventofcode.com/2022/day/1) | ⭐ | ⭐ | Iteration strategies.
 | 2 | [Rock Paper Scissors](https://adventofcode.com/2022/day/2) | ⭐ | ⭐⭐ | Modulo math.
 | 3 | [Rucksack Reorganization](https://adventofcode.com/2022/day/3) | ⭐ | ⭐⭐ | Set theory.
