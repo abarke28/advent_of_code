@@ -1,5 +1,6 @@
 using aoc.common;
 using aoc.utils;
+using System.Text;
 using System.Text.Json;
 
 namespace aoc.y2022.day_13
@@ -21,6 +22,29 @@ namespace aoc.y2022.day_13
                     (ListPacket l, ListPacket r) => CompareArrays(l, r),
                     _ => throw new Exception("Unexpected comparison case")
                 };
+            }
+
+            public override string ToString()
+            {
+                var sb = new StringBuilder();
+
+                if (this is NumPacket n)
+                {
+                    sb.Append(n.Num);
+                    sb.Append(',');
+                }
+                else if (this is ListPacket l)
+                {
+                    sb.Append('[');
+
+                    foreach (var packet in l.Packets)
+                    {
+                        sb.Append(packet.ToString());
+                    }
+                    sb.Append(']');
+                }
+
+                return sb.ToString();
             }
 
             private static int CompareArrays(ListPacket left, ListPacket right)
@@ -118,8 +142,10 @@ namespace aoc.y2022.day_13
 
             for (var i = 0; i < packetPairs.Count; i++)
             {
+                //Console.WriteLine($"Comparing left packet \n{packetPairs[i].Left} \nto right packet \n{packetPairs[i].Right}  ");
                 if (packetPairs[i].Left.CompareTo(packetPairs[i].Right) == -1)
                 {
+                    //Console.WriteLine("Packets WERE in order");
                     count += (i + 1);
                 }
             }

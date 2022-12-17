@@ -23,10 +23,26 @@ This is my first year doing this.
 | 10 | [Cathode-Ray Tube](https://adventofcode.com/2022/day/10) | ⭐⭐⭐ | ⭐ | Modulo arithmetic.
 | 11 | [Monkey In The Middle](https://adventofcode.com/2022/day/11) | ⭐ | ⭐⭐ | Modulo arithmetic & int overflows.
 | 12 | [Hill Climbing Algorithm](https://adventofcode.com/2022/day/12) | ⭐⭐ | ⭐⭐⭐⭐ | Graphs & Dijkstra's algorithm.
-| 13 | [Distress Signal](https://adventofcode.com/2022/day/13) | ⭐ | ⭐⭐⭐⭐ | Polymorphism, pattern matching, JSON parsing, Comparators.
+| 13 | [Distress Signal](https://adventofcode.com/2022/day/13) | ⭐⭐ | ⭐⭐⭐⭐ | Polymorphism, pattern matching, JSON parsing, comparators.
 | 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | ⭐⭐⭐⭐ | ⭐⭐ | Vector math (fun!).
 | 15 | [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15) | ⭐⭐ | ⭐⭐ | (Way) more vector math!
-| 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | ⭐⭐ | ⭐⭐⭐⭐⭐ | (Way) more vector math!
+| 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Graph theory.
+
+## 2021
+
+| Day | Story | Enjoyment | Challenge | What I Learnt/Used
+| --- | --- | --- | --- | --- |
+| 1 | [Sonar Sweep](https://adventofcode.com/2021/day/1) | ⭐⭐ | ⭐ | Windowing strategies.
+| 2 | [Dive!](https://adventofcode.com/2021/day/2) | ⭐⭐⭐ | ⭐ | 3D vector math.
+| 3 | [Binary Diagnostic](https://adventofcode.com/2021/day/3) | ⭐⭐ | ⭐⭐⭐ | Multi-dimension arrays, bit logic.
+| 4 | [Giant Squid](https://adventofcode.com/2021/day/4) | ⭐⭐⭐ | ⭐⭐ | Multi-dimension arrays.
+| 5 | [Hydrothermal Venture](https://adventofcode.com/2021/day/5) | ⭐⭐⭐ | ⭐⭐ | Vector math.
+| 6 | [Lanternfish](https://adventofcode.com/2021/day/6) | ⭐⭐ | ⭐⭐ | Math - fun!
+| 7 | [The Treachery of Whales](https://adventofcode.com/2021/day/7) | ⭐⭐ | ⭐⭐ | Math, some times brute force is the way to go.
+| 8 | [Seven Segment Search](https://adventofcode.com/2021/day/8) | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Set theory, pattern recognition.
+| 9 | [Smoke Basin](https://adventofcode.com/2021/day/9) | ⭐⭐ | ⭐⭐ | Vector logic & recursion.
+| 10 | [Syntax Scoring](https://adventofcode.com/2021/day/10) | ⭐⭐ | ⭐ | String parsing, stacks, and int overflows.
+| 11 | [Dumbo Octopus](https://adventofcode.com/2021/day/11) | ⭐⭐⭐⭐ | ⭐⭐ | Vector math, recursion.
 
 To solve a problem, run:
 

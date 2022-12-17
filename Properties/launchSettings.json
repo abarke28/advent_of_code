@@ -6,11 +6,11 @@
     },
     "aoc-debug": {
       "commandName": "Project",
-      "commandLineArgs": "2022 16"
+      "commandLineArgs": "2022 17"
     },
     "aoc-debug-2021": {
       "commandName": "Project",
-      "commandLineArgs": "2021 9"
+      "commandLineArgs": "2021 12"
     }
   }
 }
