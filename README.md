@@ -27,7 +27,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | ⭐⭐⭐⭐ | ⭐⭐ | Vector math (fun!).
 | 15 | [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15) | ⭐⭐ | ⭐⭐ | (Way) more vector math!
 | 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Graph theory.
-| 17 | [](https://adventofcode.com/2022/day/17) | ⭐ | ⭐ | 
+| 17 | [Pyroclastic Flow](https://adventofcode.com/2022/day/17) | ⭐⭐⭐ | ⭐⭐⭐ | Vector math, modulo math.
 
 ## 2021
 
@@ -43,7 +43,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 8 | [Seven Segment Search](https://adventofcode.com/2021/day/8) | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Set theory, pattern recognition.
 | 9 | [Smoke Basin](https://adventofcode.com/2021/day/9) | ⭐⭐ | ⭐⭐ | Vector logic & recursion.
 | 10 | [Syntax Scoring](https://adventofcode.com/2021/day/10) | ⭐⭐ | ⭐ | String parsing, stacks, and int overflows.
-| 11 | [Dumbo Octopus](https://adventofcode.com/2021/day/11) | ⭐⭐⭐⭐ | ⭐⭐ | Vector math, recursion.
+| 11 | [Dumbo Octopus](https://adventofcode.com/2021/day/11) | ⭐⭐⭐⭐ | ⭐⭐ | Cellular automata, vector math, recursion.
 
 To solve a problem, run:
 
