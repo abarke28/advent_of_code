@@ -5,7 +5,7 @@ Solutions for Advent of Code problems.
 Details: [Advent of Code](https://adventofcode.com/2022/about)
 
 A daily coding challenge for each day in December leading up to Christmas. Each day & challenge consists of two related problems.
-This is my first year doing this.
+2022 is my first year doing this, although I've since gone back and started doing the previous year's puzzles too.
 
 ## 2022
 
@@ -27,6 +27,7 @@ This is my first year doing this.
 | 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | ⭐⭐⭐⭐ | ⭐⭐ | Vector math (fun!).
 | 15 | [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15) | ⭐⭐ | ⭐⭐ | (Way) more vector math!
 | 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Graph theory.
+| 17 | [](https://adventofcode.com/2022/day/17) | ⭐ | ⭐ | 
 
 ## 2021
 
