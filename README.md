@@ -24,8 +24,9 @@ This is my first year doing this.
 | 11 | [Monkey In The Middle](https://adventofcode.com/2022/day/11) | ⭐ | ⭐⭐ | Modulo arithmetic & int overflows.
 | 12 | [Hill Climbing Algorithm](https://adventofcode.com/2022/day/12) | ⭐⭐ | ⭐⭐⭐⭐ | Graphs & Dijkstra's algorithm.
 | 13 | [Distress Signal](https://adventofcode.com/2022/day/13) | ⭐ | ⭐⭐⭐⭐ | Polymorphism, pattern matching, JSON parsing, Comparators.
-| 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | ⭐⭐⭐ | ⭐⭐ | Vector math (fun!).
+| 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | ⭐⭐⭐⭐ | ⭐⭐ | Vector math (fun!).
 | 15 | [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15) | ⭐⭐ | ⭐⭐ | (Way) more vector math!
+| 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | ⭐⭐ | ⭐⭐⭐⭐⭐ | (Way) more vector math!
 
 To solve a problem, run:
 
