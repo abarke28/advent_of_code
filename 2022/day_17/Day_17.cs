@@ -47,9 +47,8 @@ namespace aoc.y2022.day_17
 
             SimulateNRockFalls(cycleRemainder, fallenRocks, gasVectors);
 
-            height = fallenRocks.Max(fr => fr.Y) + 1;
-
-            Console.WriteLine(height + (cycleCount * cycleSize));
+            var baseHeight = fallenRocks.Max(fr => fr.Y) + 1;
+            Console.WriteLine($"Height after 1 trillion rocks: {baseHeight + (cycleCount * cycleSize)}");
         }
 
         private static (long CycleLength, long CycleSize, long CycleRemainder) FindCycle(IList<int> deltas)

@@ -1,4 +1,5 @@
 ﻿using aoc.common;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace aoc.utils;
@@ -37,7 +38,11 @@ public static class RunnerUtils
         var methodInfo = solver!.GetType().GetMethod(MethodName);
 
         Console.WriteLine($"Running solver for problem {year}-{problem}:\n");
+
+        var stopWatch = Stopwatch.StartNew();
         methodInfo!.Invoke(solver, Array.Empty<object>());
+
+        Console.WriteLine($"\nProblem solved in {stopWatch.Elapsed}.");
     }
 
     private static bool TryParseProblemNumber(string[] input, out string problemString, out string yearString)
