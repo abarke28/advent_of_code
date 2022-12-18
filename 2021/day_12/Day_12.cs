@@ -61,18 +61,15 @@ namespace aoc.y2021.day_12
 
             foreach (var adjacentNode in adjacentNodes)
             {
+                var newVisited = new List<string>(visited);
+                var newNotVisited = new HashSet<string>(notVisited);
+                
                 if (IsBigCave(adjacentNode) || notVisited.Contains(adjacentNode))
                 {
-                    var newVisited = new List<string>(visited);
-                    var newNotVisited = new HashSet<string>(notVisited);
-
                     paths.AddRange(FindPaths(caveSystem, adjacentNode, destination, newVisited, newNotVisited, hasHadSmallRevisit, allowSmallRevisit));
                 }
                 else if (IsSmallCave(adjacentNode) && allowSmallRevisit && !hasHadSmallRevisit)
                 {
-                    var newVisited = new List<string>(visited);
-                    var newNotVisited = new HashSet<string>(notVisited);
-
                     paths.AddRange(FindPaths(caveSystem, adjacentNode, destination, newVisited, newNotVisited, hasHadSmallRevisit: true, allowSmallRevisit));
                 }
             }
