@@ -128,10 +128,7 @@
                 {
                     for (var j = 0; j < NodeCount; j++)
                     {
-                        if (currentDistances[i, j] > currentDistances[i, k] + currentDistances[k, j])
-                        {
-                           currentDistances[i, j] = currentDistances[i, k] + currentDistances[k, j];
-                        }
+                        currentDistances[i, j] = Math.Min(currentDistances[i, j], currentDistances[i, k] + currentDistances[k, j]);
                     }
                 }
             }
