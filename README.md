@@ -45,6 +45,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 9 | [Smoke Basin](https://adventofcode.com/2021/day/9) | ⭐⭐ | ⭐⭐ | Vector logic & recursion.
 | 10 | [Syntax Scoring](https://adventofcode.com/2021/day/10) | ⭐⭐ | ⭐ | String parsing, stacks, and int overflows.
 | 11 | [Dumbo Octopus](https://adventofcode.com/2021/day/11) | ⭐⭐⭐⭐ | ⭐⭐ | Cellular automata, vector math, recursion.
+| 12 | [Passage Pathing](https://adventofcode.com/2021/day/12) | ⭐⭐ | ⭐⭐⭐⭐ | Graph theory, recursion, backtracking.
 
 To solve a problem, run:
 

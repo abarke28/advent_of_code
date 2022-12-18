@@ -25,13 +25,23 @@ namespace aoc.y2021.day_12
 
             Console.WriteLine(paths.Count);
 
+            var paths2 = FindPaths(caveSystem,
+                                  Start,
+                                  End,
+                                  visited: new List<string>(),
+                                  notVisited: new HashSet<string>(caves),
+                                  allowSmallRevisit: true);
+            Console.WriteLine(paths2.Count);
+
         }
 
         private static IList<IList<string>> FindPaths(NodeGraph<string> caveSystem,
                                                       string start,
                                                       string destination,
                                                       IList<string> visited,
-                                                      HashSet<string> notVisited)
+                                                      HashSet<string> notVisited,
+                                                      bool hasHadSmallRevisit = false,
+                                                      bool allowSmallRevisit = false)
         {
             var paths = new List<IList<string>>();
 
@@ -56,7 +66,14 @@ namespace aoc.y2021.day_12
                     var newVisited = new List<string>(visited);
                     var newNotVisited = new HashSet<string>(notVisited);
 
-                    paths.AddRange(FindPaths(caveSystem, adjacentNode, destination, newVisited, newNotVisited));
+                    paths.AddRange(FindPaths(caveSystem, adjacentNode, destination, newVisited, newNotVisited, hasHadSmallRevisit, allowSmallRevisit));
+                }
+                else if (IsSmallCave(adjacentNode) && allowSmallRevisit && !hasHadSmallRevisit)
+                {
+                    var newVisited = new List<string>(visited);
+                    var newNotVisited = new HashSet<string>(notVisited);
+
+                    paths.AddRange(FindPaths(caveSystem, adjacentNode, destination, newVisited, newNotVisited, hasHadSmallRevisit: true, allowSmallRevisit));
                 }
             }
 
