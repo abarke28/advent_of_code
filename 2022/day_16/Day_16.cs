@@ -100,29 +100,6 @@ namespace aoc.y2022.day_16
             return combinedScore;
         }
 
-        private static IEnumerable<(IList<string> p1, IList<string> p2)> FindAllExclusivePathPairs(IList<IList<string>> paths)
-        {
-            var pathPairs = new List<(IList<string> p1, IList<string> p2)>(paths.Count * paths.Count);
-
-            var pathNodeSets = paths.Select(p => p.ToHashSet()).ToList();
-            
-            for (var i = 0; i < paths.Count; i++)
-            {
-                for (var j = 0; j < paths.Count; j++)
-                {
-                    Console.WriteLine($"Calculating path {i} & path {j} pair.");
-                    if (i == j) continue;
-
-                    if (!pathNodeSets[i].Intersect(pathNodeSets[j]).Any())
-                    {
-                        pathPairs.Add((paths[i], paths[j]));
-                    }
-                }
-            }
-
-            return pathPairs;
-        }
-
         private static IList<IList<string>> FindAllPaths(IDictionary<(string, string), int> distances,
                                                          string startingCave,
                                                          ISet<string> unvisited,

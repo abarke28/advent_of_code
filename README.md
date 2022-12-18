@@ -28,6 +28,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 15 | [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15) | ⭐⭐ | ⭐⭐ | (Way) more vector math!
 | 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Graph theory.
 | 17 | [Pyroclastic Flow](https://adventofcode.com/2022/day/17) | ⭐⭐⭐ | ⭐⭐⭐ | Vector math, modulo math.
+| 18 | [Boiling Boulders](https://adventofcode.com/2022/day/18) | ⭐⭐⭐ | ⭐⭐⭐ | 3D cellular automata, vector math.
 
 ## 2021
 

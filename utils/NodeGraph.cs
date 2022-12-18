@@ -58,6 +58,11 @@
             return n1Adjacencies.TryGetValue(n2, out var weight) ? weight : 0;
         }
 
+        public IList<TNodeKey> GetAllNodes()
+        {
+            return _nodeKeys.ToList();
+        }
+
         public IDictionary<TNodeKey, int> GetAdjacentNodesWithWeights(TNodeKey n)
         {
             return _adjacencyLists.TryGetValue(n, out var values) ? values : new Dictionary<TNodeKey, int>();
