@@ -1,0 +1,82 @@
+using aoc.common;
+using aoc.utils;
+
+namespace aoc.y2021.day_15
+{
+    // https://adventofcode.com/2021/day/15
+    public class Day_15 : ISolver
+    {
+        public void Solve()
+        {
+            var lines = FileUtils.ReadAllLines("2021/day_15/input2.txt");
+
+            var graph = GenerateGraph(lines);
+            var minDistances = graph.GetMinDistances(0);
+
+            Console.WriteLine(minDistances[graph.VerticesCount - 1]);
+
+            var expandedGraph = GenerateExpandedGraph(lines);
+            var expandedMinDistances = expandedGraph.GetMinDistances(0);
+
+            Console.WriteLine(expandedMinDistances[expandedGraph.VerticesCount - 1]);
+        }
+
+        private static Graph GenerateGraph(IList<string> lines)
+        {
+            var grid = Grid<int>.FromStrings(lines, c => c - '0');
+
+            var graph = Graph.FromGrid(grid, GetNeighbors, (_, n2) => n2);
+
+            return graph;
+        }
+
+        private static Graph GenerateExpandedGraph(IList<string> lines)
+        {
+            const int expansionFactor = 5;
+            //const int maxValue = 9;
+
+            var height = lines.Count;
+            var width = lines.First().Length;
+
+            var grid = new Grid<int>(width * expansionFactor, height * expansionFactor, 0);
+
+            for (var y = 0; y < height; y++)
+            { 
+                for (var x = 0; x < width; x++)
+                {
+                    grid.SetValue(x, y, lines[y][x] - '0');
+                }
+            }
+
+            //for (var i = 0; i < expansionFactor; i++)
+            //{
+            //    var nominalCardinalValue = (lines[y][x] - '0') + i;
+            //    var cardinalValue = nominalCardinalValue > maxValue ? nominalCardinalValue - maxValue : nominalCardinalValue;
+
+            //    var nominalDiagonalValue = (lines[y][x] - '0') + 2 * i;
+            //    var diagonalValue = nominalDiagonalValue > maxValue ? nominalDiagonalValue - maxValue : nominalDiagonalValue;
+
+            //    grid.SetValue(x + (expansionFactor * i), y, nominalCardinalValue);
+            //    grid.SetValue(x, y + (expansionFactor * i), nominalCardinalValue);
+            //    grid.SetValue(x + (expansionFactor * i), y + (expansionFactor * i), nominalDiagonalValue);
+            //}
+
+            var graph = Graph.FromGrid(grid, GetNeighbors, (_, n2) => n2);
+
+            return graph;
+        }
+
+        private static IEnumerable<Vector2D> GetNeighbors(Vector2D v)
+        {
+            var neighbors = new List<Vector2D>
+            {
+                v + Vector2D.Up,
+                v + Vector2D.Down,
+                v + Vector2D.Left,
+                v + Vector2D.Right
+            };
+
+            return neighbors;
+        }
+    }
+}
