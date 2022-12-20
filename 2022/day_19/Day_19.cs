@@ -124,9 +124,8 @@ namespace aoc.y2022.day_19
             var startingInventory = new Inventory();
             startingInventory.Robots[Resource.Ore] = 1;
 
-            var scores = FindGeodeScores(bluePrints[0], startingInventory, 24);
+            var scores = FindGeodeScores(bluePrints[0], startingInventory, 16);
             Console.WriteLine(scores.Max());
-
         }
 
         private List<int> FindGeodeScores(BluePrint bluePrint, Inventory inventory, int time)
@@ -147,7 +146,7 @@ namespace aoc.y2022.day_19
                 Console.WriteLine($"Time left: {time + 1}");
                 Console.WriteLine(inventory.ToString());
 
-                if (WaitingIsReasonableOption(inventory, bluePrint))
+                if (WaitingIsReasonableOption(inventory, bluePrint, time))
                 {
                     var noBuyInventory = inventory.Clone();
                     noBuyInventory.GetResources();
@@ -200,8 +199,13 @@ namespace aoc.y2022.day_19
             return maxCost;
         }
 
-        private static bool WaitingIsReasonableOption(Inventory inventory, BluePrint blueprint)
+        private static bool WaitingIsReasonableOption(Inventory inventory, BluePrint blueprint, int time)
         {
+            if (time <= 2)
+            {
+                return false;
+            }
+
             // If there are any where you have n of resource where 1 < n < cost for any cost.
             var costs = blueprint.RobotCosts.Select(rc => rc.Value);
 

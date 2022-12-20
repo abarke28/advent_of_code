@@ -12,5 +12,10 @@ namespace aoc.y2022.day_20
 
             Console.WriteLine("Hello World");
         }
+
+        public static void ParseInput(IList<string> lines)
+        {
+            var xxx = lines.Select(yyy => yyy);
+        }
     }
 }
