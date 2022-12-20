@@ -16,8 +16,12 @@ namespace aoc.y2022.day_19
             Geode
         }
 
-        private class Inventory
+        private struct Inventory
         {
+            public Inventory()
+            {
+            }
+
             public Dictionary<Resource, int> Resources { get; set; } = new()
             {
                 { Resource.Ore, 0 },
@@ -113,8 +117,7 @@ namespace aoc.y2022.day_19
         }
 
         private readonly Dictionary<string, int> _resourceBreakEvenPointMemo = new();
-        private readonly Dictionary<string, List<int>> _maxGeodesMemo = new();
-        private readonly Stack<string> _stack = new();
+        private readonly Dictionary<string, int> _maxGeodesMemo = new();
 
         public void Solve()
         {
@@ -124,58 +127,62 @@ namespace aoc.y2022.day_19
             var startingInventory = new Inventory();
             startingInventory.Robots[Resource.Ore] = 1;
 
-            var scores = FindGeodeScores(bluePrints[0], startingInventory, 16);
-            Console.WriteLine(scores.Max());
+            var score = FindGeodeScore(bluePrints[0], startingInventory, 24);
+            Console.WriteLine(score);
         }
 
-        private List<int> FindGeodeScores(BluePrint bluePrint, Inventory inventory, int time)
+        private int FindGeodeScore(BluePrint bluePrint, Inventory inventory, int time)
         {
             var key = $"{time}-{inventory}";
+            var maxScore = 0;
 
             if (_maxGeodesMemo.TryGetValue(key, out var result))
             {
                 return result;
             }
 
-            var scores = new List<int>();
-
-            while (time-- > 0)
+            if (time <= 0)
             {
-                Console.WriteLine($"Time left: {time + 1}");
-                Console.WriteLine(inventory.ToString());
+                _maxGeodesMemo.Add(key, inventory.Resources[Resource.Geode]);
+                return inventory.Resources[Resource.Geode];
+            }
+            else if (time == 1)
+            {
+                _maxGeodesMemo.Add(key, inventory.Resources[Resource.Geode] + inventory.Robots[Resource.Geode]);
+                return inventory.Resources[Resource.Geode] + inventory.Robots[Resource.Geode];
+            }
 
-                if (WaitingIsReasonableOption(inventory, bluePrint, time))
+            //Console.WriteLine($"Time left: {time + 1}");
+            //Console.WriteLine(inventory.ToString());
+
+
+            if (WaitingIsReasonableOption(inventory, bluePrint, time))
+            {
+                var noBuyInventory = inventory.Clone();
+                noBuyInventory.GetResources();
+
+                maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, noBuyInventory, time - 1));
+            }
+
+
+            foreach (var robot in bluePrint.RobotCosts)
+            {
+                var resourceType = robot.Key;
+                var resourceBreakEvenPoint = ResourceBreakEvenPoint(resourceType, bluePrint);
+                var resourceRobotCurrentCount = inventory.Robots[resourceType];
+
+                if (inventory.CanAfford(robot.Value) && (resourceType == Resource.Geode || resourceBreakEvenPoint > resourceRobotCurrentCount))
                 {
-                    var noBuyInventory = inventory.Clone();
-                    noBuyInventory.GetResources();
+                    var newInventory = inventory.Clone();
+                    newInventory.BuyRobot(robot.Key, robot.Value);
+                    newInventory.GetResources();
 
-                    scores.AddRange(FindGeodeScores(bluePrint, noBuyInventory, time));
-                }
-
-                foreach (var robot in bluePrint.RobotCosts)
-                {
-                    var resourceType = robot.Key;
-                    var resourceBreakEvenPoint = ResourceBreakEvenPoint(resourceType, bluePrint);
-                    var resourceRobotCurrentCount = inventory.Robots[resourceType];
-
-                    if (inventory.CanAfford(robot.Value) &&
-                        (resourceType == Resource.Geode || resourceBreakEvenPoint > resourceRobotCurrentCount))
-                    {
-                        Console.WriteLine($"Can afford to buy a {resourceType} robot, exploring banch");
-
-                        var newInventory = inventory.Clone();
-                        newInventory.BuyRobot(robot.Key, robot.Value);
-                        inventory.GetResources();
-
-                        scores.AddRange(FindGeodeScores(bluePrint, newInventory, time));
-                    }
+                    maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, newInventory, time - 1));
                 }
             }
 
-            scores.Add(inventory.Resources[Resource.Geode]);
-
-            _maxGeodesMemo.Add(key, scores);
-            return scores;
+            _maxGeodesMemo.Add(key, maxScore);
+            return maxScore;
         }
 
         private int ResourceBreakEvenPoint(Resource resourceType, BluePrint blueprint)
