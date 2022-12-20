@@ -30,7 +30,8 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 17 | [Pyroclastic Flow](https://adventofcode.com/2022/day/17) | ⭐⭐⭐ | ⭐⭐⭐ | Vector math, modulo math.
 | 18 | [Boiling Boulders](https://adventofcode.com/2022/day/18) | ⭐⭐⭐ | ⭐⭐⭐ | 3D cellular automata, vector math.
 | 19 | [Not Enough Minerals](https://adventofcode.com/2022/day/19) | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Dynamic programming, recursion, memoization.
-| 20 | [Grove Positioning System](https://adventofcode.com/2022/day/20) | ⭐ | ⭐ | .
+| 20 | [Grove Positioning System](https://adventofcode.com/2022/day/20) | ⭐⭐ | ⭐⭐⭐ | Modulo math, linked lists.
+| 21 | [](https://adventofcode.com/2022/day/21) | ⭐ | ⭐ | .
 
 ## 2021
 

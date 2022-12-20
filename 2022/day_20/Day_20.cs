@@ -7,22 +7,38 @@ namespace aoc.y2022.day_20
     // https://adventofcode.com/2022/day/20
     public class Day_20 : ISolver
     {
+        private const int DecryptionKey = 811_589_153;
+        private const int Repititions = 10;
+
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("2022/day_20/input2.txt");
+            var lines = FileUtils.ReadAllLines("2022/day_20/input.txt");
             var nums = lines.Select(l => int.Parse(l)).ToList();
 
-            var result = MixNumbers(nums);
-            Console.WriteLine(string.Join(',', result.Select(i => i.ToString())));
+            var result = MixNumbers(nums, nums);
+            var score = ComputeScore(result);
+            Console.WriteLine(score);
+
+            //var nums2 = lines.Select(l => int.Parse(l) * DecryptionKey).ToList();
+            //var mixedNums = new List<int>(nums2);
+
+            //for (var i = 0; i < Repititions; i++)
+            //{
+            //    mixedNums = MixNumbers(nums2, mixedNums);
+            //}
+
+            //var score2 = ComputeScore(mixedNums);
+            //Console.WriteLine(score2);
         }
 
-        private static IList<int> MixNumbers(IList<int> numbers)
+        private static List<int> MixNumbers(IList<int> numbers, IList<int> startingSequence)
         {
             var length = numbers.Count;
             var indexedNums = numbers.WithIndex().ToList();
             var indexTracker = indexedNums.ToDictionary(n => n.index, n => n.index);
 
-            var mixedNums = new LinkedList<int>(numbers);
+            var mixedNums = new LinkedList<int>(startingSequence);
+            
             Console.WriteLine(string.Join(',', mixedNums.Select(i => i.ToString())));
 
             foreach (var (num, originalIndex) in indexedNums)
@@ -31,15 +47,24 @@ namespace aoc.y2022.day_20
 
                 var currentIndex = indexTracker[originalIndex];
 
-                var (targetIndex, wrapped) = ComputeTargetIndex(num, currentIndex, length);
-                Console.WriteLine($"{num} is currently at {currentIndex} - moving to {targetIndex}");
+                var (targetIndex, headingLeft) = ComputeTargetIndex(num, currentIndex, length);
+                Console.WriteLine($"{num} is currently at {currentIndex} and moving to {targetIndex}");
 
-                UpdateAffectedIndices(indexTracker, currentIndex, targetIndex, wrapped);
+                UpdateAffectedIndices(indexTracker, currentIndex, targetIndex);
 
-                var targetNode = GetNode(mixedNums, targetIndex + 1);
+                var targetNode = GetNode(mixedNums, targetIndex);
+                Console.WriteLine($"Target node has value {targetNode.Value}\n");
                 var removalNode = GetNode(mixedNums, currentIndex);
 
-                mixedNums.AddBefore(targetNode, num);
+                if (headingLeft)
+                {
+                    mixedNums.AddBefore(targetNode, num);
+                }
+                else
+                {
+                    mixedNums.AddAfter(targetNode, num);
+                }
+
                 mixedNums.Remove(removalNode);
 
                 Console.WriteLine(string.Join(',', mixedNums.Select(i => i.ToString())));
@@ -48,36 +73,17 @@ namespace aoc.y2022.day_20
             return mixedNums.ToList();
         }
 
-        private static (int index, bool wrapped) ComputeTargetIndex(int num, int currentIndex, int numsLength)
+        private static (int index, bool headingLeft) ComputeTargetIndex(int num, int currentIndex, int numsLength)
         {
             var nominalTargetIndex = currentIndex + num;
+            var headingLeft = nominalTargetIndex < currentIndex;
 
-            if (nominalTargetIndex < 0 || nominalTargetIndex >= numsLength)
-            {
-                var wrapDirection = Math.Sign(nominalTargetIndex);
+            var wrappedTargetIndex = nominalTargetIndex.MathMod(numsLength);
 
-                var wrappedIndex = ((nominalTargetIndex % numsLength) + numsLength) % numsLength;
-                return (wrappedIndex, true);
-            }
-            //if (nominalTargetIndex < 0)
-            //{
-            //    var wrappedIndex = nominalTargetIndex + numsLength - 1;
-
-            //    return (wrappedIndex, true);
-            //}
-            //else if (nominalTargetIndex >= numsLength)
-            //{
-            //    var wrappedIndex = nominalTargetIndex % numsLength;
-
-            //    return (wrappedIndex, true);
-            //}
-            else
-            {
-                return (nominalTargetIndex, false);
-            }
+            return (wrappedTargetIndex, nominalTargetIndex < currentIndex);
         }
 
-        private static void UpdateAffectedIndices(Dictionary<int,int> indexTracker, int currentIndex, int targetIndex, bool wrapped)
+        private static void UpdateAffectedIndices(Dictionary<int,int> indexTracker, int currentIndex, int targetIndex)
         {
             // Shifting right
             if (currentIndex < targetIndex)
@@ -99,29 +105,15 @@ namespace aoc.y2022.day_20
 
         private static LinkedListNode<int> GetNode(LinkedList<int> list, int targetIndex)
         {
-            if (targetIndex > list.Count / 2)
+            var node = list.First;
+
+            while (targetIndex > 0)
             {
-                var node = list.Last;
-                var traversals = list.Count - 1 - targetIndex;
-
-                while (traversals-- > 0)
-                {
-                    node = node!.Previous;
-                }
-
-                return node!;
+                node = node!.Next;
+                targetIndex--;
             }
-            else
-            {
-                var node = list.First;
 
-                while (targetIndex-- > 0)
-                {
-                    node = node!.Next;
-                }
-
-                return node!;
-            }
+            return node!;
         }
 
         private static int ComputeScore(IList<int> numbers)
@@ -132,9 +124,12 @@ namespace aoc.y2022.day_20
 
             var baseIndex = numbers.IndexOf(0);
 
-            return numbers[(baseIndex + num1Index - 1) % numbers.Count] + 
-                   numbers[(baseIndex + num2Index - 1) % numbers.Count] +
-                   numbers[(baseIndex + num3Index - 1) % numbers.Count];
+            var num1 = numbers[(baseIndex + num1Index) % numbers.Count];
+            var num2 = numbers[(baseIndex + num2Index) % numbers.Count];
+            var num3 = numbers[(baseIndex + num3Index) % numbers.Count];
+
+
+            return num1 + num2 + num3;
         }
     }
 }
