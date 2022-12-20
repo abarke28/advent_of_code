@@ -51,22 +51,35 @@ namespace aoc.y2022.day_19
                 return true;
             }
 
-            public void BuyRobot(Resource robotType, Cost cost)
+            public Inventory NextWithBuyRobotAndGetResources(Resource robotType, Cost cost)
             {
+                var inventory = this.Clone();
+
                 foreach (var resource in cost.Resources)
                 {
-                    Resources[resource.Key] -= resource.Value;
+                    inventory.Resources[resource.Key] -= resource.Value;
                 }
 
-                Robots[robotType]++;
+                foreach (var robot in inventory.Robots)
+                {
+                    inventory.Resources[robot.Key] += robot.Value;
+                }
+
+                inventory.Robots[robotType]++;
+
+                return inventory;
             }
 
-            public void GetResources()
+            public Inventory NextWithGetResources()
             {
-                foreach (var robot in Robots)
+                var inventory = this.Clone();
+
+                foreach (var robot in inventory.Robots)
                 {
-                    Resources[robot.Key] += robot.Value;
+                    inventory.Resources[robot.Key] += robot.Value;
                 }
+
+                return inventory;
             }
 
             public override string ToString()
@@ -155,29 +168,21 @@ namespace aoc.y2022.day_19
             //Console.WriteLine($"Time left: {time + 1}");
             //Console.WriteLine(inventory.ToString());
 
-
             if (WaitingIsReasonableOption(inventory, bluePrint, time))
             {
-                var noBuyInventory = inventory.Clone();
-                noBuyInventory.GetResources();
-
-                maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, noBuyInventory, time - 1));
+                maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, inventory.NextWithGetResources(), time - 1));
             }
-
 
             foreach (var robot in bluePrint.RobotCosts)
             {
                 var resourceType = robot.Key;
                 var resourceBreakEvenPoint = ResourceBreakEvenPoint(resourceType, bluePrint);
                 var resourceRobotCurrentCount = inventory.Robots[resourceType];
+                var robotIsWorthBuilding = resourceBreakEvenPoint > resourceRobotCurrentCount || resourceType == Resource.Geode;
 
-                if (inventory.CanAfford(robot.Value) && (resourceType == Resource.Geode || resourceBreakEvenPoint > resourceRobotCurrentCount))
+                if (inventory.CanAfford(robot.Value) && robotIsWorthBuilding)
                 {
-                    var newInventory = inventory.Clone();
-                    newInventory.BuyRobot(robot.Key, robot.Value);
-                    newInventory.GetResources();
-
-                    maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, newInventory, time - 1));
+                    maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, inventory.NextWithBuyRobotAndGetResources(robot.Key, robot.Value), time - 1));
                 }
             }
 
@@ -199,7 +204,6 @@ namespace aoc.y2022.day_19
                                               .Max();
 
             _resourceBreakEvenPointMemo.Add(lookupKey, maxCost);
-
             return maxCost;
         }
 
