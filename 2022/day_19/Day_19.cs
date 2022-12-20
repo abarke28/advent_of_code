@@ -131,11 +131,9 @@ namespace aoc.y2022.day_19
         private List<int> FindGeodeScores(BluePrint bluePrint, Inventory inventory, int time)
         {
             var key = $"{time}-{inventory}";
-            _stack.Push(key);
 
             if (_maxGeodesMemo.TryGetValue(key, out var result))
             {
-                _stack.Pop();
                 return result;
             }
 
@@ -176,7 +174,6 @@ namespace aoc.y2022.day_19
 
             scores.Add(inventory.Resources[Resource.Geode]);
 
-            _stack.Pop();
             _maxGeodesMemo.Add(key, scores);
             return scores;
         }
