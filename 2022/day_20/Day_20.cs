@@ -1,8 +1,6 @@
 using aoc.common;
 using aoc.utils;
 using aoc.utils.extensions;
-using System.Text;
-using System.Xml.Linq;
 
 namespace aoc.y2022.day_20
 {
@@ -124,7 +122,11 @@ namespace aoc.y2022.day_20
             const int num2Index = 2000;
             const int num3Index = 3000;
 
-            return numbers[num1Index - 1] + numbers[num2Index - 1] + numbers[num3Index- 1];
+            var baseIndex = numbers.IndexOf(0);
+
+            return numbers[(baseIndex + num1Index - 1) % numbers.Count] + 
+                   numbers[(baseIndex + num2Index - 1) % numbers.Count] +
+                   numbers[(baseIndex + num3Index - 1) % numbers.Count];
         }
     }
 }

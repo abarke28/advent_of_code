@@ -26,9 +26,11 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 13 | [Distress Signal](https://adventofcode.com/2022/day/13) | ⭐⭐ | ⭐⭐⭐⭐ | Polymorphism, pattern matching, JSON parsing, comparators.
 | 14 | [Regolith Reservoir](https://adventofcode.com/2022/day/14) | ⭐⭐⭐⭐ | ⭐⭐ | Vector math (fun!).
 | 15 | [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15) | ⭐⭐ | ⭐⭐ | (Way) more vector math!
-| 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Graph theory.
+| 16 | [Proboscidea Volcanium](https://adventofcode.com/2022/day/16) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Graph theory, dynamic programming, recursion.
 | 17 | [Pyroclastic Flow](https://adventofcode.com/2022/day/17) | ⭐⭐⭐ | ⭐⭐⭐ | Vector math, modulo math.
 | 18 | [Boiling Boulders](https://adventofcode.com/2022/day/18) | ⭐⭐⭐ | ⭐⭐⭐ | 3D cellular automata, vector math.
+| 19 | [Not Enough Minerals](https://adventofcode.com/2022/day/19) | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Dynamic programming, recursion, memoization.
+| 20 | [Grove Positioning System](https://adventofcode.com/2022/day/20) | ⭐ | ⭐ | .
 
 ## 2021
 

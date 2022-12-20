@@ -38,6 +38,21 @@ namespace aoc.y2022.day_19
                 { Resource.Geode, 0 }
             };
 
+            public HashSet<Resource> GetAffordableRobots(BluePrint bluePrint)
+            {
+                var types = new HashSet<Resource>();
+
+                foreach (var c in bluePrint.RobotCosts)
+                {
+                    if (CanAfford(c.Value))
+                    {
+                        types.Add(c.Key);
+                    }
+                }
+
+                return types;
+            }
+
             public bool CanAfford(Cost cost)
             {
                 foreach (var resource in cost.Resources)
@@ -134,17 +149,34 @@ namespace aoc.y2022.day_19
 
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("2022/day_19/input2.txt");
+            var lines = FileUtils.ReadAllLines("2022/day_19/input.txt");
             var bluePrints = ParseInput(lines);
 
             var startingInventory = new Inventory();
             startingInventory.Robots[Resource.Ore] = 1;
 
-            var score = FindGeodeScore(bluePrints[0], startingInventory, 24);
-            Console.WriteLine(score);
+            var scores = GetQualityLevels(bluePrints, 24);
+            Console.WriteLine(scores.Sum());
+
+            var bluePrints2 = bluePrints.Take(3).ToList();
+
+            var result = 1;
+
+            foreach (var bp in bluePrints2)
+            {
+                _maxGeodesMemo.Clear();
+                _resourceBreakEvenPointMemo.Clear();
+
+                var score = FindGeodeScore(bp, startingInventory, 32, null);
+                Console.WriteLine(score);
+
+                result *= score;
+            }
+
+            Console.WriteLine(result);
         }
 
-        private int FindGeodeScore(BluePrint bluePrint, Inventory inventory, int time)
+        private int FindGeodeScore(BluePrint bluePrint, Inventory inventory, int time, HashSet<Resource>? cannotBuild = null)
         {
             var key = $"{time}-{inventory}";
             var maxScore = 0;
@@ -165,12 +197,9 @@ namespace aoc.y2022.day_19
                 return inventory.Resources[Resource.Geode] + inventory.Robots[Resource.Geode];
             }
 
-            //Console.WriteLine($"Time left: {time + 1}");
-            //Console.WriteLine(inventory.ToString());
-
             if (WaitingIsReasonableOption(inventory, bluePrint, time))
             {
-                maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, inventory.NextWithGetResources(), time - 1));
+                maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, inventory.NextWithGetResources(), time - 1, inventory.GetAffordableRobots(bluePrint)));
             }
 
             foreach (var robot in bluePrint.RobotCosts)
@@ -179,10 +208,11 @@ namespace aoc.y2022.day_19
                 var resourceBreakEvenPoint = ResourceBreakEvenPoint(resourceType, bluePrint);
                 var resourceRobotCurrentCount = inventory.Robots[resourceType];
                 var robotIsWorthBuilding = resourceBreakEvenPoint > resourceRobotCurrentCount || resourceType == Resource.Geode;
+                var typeIsAllowed = cannotBuild == null || !cannotBuild.Contains(resourceType);
 
-                if (inventory.CanAfford(robot.Value) && robotIsWorthBuilding)
+                if (inventory.CanAfford(robot.Value) && robotIsWorthBuilding/* && typeIsAllowed*/)
                 {
-                    maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, inventory.NextWithBuyRobotAndGetResources(robot.Key, robot.Value), time - 1));
+                    maxScore = Math.Max(maxScore, FindGeodeScore(bluePrint, inventory.NextWithBuyRobotAndGetResources(robot.Key, robot.Value), time - 1, null));
                 }
             }
 
@@ -214,7 +244,6 @@ namespace aoc.y2022.day_19
                 return false;
             }
 
-            // If there are any where you have n of resource where 1 < n < cost for any cost.
             var costs = blueprint.RobotCosts.Select(rc => rc.Value);
 
             if (costs.All(c => !inventory.CanAfford(c)))
@@ -222,15 +251,23 @@ namespace aoc.y2022.day_19
                 return true;
             }
 
-            foreach (var cost in costs)
-            {
-                if (cost.Resources.Any(rc => inventory.Resources[rc.Key] > 0 && inventory.Resources[rc.Key] < rc.Value))
-                {
-                    return true;
-                }
-            }
-
             return false;
+        }
+
+        private IEnumerable<int> GetQualityLevels(IList<BluePrint> bluePrints, int time)
+        {
+            foreach (var bluePrint in bluePrints)
+            {
+                _maxGeodesMemo.Clear();
+                _resourceBreakEvenPointMemo.Clear();
+
+                var startingInventory = new Inventory();
+                startingInventory.Robots[Resource.Ore] = 1;
+
+                var score = FindGeodeScore(bluePrint, startingInventory, time);
+
+                yield return score * bluePrint.Id;
+            }
         }
 
         private static IList<BluePrint> ParseInput(IList<string> lines)
