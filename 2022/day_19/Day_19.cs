@@ -114,6 +114,7 @@ namespace aoc.y2022.day_19
 
         private readonly Dictionary<string, int> _resourceBreakEvenPointMemo = new();
         private readonly Dictionary<string, List<int>> _maxGeodesMemo = new();
+        private readonly Stack<string> _stack = new();
 
         public void Solve()
         {
@@ -131,9 +132,11 @@ namespace aoc.y2022.day_19
         private List<int> FindGeodeScores(BluePrint bluePrint, Inventory inventory, int time)
         {
             var key = $"{time}-{inventory}";
+            _stack.Push(key);
 
             if (_maxGeodesMemo.TryGetValue(key, out var result))
             {
+                _stack.Pop();
                 return result;
             }
 
@@ -159,7 +162,7 @@ namespace aoc.y2022.day_19
                     var resourceRobotCurrentCount = inventory.Robots[resourceType];
 
                     if (inventory.CanAfford(robot.Value) &&
-                        resourceBreakEvenPoint > resourceRobotCurrentCount)
+                        (resourceType == Resource.Geode || resourceBreakEvenPoint > resourceRobotCurrentCount))
                     {
                         Console.WriteLine($"Can afford to buy a {resourceType} robot, exploring banch");
 
@@ -174,6 +177,7 @@ namespace aoc.y2022.day_19
 
             scores.Add(inventory.Resources[Resource.Geode]);
 
+            _stack.Pop();
             _maxGeodesMemo.Add(key, scores);
             return scores;
         }
