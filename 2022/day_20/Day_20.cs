@@ -27,11 +27,12 @@ namespace aoc.y2022.day_20
 
             foreach (var (num, originalIndex) in indexedNums)
             {
-                if (num == 0) continue;
+                    if (num == 0) continue;
 
                 var currentIndex = indexTracker[originalIndex];
 
                 var (targetIndex, wrapped) = ComputeTargetIndex(num, currentIndex, length);
+                Console.WriteLine($"{num} is currently at {currentIndex} - moving to {targetIndex}");
 
                 UpdateAffectedIndices(indexTracker, currentIndex, targetIndex, wrapped);
 
@@ -51,18 +52,25 @@ namespace aoc.y2022.day_20
         {
             var nominalTargetIndex = currentIndex + num;
 
-            if (nominalTargetIndex < 0)
+            if (nominalTargetIndex < 0 || nominalTargetIndex >= numsLength)
             {
-                var wrappedIndex = nominalTargetIndex + numsLength;
+                var wrapDirection = Math.Sign(nominalTargetIndex);
 
+                var wrappedIndex = ((nominalTargetIndex % numsLength) + numsLength) % numsLength;
                 return (wrappedIndex, true);
             }
-            else if (nominalTargetIndex >= numsLength)
-            {
-                var wrappedIndex = nominalTargetIndex % numsLength;
+            //if (nominalTargetIndex < 0)
+            //{
+            //    var wrappedIndex = nominalTargetIndex + numsLength - 1;
 
-                return (wrappedIndex, true);
-            }
+            //    return (wrappedIndex, true);
+            //}
+            //else if (nominalTargetIndex >= numsLength)
+            //{
+            //    var wrappedIndex = nominalTargetIndex % numsLength;
+
+            //    return (wrappedIndex, true);
+            //}
             else
             {
                 return (nominalTargetIndex, false);
@@ -74,7 +82,7 @@ namespace aoc.y2022.day_20
             // Shifting right
             if (currentIndex < targetIndex)
             {
-                for (var i = currentIndex + 1; i < targetIndex; i++)
+                for (var i = currentIndex + 1; i <= targetIndex; i++)
                 {
                     indexTracker[i]--;
                 }
@@ -82,7 +90,7 @@ namespace aoc.y2022.day_20
             // Shifting left
             else
             {
-                for (var i = targetIndex + 1; i < currentIndex; i++)
+                for (var i = targetIndex; i < currentIndex; i++)
                 {
                     indexTracker[i]++;
                 }
