@@ -63,7 +63,7 @@ namespace aoc.y2022.day_21
 
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("2022/day_21/input2.txt");
+            var lines = FileUtils.ReadAllLines("2022/day_21/input.txt");
             var (numberMonkeys, operationMonkeys) = ParseInput(lines);
 
             var result = FindMonkeyNumber(Root, numberMonkeys, operationMonkeys);
@@ -98,65 +98,68 @@ namespace aoc.y2022.day_21
         }
 
         private static long ComputeChildNeededValue(long neededValue,
+                                                    long otherMonkeyScore,
                                                     Monkey monkey,
-                                                    string unknownMonkey,
-                                                    IDictionary<string, long> monkeyActions,
-                                                    IDictionary<string, Monkey> operationMonkeys)
+                                                    string unknownMonkeyName)
         {
-            // We want the other monkey - the one where we know the value of it (or it's branch).
-            // Then we can use that to compute the needed score of the unknown child.
-            var relevantMonkey = monkey.PredicateMonkeys.WithIndex().Single((mi) => mi.item != unknownMonkey);
-            var relevantMonkeyScore = ComputeMonkeyNumber(monkeyActions, operationMonkeys, relevantMonkey.item);
-            var relevantMonkeyIndex = relevantMonkey.index;
+            checked
+            {
+                // We want the other monkey - the one where we know the value of it (or it's branch).
+                // Then we can use that to compute the needed score of the unknown child.
+                var unknownMonkey = monkey.PredicateMonkeys.WithIndex().Single((mi) => mi.item == unknownMonkeyName);
+                var unknownMonkeyIndex = unknownMonkey.index;
 
-            if (monkey.Operation == Operation.Add)
-            {
-                return neededValue - relevantMonkeyScore;
-            }
-            else if (monkey.Operation == Operation.Multiply)
-            {
-                return neededValue / relevantMonkeyScore;
-            }
-            else if (monkey.Operation == Operation.Minus)
-            {
-                // If:
-                // Needed = Known - Unknown
-                // Then
-                // Unknown = Known - Needed
-                if (relevantMonkeyIndex == 0)
+                if (monkey.Operation == Operation.Add)
                 {
-                    return relevantMonkeyScore - neededValue;
+                    return neededValue - otherMonkeyScore;
                 }
-                // If:
-                // Needed = Unknwon - Known
-                // Then
-                // Unknown = Needed - Known
-                else
+                else if (monkey.Operation == Operation.Multiply)
                 {
-                    return neededValue - relevantMonkeyScore;
+                    var result = neededValue / otherMonkeyScore;
+                    return result;
                 }
-            }
-            else if (monkey.Operation == Operation.Divide)
-            {
-                // If:
-                // Needed = Known / Unknown
-                // Then
-                // Unknown = Known / Needed
-                if (relevantMonkeyIndex == 0)
+                else if (monkey.Operation == Operation.Minus)
                 {
-                    return relevantMonkeyScore / neededValue;
+                    // If:
+                    // Needed = This - Other
+                    // Then
+                    // This = Needed + Other
+                    if (unknownMonkeyIndex == 0)
+                    {
+                        return neededValue + otherMonkeyScore;
+                    }
+                    // If:
+                    // Needed = Other - This
+                    // Then
+                    // This = Other - Needed
+                    else
+                    {
+                        return otherMonkeyScore - neededValue;
+                    }
                 }
-                // If:
-                // Needed = Unknown / Known
-                // Then
-                // Unknown = Needed * Known
-                else
+                else if (monkey.Operation == Operation.Divide)
                 {
-                    return neededValue * relevantMonkeyScore;
+                    // If:
+                    // Needed = This / Other
+                    // Then
+                    // This = Needed * Other
+                    if (unknownMonkeyIndex == 0)
+                    {
+                        var result = otherMonkeyScore * neededValue;
+                        return result;
+                    }
+                    // If:
+                    // Needed = Other / This
+                    // Then 
+                    // This = Other / Needed
+                    else
+                    {
+                        return otherMonkeyScore / neededValue;
+                    }
                 }
-            }
 
-            throw new Exception("Unexpeted operation");
+                throw new Exception("Unexpeted operation");
+            }
         }
 
         private static long FindNecessaryHumanNumber(long neededValue,
@@ -164,22 +167,16 @@ namespace aoc.y2022.day_21
                                                      IDictionary<string, long> monkeyActions,
                                                      IDictionary<string, Monkey> operationMonkeys)
         {
-            if (monkey.Name == Human)
-            {
-                return neededValue;
-            }
-
-            // Predicate Monkey is the branch that contains Human, that we need to traverse down and find the appropriate value for
             var (knownChildScore, unknownChildName) = FindMonkeyComputeableBranchValues(monkey.Name,
-                                                                                      monkeyActions,
-                                                                                      operationMonkeys);
+                                                                                        monkeyActions,
+                                                                                        operationMonkeys);
 
-            //if (predicateMonkey == Human)
-            //{
-            //    return newNeededValue;
-            //}
+            var neededChildMonkeyValue = ComputeChildNeededValue(neededValue, knownChildScore, monkey, unknownChildName);
 
-            var neededChildMonkeyValue = ComputeChildNeededValue(knownChildScore, monkey, unknownChildName, monkeyActions, operationMonkeys);
+            if (unknownChildName == Human)
+            {
+                return neededChildMonkeyValue;
+            }
 
             return FindNecessaryHumanNumber(neededChildMonkeyValue, operationMonkeys[unknownChildName], monkeyActions, operationMonkeys);
         }
