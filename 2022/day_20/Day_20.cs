@@ -12,15 +12,15 @@ namespace aoc.y2022.day_20
 
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("2022/day_20/input.txt");
-            var nums = lines.Select(l => int.Parse(l)).ToList();
+            var lines = FileUtils.ReadAllLines("2022/day_20/input2.txt");
+            var nums = lines.Select(l => long.Parse(l)).ToList();
 
             var result = MixNumbers(nums, nums);
             var score = ComputeScore(result);
             Console.WriteLine(score);
 
-            //var nums2 = lines.Select(l => int.Parse(l) * DecryptionKey).ToList();
-            //var mixedNums = new List<int>(nums2);
+            //var nums2 = lines.Select(l => long.Parse(l) * DecryptionKey).ToList();
+            //var mixedNums = new List<long>(nums2);
 
             //for (var i = 0; i < Repititions; i++)
             //{
@@ -31,13 +31,13 @@ namespace aoc.y2022.day_20
             //Console.WriteLine(score2);
         }
 
-        private static List<int> MixNumbers(IList<int> numbers, IList<int> startingSequence)
+        private static List<long> MixNumbers(IList<long> numbers, IList<long> startingSequence)
         {
             var length = numbers.Count;
-            var indexedNums = numbers.WithIndex().ToList();
+            var indexedNums = startingSequence.WithIndex().ToList();
             var indexTracker = indexedNums.ToDictionary(n => n.index, n => n.index);
 
-            var mixedNums = new LinkedList<int>(startingSequence);
+            var mixedNums = new LinkedList<long>(startingSequence);
             
             Console.WriteLine(string.Join(',', mixedNums.Select(i => i.ToString())));
 
@@ -73,14 +73,14 @@ namespace aoc.y2022.day_20
             return mixedNums.ToList();
         }
 
-        private static (int index, bool headingLeft) ComputeTargetIndex(int num, int currentIndex, int numsLength)
+        private static (int index, bool headingLeft) ComputeTargetIndex(long num, long currentIndex, int numsLength)
         {
             var nominalTargetIndex = currentIndex + num;
             var headingLeft = nominalTargetIndex < currentIndex;
 
             var wrappedTargetIndex = nominalTargetIndex.MathMod(numsLength);
 
-            return (wrappedTargetIndex, nominalTargetIndex < currentIndex);
+            return ((int)wrappedTargetIndex, nominalTargetIndex < currentIndex);
         }
 
         private static void UpdateAffectedIndices(Dictionary<int,int> indexTracker, int currentIndex, int targetIndex)
@@ -103,7 +103,7 @@ namespace aoc.y2022.day_20
             }
         }
 
-        private static LinkedListNode<int> GetNode(LinkedList<int> list, int targetIndex)
+        private static LinkedListNode<long> GetNode(LinkedList<long> list, int targetIndex)
         {
             var node = list.First;
 
@@ -116,7 +116,7 @@ namespace aoc.y2022.day_20
             return node!;
         }
 
-        private static int ComputeScore(IList<int> numbers)
+        private static long ComputeScore(IList<long> numbers)
         {
             const int num1Index = 1000;
             const int num2Index = 2000;

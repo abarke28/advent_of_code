@@ -6,5 +6,10 @@
         {
             return ((a % b) + b) % b;
         }
+
+        public static long MathMod(this long a, long b)
+        {
+            return ((a % b) + b) % b;
+        }
     }
 }
