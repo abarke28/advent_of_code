@@ -33,7 +33,7 @@ namespace aoc.y2022.day_21
 
                     return true;
                 }
-                
+
                 if (PredicateMonkeys.All(pm => monkeyActions.ContainsKey(pm)))
                 {
                     result = Operation switch
@@ -102,63 +102,29 @@ namespace aoc.y2022.day_21
                                                     Monkey monkey,
                                                     string unknownMonkeyName)
         {
-            checked
+            // We want the other monkey - the one where we know the value of it (or it's branch).
+            // Then we can use that to compute the needed score of the unknown child, where the humn monkey is.
+            var unknownMonkey = monkey.PredicateMonkeys.WithIndex().Single((mi) => mi.item == unknownMonkeyName);
+            var unknownMonkeyIndex = unknownMonkey.index;
+
+            switch (monkey.Operation)
             {
-                // We want the other monkey - the one where we know the value of it (or it's branch).
-                // Then we can use that to compute the needed score of the unknown child.
-                var unknownMonkey = monkey.PredicateMonkeys.WithIndex().Single((mi) => mi.item == unknownMonkeyName);
-                var unknownMonkeyIndex = unknownMonkey.index;
-
-                if (monkey.Operation == Operation.Add)
-                {
+                case Operation.Add:
                     return neededValue - otherMonkeyScore;
-                }
-                else if (monkey.Operation == Operation.Multiply)
-                {
-                    var result = neededValue / otherMonkeyScore;
-                    return result;
-                }
-                else if (monkey.Operation == Operation.Minus)
-                {
-                    // If:
-                    // Needed = This - Other
-                    // Then
-                    // This = Needed + Other
-                    if (unknownMonkeyIndex == 0)
-                    {
-                        return neededValue + otherMonkeyScore;
-                    }
-                    // If:
-                    // Needed = Other - This
-                    // Then
-                    // This = Other - Needed
-                    else
-                    {
-                        return otherMonkeyScore - neededValue;
-                    }
-                }
-                else if (monkey.Operation == Operation.Divide)
-                {
-                    // If:
-                    // Needed = This / Other
-                    // Then
-                    // This = Needed * Other
-                    if (unknownMonkeyIndex == 0)
-                    {
-                        var result = otherMonkeyScore * neededValue;
-                        return result;
-                    }
-                    // If:
-                    // Needed = Other / This
-                    // Then 
-                    // This = Other / Needed
-                    else
-                    {
-                        return otherMonkeyScore / neededValue;
-                    }
-                }
 
-                throw new Exception("Unexpeted operation");
+                case Operation.Multiply:
+                    return neededValue / otherMonkeyScore;
+
+                case Operation.Minus:
+                    // If (Needed = This - Other) => (This = Needed + Other). If (Needed = Other - This) => (This = Other - Needed)
+                    return unknownMonkeyIndex == 0 ? neededValue + otherMonkeyScore : otherMonkeyScore - neededValue;
+
+                case Operation.Divide:
+                    // If (Needed = This / Other) => (This = Needed * Other). If (Needed = Other / This) => (This = Other / Needed)
+                    return unknownMonkeyIndex == 0 ? otherMonkeyScore * neededValue : otherMonkeyScore / neededValue;
+
+                default:
+                    throw new Exception("Unexpcted operation");
             }
         }
 
