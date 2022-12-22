@@ -84,15 +84,18 @@ namespace aoc.y2022.day_22
             while (instruction.Count > 0)
             {
                 var nextTarget = currentPosition + currentHeading;
+                var nextHeading = currentHeading;
+           
+                DirectionEval:
+                
                 var isInBounds = grid.IsInBounds(nextTarget);
 
                 Console.WriteLine($"At {currentPosition} with heading {currentHeading}. Next target {nextTarget}");
 
-            DirectionEval:
-
                 if (isInBounds && grid.GetValue(nextTarget) == Valid)
                 {
                     currentPosition = nextTarget;
+                    currentHeading = nextHeading;
                     newPosition = currentPosition;
                     instruction.Count--;
                     continue;
@@ -103,44 +106,17 @@ namespace aoc.y2022.day_22
                 }
                 else if (!isInBounds || grid.GetValue(nextTarget) == InValid)
                 {
-                    // Heading left or right
-                    if (currentHeading.Y == 0)
+                    var (canMove, wrappedTarget, wrappedHeading) = ComputeWrap(grid, currentPosition, currentHeading);
+
+                    if (!canMove)
                     {
-                        var indexedRow = grid.GetRow(currentPosition.Y).WithIndex();
-
-                        var nextXCoord = currentHeading ==
-                            Vector2D.Right
-                                ? indexedRow.Where(ir => ir.item != InValid).Min(ir => ir.index)
-                                : indexedRow.Where(ir => ir.item != InValid).Max(ir => ir.index);
-
-                        nextTarget = new Vector2D(nextXCoord, currentPosition.Y);
-
-                        if (!grid.IsInBounds(nextTarget))
-                        {
-                            break;
-                        }
-
-                        isInBounds = true;
-                        goto DirectionEval;
+                        break;
                     }
-                    // Heading up or down
                     else
                     {
-                        var indexedColumn = grid.GetColumn(currentPosition.X).WithIndex();
+                        nextTarget = wrappedTarget;
+                        nextHeading = wrappedHeading;
 
-                        var nextYCoord = currentHeading ==
-                            Vector2D.Up
-                                ? indexedColumn.Where(ic => ic.item != InValid).Min(ic => ic.index)
-                                : indexedColumn.Where(ic => ic.item != InValid).Max(ic => ic.index);
-
-                        nextTarget = new Vector2D(currentPosition.X, nextYCoord);
-
-                        if (!grid.IsInBounds(nextTarget))
-                        {
-                            break;
-                        }
-
-                        isInBounds = true;
                         goto DirectionEval;
                     }
                 }
@@ -149,6 +125,48 @@ namespace aoc.y2022.day_22
             }
 
             return (newPosition, newHeading);
+        }
+
+        private static (bool canMove, Vector2D wrappedPosition, Vector2D wrappedHeading) ComputeWrap(Grid<char> grid, Vector2D currentPosition, Vector2D currentHeading)
+        {
+            // Heading left or right
+            if (currentHeading.Y == 0)
+            {
+                var indexedRow = grid.GetRow(currentPosition.Y).WithIndex();
+
+                var nextXCoord = currentHeading ==
+                    Vector2D.Right
+                        ? indexedRow.Where(ir => ir.item != InValid).Min(ir => ir.index)
+                        : indexedRow.Where(ir => ir.item != InValid).Max(ir => ir.index);
+
+                var nextTarget = new Vector2D(nextXCoord, currentPosition.Y);
+
+                if (!grid.IsInBounds(nextTarget) || grid.GetValue(nextTarget) == Wall)
+                {
+                    return (false, nextTarget, currentHeading);
+                }
+
+                return (true, nextTarget, currentHeading);
+            }
+            // Heading up or down
+            else
+            {
+                var indexedColumn = grid.GetColumn(currentPosition.X).WithIndex();
+
+                var nextYCoord = currentHeading ==
+                    Vector2D.Up
+                        ? indexedColumn.Where(ic => ic.item != InValid).Min(ic => ic.index)
+                        : indexedColumn.Where(ic => ic.item != InValid).Max(ic => ic.index);
+
+                var nextTarget = new Vector2D(currentPosition.X, nextYCoord);
+
+                if (!grid.IsInBounds(nextTarget) || grid.GetValue(nextTarget) == Wall)
+                {
+                    return (false, nextTarget, currentHeading);
+                }
+
+                return (true, nextTarget, currentHeading);
+            }
         }
 
         private static Vector2D CalculateTurn(Vector2D currentHeading, Turn direction)
