@@ -71,7 +71,6 @@ namespace aoc.y2022.day_18
             while (toCheck.Count > 0)
             {
                 var candidate = toCheck.Pop();
-                Console.WriteLine($"Checking candidate {candidate}.");
 
                 if (alreadyChecked.Contains(candidate))
                 {

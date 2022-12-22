@@ -283,7 +283,7 @@
         /// <exception cref="ArgumentException"></exception>
         public static Grid<T> FromStrings(IList<string> input, Func<char, T> mapper)
         {
-            if (input.Select(s => s.Trim().Length).ToHashSet().Count != 1)
+            if (input.Select(s => s.Length).ToHashSet().Count != 1)
             {
                 throw new ArgumentException("Input strings not of uniform length.");
             }

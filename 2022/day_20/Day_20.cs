@@ -8,7 +8,8 @@ namespace aoc.y2022.day_20
     public class Day_20 : ISolver
     {
         private const int DecryptionKey = 811_589_153;
-        private const int Repititions = 10;
+        private const int Repititions = 1;
+        //private const int Repititions = 10;
 
         public void Solve()
         {
@@ -19,16 +20,16 @@ namespace aoc.y2022.day_20
             var score = ComputeScore(result);
             Console.WriteLine(score);
 
-            //var nums2 = lines.Select(l => long.Parse(l) * DecryptionKey).ToList();
-            //var mixedNums = new List<long>(nums2);
+            var nums2 = lines.Select(l => long.Parse(l) * DecryptionKey).ToList();
+            var mixedNums = new List<long>(nums2);
 
-            //for (var i = 0; i < Repititions; i++)
-            //{
-            //    mixedNums = MixNumbers(nums2, mixedNums);
-            //}
+            for (var i = 0; i < Repititions; i++)
+            {
+                mixedNums = MixNumbers(nums2, mixedNums);
+            }
 
-            //var score2 = ComputeScore(mixedNums);
-            //Console.WriteLine(score2);
+            var score2 = ComputeScore(mixedNums);
+            Console.WriteLine(score2);
         }
 
         private static List<long> MixNumbers(IList<long> numbers, IList<long> startingSequence)
