@@ -32,6 +32,8 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 19 | [Not Enough Minerals](https://adventofcode.com/2022/day/19) | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Dynamic programming, recursion, memoization.
 | 20 | [Grove Positioning System](https://adventofcode.com/2022/day/20) | ⭐⭐ | ⭐⭐⭐ | Modulo math, linked lists.
 | 21 | [Monkey Math](https://adventofcode.com/2022/day/21) | ⭐⭐⭐⭐ | ⭐⭐⭐ | Recursion, checked contexts, tree traversal.
+| 22 | [Monkey Map](https://adventofcode.com/2022/day/22) | ⭐⭐ | ⭐⭐⭐ | Vector math, 2D & 3D traversal.
+| 23 | [Unstable Diffusion](https://adventofcode.com/2022/day/23) | ⭐⭐ | ⭐⭐ | Vector math	.
 
 ## 2021
 

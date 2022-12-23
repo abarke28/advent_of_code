@@ -56,6 +56,20 @@
                 : X.CompareTo(other.X);
         }
 
+        public IEnumerable<Vector2D> Get8Neighbors()
+        {
+            foreach (var y in new[] { -1, 0, 1 })
+            {
+                foreach (var x in new[] { -1, 0, 1 })
+                {
+                    if (!(y == 0 && x == 0))
+                    {
+                        yield return new Vector2D(X + x, Y + y);
+                    }
+                }
+            }
+        }
+
         public static Vector2D operator +(Vector2D v1, Vector2D v2)
         {
             return new Vector2D(v1.X + v2.X, v1.Y + v2.Y);

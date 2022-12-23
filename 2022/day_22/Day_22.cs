@@ -194,6 +194,15 @@ namespace aoc.y2022.day_22
             return score;
         }
 
+        private static IDictionary<(Vector2D position, Vector2D heading), (Vector2D position, Vector2D heading)> Compute3DWraps(Grid<char> grid)
+        {
+            var wraps = new Dictionary<(Vector2D position, Vector2D heading), (Vector2D position, Vector2D heading)>();
+
+            // TODO - Compute wraps.
+
+            return wraps;
+        }
+
         private static (Grid<char> grid, IList<Instruction> instructions) ParseInput(IList<string> lines)
         {
             var gridLines = lines.Take(lines.Count - 2);
