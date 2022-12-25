@@ -35,7 +35,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 22 | [Monkey Map](https://adventofcode.com/2022/day/22) | ⭐⭐ | ⭐⭐⭐ | Vector math, 2D & 3D traversal.
 | 23 | [Unstable Diffusion](https://adventofcode.com/2022/day/23) | ⭐⭐ | ⭐⭐ | Vector math.
 | 24 | [Blizzard Basin](https://adventofcode.com/2022/day/24) | ⭐⭐⭐ | ⭐⭐⭐ | BFS, vector math.
-| 25 | [TBD](https://adventofcode.com/2022/day/25) | ⭐ | ⭐ | .
+| 25 | [Full of Hot Air](https://adventofcode.com/2022/day/25) | ⭐⭐ | ⭐⭐ | String manipulation, radix handling.
 
 ## 2021
 

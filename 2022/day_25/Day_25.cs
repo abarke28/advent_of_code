@@ -23,8 +23,8 @@ namespace aoc.y2022.day_25
             { 0, '0' },
             { 1, '1' },
             { 2, '2' },
-            { 3, '=' },
-            { 4, '-' },
+            { -2, '=' },
+            { -1, '-' },
         };
 
         private static readonly Dictionary<int, int> digitSnafuOffsetMap = new()
@@ -32,8 +32,8 @@ namespace aoc.y2022.day_25
             { 0, 0 },
             { 1, 1 },
             { 2, 2 },
-            { 3, -2 },
-            { 4, -1 }
+            { -2, -2 },
+            { -1, -1 }
         };
 
         public void Solve()
@@ -69,7 +69,7 @@ namespace aoc.y2022.day_25
 
             while (workingValue != 0)
             {
-                var radixValue = ((workingValue % Radix) + Radix) % Radix;
+                var radixValue = ((workingValue + 2) % Radix) -2;
 
                 snafu.Append(digitSnafuMap[(int)radixValue]);
                 workingValue -= digitSnafuOffsetMap[(int)radixValue];
