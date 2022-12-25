@@ -23,6 +23,11 @@ namespace aoc.utils.extensions
             return dict;
         }
 
+        public static Dictionary<TValue, TKey> Invert<TKey, TValue>(this IDictionary<TKey, TValue> source) where TValue : notnull
+        {
+            return source.ToDictionary(source => source.Value, source => source.Key);
+        }
+
         public static void AddRange<T>(this ICollection<T> source, IEnumerable<T> items)
         {
             foreach (var item in items)

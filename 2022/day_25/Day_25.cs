@@ -1,5 +1,6 @@
 using aoc.common;
 using aoc.utils;
+using aoc.utils.extensions;
 using System.Text;
 
 namespace aoc.y2022.day_25
@@ -18,14 +19,7 @@ namespace aoc.y2022.day_25
             { '2', 2 },
         };
 
-        private static readonly Dictionary<int, char> digitSnafuMap = new()
-        {
-            { 0, '0' },
-            { 1, '1' },
-            { 2, '2' },
-            { -2, '=' },
-            { -1, '-' },
-        };
+        private static readonly Dictionary<int, char> digitSnafuMap = charScoreMap.Invert();
 
         public void Solve()
         {
