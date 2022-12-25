@@ -27,15 +27,6 @@ namespace aoc.y2022.day_25
             { -1, '-' },
         };
 
-        private static readonly Dictionary<int, int> digitSnafuOffsetMap = new()
-        {
-            { 0, 0 },
-            { 1, 1 },
-            { 2, 2 },
-            { -2, -2 },
-            { -1, -1 }
-        };
-
         public void Solve()
         {
             var lines = FileUtils.ReadAllLines("2022/day_25/input.txt");
@@ -72,7 +63,7 @@ namespace aoc.y2022.day_25
                 var radixValue = ((workingValue + 2) % Radix) -2;
 
                 snafu.Append(digitSnafuMap[(int)radixValue]);
-                workingValue -= digitSnafuOffsetMap[(int)radixValue];
+                workingValue -= radixValue;
 
                 workingValue /= Radix;
             }
