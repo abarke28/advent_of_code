@@ -56,54 +56,6 @@
                 : X.CompareTo(other.X);
         }
 
-        public IEnumerable<Vector2D> Get4Neighbors()
-        {
-            return new List<Vector2D>()
-            {
-                this + Vector2D.Up,
-                this + Vector2D.Down,
-                this + Vector2D.Left,
-                this + Vector2D.Right
-            };
-        }
-
-        public IEnumerable<Vector2D> Get5Neighbors()
-        {
-            return new List<Vector2D>()
-            {
-                this,
-                this + Vector2D.Up,
-                this + Vector2D.Down,
-                this + Vector2D.Left,
-                this + Vector2D.Right
-            };
-        }
-
-        public IEnumerable<Vector2D> Get8Neighbors()
-        {
-            foreach (var y in new[] { -1, 0, 1 })
-            {
-                foreach (var x in new[] { -1, 0, 1 })
-                {
-                    if (!(y == 0 && x == 0))
-                    {
-                        yield return new Vector2D(X + x, Y + y);
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<Vector2D> Get9Neighbors()
-        {
-            foreach (var y in new[] { -1, 0, 1 })
-            {
-                foreach (var x in new[] { -1, 0, 1 })
-                {
-                    yield return new Vector2D(X + x, Y + y);
-                }
-            }
-        }
-
         public void Deconstruct(out int x, out int y)
         {
             x = X;

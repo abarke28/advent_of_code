@@ -43,5 +43,53 @@
 
             return sum;
         }
+
+        public static IEnumerable<Vector2D> Get4Neighbors(this Vector2D source)
+        {
+            return new List<Vector2D>()
+            {
+                source + Vector2D.Up,
+                source + Vector2D.Down,
+                source + Vector2D.Left,
+                source + Vector2D.Right
+            };
+        }
+
+        public static IEnumerable<Vector2D> Get5Neighbors(this Vector2D source)
+        {
+            return new List<Vector2D>()
+            {
+                source,
+                source + Vector2D.Up,
+                source + Vector2D.Down,
+                source + Vector2D.Left,
+                source + Vector2D.Right
+            };
+        }
+
+        public static IEnumerable<Vector2D> Get8Neighbors(this Vector2D source)
+        {
+            foreach (var y in new[] { -1, 0, 1 })
+            {
+                foreach (var x in new[] { -1, 0, 1 })
+                {
+                    if (!(y == 0 && x == 0))
+                    {
+                        yield return new Vector2D(source.X + x, source.Y + y);
+                    }
+                }
+            }
+        }
+
+        public static IEnumerable<Vector2D> Get9Neighbors(this Vector2D source)
+        {
+            foreach (var y in new[] { -1, 0, 1 })
+            {
+                foreach (var x in new[] { -1, 0, 1 })
+                {
+                    yield return new Vector2D(source.X + x, source.Y + y);
+                }
+            }
+        }
     }
 }
