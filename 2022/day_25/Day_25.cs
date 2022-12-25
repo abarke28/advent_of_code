@@ -49,17 +49,18 @@ namespace aoc.y2022.day_25
 
         private static string ConvertDecimalToSnafu(long n)
         {
-            var workingValue = n;
+            const int radixOffset = -2;
+
             var snafu = new StringBuilder();
 
-            while (workingValue != 0)
+            while (n != 0)
             {
-                var radixValue = ((workingValue + 2) % Radix) -2;
+                var radixValue = n.ModWithOffset(Radix, radixOffset);
 
                 snafu.Append(digitSnafuMap[(int)radixValue]);
-                workingValue -= radixValue;
+                n -= radixValue;
 
-                workingValue /= Radix;
+                n /= Radix;
             }
 
             return new string(snafu.ToString().Reverse().ToArray());

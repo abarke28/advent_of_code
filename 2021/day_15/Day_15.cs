@@ -1,5 +1,6 @@
 using aoc.common;
 using aoc.utils;
+using aoc.utils.extensions;
 
 namespace aoc.y2021.day_15
 {
@@ -14,9 +15,9 @@ namespace aoc.y2021.day_15
             var minDistances = graph.GetMinDistances(0);
             Console.WriteLine(minDistances[graph.VerticesCount - 1]);
 
-            var expandedGraph = GenerateExpandedGraph(lines);
-            var expandedMinDistances = expandedGraph.GetMinDistances(0);
-            Console.WriteLine(expandedMinDistances[expandedGraph.VerticesCount - 1]);
+            var expandedGrid = GenerateExpandedGrid(lines);
+            var expandedMinDistances = expandedGrid.GetMinDistances(Vector2D.Zero, (_, n2) => n2);
+            Console.WriteLine(expandedMinDistances[new Vector2D(expandedGrid.Width - 1, expandedGrid.Height - 1)]);
         }
 
         private static Graph GenerateGraph(IList<string> lines)
@@ -28,7 +29,7 @@ namespace aoc.y2021.day_15
             return graph;
         }
 
-        private static Graph GenerateExpandedGraph(IList<string> lines)
+        private static Grid<int> GenerateExpandedGrid(IList<string> lines)
         {
             const int expansionFactor = 5;
             const int maxValue = 9;
@@ -63,9 +64,7 @@ namespace aoc.y2021.day_15
                 }
             }
 
-            var graph = Graph.FromGrid(grid, GetNeighbors, (_, n2) => n2);
-
-            return graph;
+            return grid;
         }
 
         private static IEnumerable<Vector2D> GetNeighbors(Vector2D v)
