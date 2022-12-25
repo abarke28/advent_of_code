@@ -8,16 +8,14 @@ namespace aoc.y2021.day_15
     {
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("2021/day_15/input2.txt");
+            var lines = FileUtils.ReadAllLines("2021/day_15/input.txt");
 
             var graph = GenerateGraph(lines);
             var minDistances = graph.GetMinDistances(0);
-
             Console.WriteLine(minDistances[graph.VerticesCount - 1]);
 
             var expandedGraph = GenerateExpandedGraph(lines);
             var expandedMinDistances = expandedGraph.GetMinDistances(0);
-
             Console.WriteLine(expandedMinDistances[expandedGraph.VerticesCount - 1]);
         }
 
@@ -33,33 +31,37 @@ namespace aoc.y2021.day_15
         private static Graph GenerateExpandedGraph(IList<string> lines)
         {
             const int expansionFactor = 5;
-            //const int maxValue = 9;
+            const int maxValue = 9;
 
             var height = lines.Count;
             var width = lines.First().Length;
 
             var grid = new Grid<int>(width * expansionFactor, height * expansionFactor, 0);
 
-            for (var y = 0; y < height; y++)
-            { 
-                for (var x = 0; x < width; x++)
+            for (var y = 0; y < grid.Height; y++)
+            {
+                for (var x = 0; x <grid.Width; x++)
                 {
-                    grid.SetValue(x, y, lines[y][x] - '0');
+                    if (x < width && y < height)
+                    {
+                        grid.SetValue(x, y, lines[y][x] - '0');
+                    }
+                    else
+                    {
+                        var sourceX = x % width;
+                        var sourceY = y % height;
+
+                        var nominalValue = grid.GetValue(sourceX, sourceY);
+
+                        var overflowCountX = x / width;
+                        var overflowCountY = y / height;
+
+                        var wrappedValue = ((nominalValue + overflowCountX + overflowCountY - 1) % maxValue) + 1;
+
+                        grid.SetValue(x, y, wrappedValue);
+                    }
                 }
             }
-
-            //for (var i = 0; i < expansionFactor; i++)
-            //{
-            //    var nominalCardinalValue = (lines[y][x] - '0') + i;
-            //    var cardinalValue = nominalCardinalValue > maxValue ? nominalCardinalValue - maxValue : nominalCardinalValue;
-
-            //    var nominalDiagonalValue = (lines[y][x] - '0') + 2 * i;
-            //    var diagonalValue = nominalDiagonalValue > maxValue ? nominalDiagonalValue - maxValue : nominalDiagonalValue;
-
-            //    grid.SetValue(x + (expansionFactor * i), y, nominalCardinalValue);
-            //    grid.SetValue(x, y + (expansionFactor * i), nominalCardinalValue);
-            //    grid.SetValue(x + (expansionFactor * i), y + (expansionFactor * i), nominalDiagonalValue);
-            //}
 
             var graph = Graph.FromGrid(grid, GetNeighbors, (_, n2) => n2);
 
