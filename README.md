@@ -54,6 +54,8 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 11 | [Dumbo Octopus](https://adventofcode.com/2021/day/11) | ⭐⭐⭐⭐ | ⭐⭐ | Cellular automata, vector math, recursion.
 | 12 | [Passage Pathing](https://adventofcode.com/2021/day/12) | ⭐⭐ | ⭐⭐⭐⭐ | Graph theory, recursion, backtracking.
 | 13 | [Transparent Origami](https://adventofcode.com/2021/day/13) | ⭐⭐⭐⭐⭐ | ⭐⭐ | Vector math, console art - cool!
+| 14 | [Extended Polymerization](https://adventofcode.com/2021/day/14) | ⭐⭐ | ⭐⭐⭐ | String manipulation, scaling issues.
+| 15 | [Chiton](https://adventofcode.com/2021/day/15) | ⭐⭐ | ⭐⭐⭐ | Graph theory, Djikstras algo.
 
 To solve a problem, run:
 
