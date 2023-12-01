@@ -7,6 +7,12 @@ Details: [Advent of Code](https://adventofcode.com/2022/about)
 A daily coding challenge for each day in December leading up to Christmas. Each day & challenge consists of two related problems.
 2022 is my first year doing this, although I've since gone back and started doing the previous year's puzzles too.
 
+## 2023
+
+| Day | Story | Enjoyment | Challenge | What I Learnt/Used
+| --- | --- | --- | --- | --- |
+| 1 | [Name](https://adventofcode.com/2023/day/1) | ⭐ | ⭐ | Learned.
+
 ## 2022
 
 | Day | Story | Enjoyment | Challenge | What I Learnt/Used
