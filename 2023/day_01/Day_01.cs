@@ -1,5 +1,6 @@
 using aoc.common;
 using aoc.utils;
+using aoc.utils.extensions;
 
 namespace aoc.y2023.day_01
 {
@@ -12,10 +13,10 @@ namespace aoc.y2023.day_01
 
             // Part 1
             var numLines = lines
-                .Select(l => l.Where(c => int.TryParse(c.ToString(), out var _)).ToArray());
+                .Select(l => l.Where(c => c.IsNumber()).ToArray());
 
             var sumTotal = numLines
-                .Select(nl => int.Parse(nl[0].ToString() + nl[^1].ToString()))
+                .Select(nl => int.Parse($"{nl[0]}{nl[^1]}"))
                 .Sum();
 
             Console.WriteLine(sumTotal);
