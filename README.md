@@ -11,7 +11,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 
 | Day | Story | Enjoyment | Challenge | What I Learnt/Used
 | --- | --- | --- | --- | --- |
-| 1 | [Name](https://adventofcode.com/2023/day/1) | ⭐ | ⭐ | Learned.
+| 1 | [Trebuchet?!](https://adventofcode.com/2023/day/1) | ⭐ | ⭐⭐ | Clunky string parsing.
 
 ## 2022
 

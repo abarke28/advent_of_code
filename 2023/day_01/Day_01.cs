@@ -10,6 +10,7 @@ namespace aoc.y2023.day_01
         {
             var lines = FileUtils.ReadAllLines("2023/day_01/input2.txt");
 
+            // Part 1
             var numLines = lines
                 .Select(l => l.Where(c => int.TryParse(c.ToString(), out var _)).ToArray());
 
@@ -51,8 +52,8 @@ namespace aoc.y2023.day_01
 
             foreach (var l in lines)
             {
-                string firstNum = "";
-                string secondNum = "";
+                var firstNum = "";
+                var secondNum = "";
 
                 for (int i = 0; i < l.Length; i++)
                 {
