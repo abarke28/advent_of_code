@@ -9,7 +9,7 @@ namespace aoc.y2023.day_01
     {
         public void Solve()
         {
-            var lines = FileUtils.ReadAllLines("2023/day_01/input2.txt");
+            var lines = FileUtils.ReadAllLines("2023/day_01/input.txt");
 
             // Part 1
             var numLines = lines
@@ -22,20 +22,6 @@ namespace aoc.y2023.day_01
             Console.WriteLine(sumTotal);
             
             // Part 2
-            var chars = new Dictionary<char, int>()
-            {
-                { '1', 1 },
-                { '2', 2 },
-                { '3', 3 },
-                { '4', 4 },
-                { '5', 5 },
-                { '6', 6 },
-                { '7', 7 },
-                { '8', 8 },
-                { '9', 9 },
-                { '0', 0 },
-            };
-
             var numWords = new Dictionary<string, int>()
             {
                 { "one", 1 },
@@ -58,9 +44,9 @@ namespace aoc.y2023.day_01
 
                 for (int i = 0; i < l.Length; i++)
                 {
-                    if (chars.ContainsKey(l[i]))
+                    if (l[i].IsNumber())
                     {
-                        firstNum = chars[l[i]].ToString();
+                        firstNum = l[i].ToString();
                         break;
                     }
 
@@ -85,9 +71,9 @@ namespace aoc.y2023.day_01
 
                 for (int i = l.Length - 1; i >= 0; i--)
                 {
-                    if (chars.ContainsKey(l[i]))
+                    if (l[i].IsNumber())
                     {
-                        secondNum = chars[l[i]].ToString();
+                        secondNum = l[i].ToString();
                         break;
                     }
 
