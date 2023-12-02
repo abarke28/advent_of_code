@@ -48,7 +48,18 @@ namespace aoc.y$year.day_$day
         {
             var lines = FileUtils.ReadAllLines(`"$year/day_$day/input.txt`");
 
-            Console.WriteLine(`"Hello World`");
+            Part1(lines);
+            Part2(lines);
+        }
+
+        public void Part1(List<string> lines)
+        {
+            
+        }
+
+        public void Part2(List<string> lines)
+        {
+            
         }
     }
 }
