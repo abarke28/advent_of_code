@@ -12,6 +12,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | Day | Story | Enjoyment | Challenge | What I Learnt/Used
 | --- | --- | --- | --- | --- |
 | 1 | [Trebuchet?!](https://adventofcode.com/2023/day/1) | ⭐ | ⭐⭐ | Clunky string parsing.
+| 2 | [Cube Conundrum](https://adventofcode.com/2023/day/2) | ⭐ | ⭐ | String parsing.
 
 ## 2022
 
@@ -67,8 +68,12 @@ To solve a problem, run:
 
 `dotnet run [year_number] <day_number>`
 
-The default year is 2022.
+To use the example input (helpful for debugging), run:
 
-To generate the files for a new day's problem, run:
+`dotnet run [year_number] <day_number> -example`
+
+The default year is 2023.
+
+To generate the files for a new day's problems, run:
 
 `.\generate_day.ps1 <year_number> <day_number>`
