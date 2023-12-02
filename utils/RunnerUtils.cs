@@ -14,6 +14,7 @@ public static class RunnerUtils
     private const string SolutionPath = "aoc.y{0}.day_{1}.Day_{1}";
     private const string InputPath = "{0}/day_{1}/input{2}.txt";
     private const string Example = "-Example";
+    private const string NoFetch = "-NoFetch";
 
     public static async Task RunProblem(string[] input)
     {
@@ -22,7 +23,10 @@ public static class RunnerUtils
             return;
         }
 
-        await FetchProblemInput(year, problem);
+        if (!input.Any(i => i.Equals(NoFetch, StringComparison.OrdinalIgnoreCase)))
+        {
+            await FetchProblemInput(year, problem);
+        }
 
         var fqTypeName = string.Format(SolutionPath, year, problem);
 
@@ -63,7 +67,10 @@ public static class RunnerUtils
         const int dayLength = 2;
         const char dayPadChar = '0';
 
-        var numberInput = input.Where(i => !i.Equals(Example, StringComparison.OrdinalIgnoreCase)).ToArray();
+        var numberInput = input
+            .Where(i => !i.Equals(Example, StringComparison.OrdinalIgnoreCase))
+            .Where(i => !i.Equals(NoFetch, StringComparison.OrdinalIgnoreCase))
+            .ToArray();
 
         var inputCount = numberInput.Length;
         var dayIndex = inputCount - 1;
