@@ -1,6 +1,8 @@
 ﻿using aoc.common;
 using System.Diagnostics;
+using System.Net;
 using System.Reflection;
+using System.Text.Json;
 
 namespace aoc.utils;
 
@@ -13,12 +15,14 @@ public static class RunnerUtils
     private const string InputPath = "{0}/day_{1}/input{2}.txt";
     private const string Example = "-Example";
 
-    public static void RunProblem(string[] input)
+    public static async Task RunProblem(string[] input)
     {
         if (!TryParseProblemNumber(input, out var problem, out var year))
         {
             return;
         }
+
+        await FetchProblemInput(year, problem);
 
         var fqTypeName = string.Format(SolutionPath, year, problem);
 
@@ -40,8 +44,6 @@ public static class RunnerUtils
 
         var p1 = solver!.GetType().GetMethod(Part1Method);
         var p2 = solver!.GetType().GetMethod(Part2Method);
-
-        Console.WriteLine($"Running solver for problem {year}-{problem}:\n");
 
         var runExample = input.Any(i => i.Equals(Example, StringComparison.OrdinalIgnoreCase));
         var fileInput = string.Format(InputPath, year, problem, runExample ? "2" : string.Empty);
@@ -80,5 +82,51 @@ public static class RunnerUtils
         problemString = paddedProblem;
 
         return true;
+    }
+
+    private static async Task FetchProblemInput(string year, string day)
+    {
+        var fileInput = string.Format(InputPath, year, day, string.Empty);
+        var inputPath = $"C://git/aoc/{fileInput}";
+
+        if (File.Exists(inputPath))
+        {
+            var currentInputFileContent = File.ReadAllLines(inputPath);
+
+            if (currentInputFileContent.Any(l => !string.IsNullOrWhiteSpace(l)))
+            {
+                Console.WriteLine($"[Input file {inputPath} already has content, will not fetch input]\n");
+                return;
+            }
+        }
+
+        var json = File.ReadAllText("config.json");
+        var config = JsonSerializer.Deserialize<AocConfig>(json, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+
+        var baseAddress = new Uri(config.BaseUrl);
+        var cookies = new CookieContainer();
+        var handler = new HttpClientHandler { CookieContainer = cookies };
+        var client = new HttpClient(handler) { BaseAddress = baseAddress };
+
+        cookies.Add(baseAddress, new Cookie(config.CookieName, config.Token));
+
+        var requestPath = string.Format(config.RequestPath, year, int.Parse(day));
+
+        Console.WriteLine($"[Fetching file input - GET - {baseAddress}{requestPath}]\n");
+
+        var response = await client.GetAsync(requestPath);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            Console.WriteLine($"Error fetching problem input: {response.StatusCode}");
+            throw new Exception(response.ToString());
+        }
+        var content = await response.Content.ReadAsStringAsync();
+
+        File.WriteAllText(inputPath, content);
+        var lines = content.Split("\n").Where(l => !string.IsNullOrWhiteSpace(l));
     }
 }

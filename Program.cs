@@ -4,7 +4,7 @@ Console.WriteLine("Advent Of Code\n");
 
 if (args.Any())
 {
-    RunnerUtils.RunProblem(args);
+    await RunnerUtils.RunProblem(args);
 }
 else
 {
