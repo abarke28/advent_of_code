@@ -3,7 +3,7 @@
 namespace aoc.y2022.day_03
 {
     // https://adventofcode.com/2022/day/3
-    public class Day_03 : ISolver
+    public class Day_03
     {
         private class Bag
         {

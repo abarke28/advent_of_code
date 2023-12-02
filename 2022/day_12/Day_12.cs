@@ -4,7 +4,7 @@ using aoc.utils;
 namespace aoc.y2022.day_12
 {
     // https://adventofcode.com/2022/day/12
-    public class Day_12 : ISolver
+    public class Day_12
     {
         private const char BestSignal = 'E';
         private const char Start = 'S';

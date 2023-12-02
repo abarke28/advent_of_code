@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2021.day_13
 {
     // https://adventofcode.com/2021/day/13
-    public class Day_13 : ISolver
+    public class Day_13
     {
         private enum FoldDirection
         {

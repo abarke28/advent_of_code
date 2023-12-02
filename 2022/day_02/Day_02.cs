@@ -3,7 +3,7 @@
 namespace aoc.y2022.day_02
 {
     // https://adventofcode.com/2022/day/2
-    public class Day_02 : ISolver
+    public class Day_02
     {
         private enum Rps
         {

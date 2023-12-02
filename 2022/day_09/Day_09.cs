@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_09
 {
     // https://adventofcode.com/2022/day/09
-    public class Day_09 : ISolver
+    public class Day_09
     {
         private static readonly Dictionary<char, Vector2D> InstructionMoveMap = new Dictionary<char, Vector2D>()
         {

@@ -1,14 +1,18 @@
 ﻿using aoc.common;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 namespace aoc.utils;
 
 public static class RunnerUtils
 {
-    private const string DefaultYear = "2022";
-    private const string MethodName = "Solve";
+    private const string DefaultYear = "2023";
+    private const string Part1Method = "Part1";
+    private const string Part2Method = "Part2";
     private const string SolutionPath = "aoc.y{0}.day_{1}.Day_{1}";
+    private const string InputPath = "{0}/day_{1}/input{2}.txt";
+    private const string Example = "-Example";
 
     public static void RunProblem(string[] input)
     {
@@ -35,14 +39,22 @@ public static class RunnerUtils
             return;
         }
 
-        var methodInfo = solver!.GetType().GetMethod(MethodName);
+        var p1 = solver!.GetType().GetMethod(Part1Method);
+        var p2 = solver!.GetType().GetMethod(Part2Method);
 
         Console.WriteLine($"Running solver for problem {year}-{problem}:\n");
 
-        var stopWatch = Stopwatch.StartNew();
-        methodInfo!.Invoke(solver, Array.Empty<object>());
+        var runExample = input.Any(i => i.Equals(Example, StringComparison.OrdinalIgnoreCase));
+        var fileInput = string.Format(InputPath, year, problem, runExample ? "2" : string.Empty);
+        var problemInput = FileUtils.ReadAllLines(fileInput);
 
-        Console.WriteLine($"\nProblem solved in {stopWatch.ElapsedMilliseconds} ms");
+        var stopWatch = Stopwatch.StartNew();
+        var result1 = p1!.Invoke(solver, new object[] { problemInput });
+        Console.WriteLine($"[{year}-{problem} Part 1] [{stopWatch.ElapsedMilliseconds} ms] - {result1?.ToString()}");
+
+        stopWatch.Restart();
+        var result2 = p2!.Invoke(solver, new object[] { problemInput });
+        Console.WriteLine($"[{year}-{problem} Part 2] [{stopWatch.ElapsedMilliseconds} ms] - {result2?.ToString()}");
     }
 
     private static bool TryParseProblemNumber(string[] input, out string problemString, out string yearString)
@@ -50,12 +62,14 @@ public static class RunnerUtils
         const int dayLength = 2;
         const char dayPadChar = '0';
 
-        var inputCount = input.Length;
+        var numberInput = input.Where(i => !i.Equals(Example, StringComparison.OrdinalIgnoreCase)).ToArray();
+
+        var inputCount = numberInput.Length;
         var dayIndex = inputCount - 1;
         
-        yearString = inputCount > 1 ? input[0] : DefaultYear;
+        yearString = inputCount > 1 ? numberInput[0] : DefaultYear;
 
-        if (!int.TryParse(input[dayIndex], out var problem))
+        if (!int.TryParse(numberInput[dayIndex], out var problem))
         {
             Console.WriteLine($"Could not parse input '{input}' into a problem number. Exiting.");
 

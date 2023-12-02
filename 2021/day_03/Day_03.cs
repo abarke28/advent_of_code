@@ -6,7 +6,7 @@ using System.Collections;
 namespace aoc.y2021.day_03
 {
     // https://adventofcode.com/2021/day/03
-    public class Day_03 : ISolver
+    public class Day_03
     {
         public void Solve()
         {

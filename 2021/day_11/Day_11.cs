@@ -4,7 +4,7 @@ using aoc.utils;
 namespace aoc.y2021.day_11
 {
     // https://adventofcode.com/2021/day/11
-    public class Day_11 : ISolver
+    public class Day_11
     {
         private const int MinEnergy = 0;
         private const int MaxEnergy = 9;

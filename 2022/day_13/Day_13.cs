@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace aoc.y2022.day_13
 {
     // https://adventofcode.com/2022/day/13
-    public class Day_13 : ISolver
+    public class Day_13
     {
         private abstract class Packet : IComparable<Packet>
         {

@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_20
 {
     // https://adventofcode.com/2022/day/20
-    public class Day_20 : ISolver
+    public class Day_20
     {
         private const int DecryptionKey = 811_589_153;
         private const int Repititions = 1;

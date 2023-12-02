@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2021.day_08
 {
     // https://adventofcode.com/2021/day/08
-    public class Day_08 : ISolver
+    public class Day_08
     {
         private const int SegmentCount069 = 6;
         private const int SegmentCount235 = 5;

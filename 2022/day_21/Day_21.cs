@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_21
 {
     // https://adventofcode.com/2022/day/21
-    public class Day_21 : ISolver
+    public class Day_21
     {
         private enum Operation
         {

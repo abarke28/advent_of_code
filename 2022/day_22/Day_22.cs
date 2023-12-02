@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_22
 {
     // https://adventofcode.com/2022/day/22
-    public class Day_22 : ISolver
+    public class Day_22
     {
         private const char Valid = '.';
         private const char InValid = ' ';

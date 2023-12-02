@@ -4,7 +4,7 @@ using aoc.utils;
 namespace aoc.y2021.day_16
 {
     // https://adventofcode.com/2021/day/16
-    public class Day_16 : ISolver
+    public class Day_16
     {
         public void Solve()
         {

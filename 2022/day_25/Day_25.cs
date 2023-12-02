@@ -6,7 +6,7 @@ using System.Text;
 namespace aoc.y2022.day_25
 {
     // https://adventofcode.com/2022/day/25
-    public class Day_25 : ISolver
+    public class Day_25
     {
         private const int Radix = 5;
 

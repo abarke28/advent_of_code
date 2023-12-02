@@ -3,7 +3,7 @@
 namespace aoc.y2022.day_01
 {
     // https://adventofcode.com/2022/day/1
-    public class Day_01 : ISolver
+    public class Day_01
     {
         public void Solve()
         {

@@ -7,11 +7,8 @@ namespace aoc.y2023.day_01
     // https://adventofcode.com/2023/day/01
     public class Day_01 : ISolver
     {
-        public void Solve()
+        public object Part1(IList<string> lines)
         {
-            var lines = FileUtils.ReadAllLines("2023/day_01/input.txt");
-
-            // Part 1
             var numLines = lines
                 .Select(l => l.Where(c => c.IsNumber()).ToArray());
 
@@ -19,9 +16,11 @@ namespace aoc.y2023.day_01
                 .Select(nl => int.Parse($"{nl[0]}{nl[^1]}"))
                 .Sum();
 
-            Console.WriteLine(sumTotal);
-            
-            // Part 2
+            return sumTotal;
+        }
+
+        public object Part2(IList<string> lines)
+        {
             var numWords = new Dictionary<string, int>()
             {
                 { "one", 1 },
@@ -97,9 +96,10 @@ namespace aoc.y2023.day_01
                 }
 
                 nums.Add(int.Parse(firstNum + secondNum));
+
             }
 
-            Console.WriteLine(nums.Sum());
+            return nums.Sum();
         }
     }
 }

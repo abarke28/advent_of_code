@@ -4,7 +4,7 @@ using aoc.utils;
 namespace aoc.y2022.day_07
 {
     // https://adventofcode.com/2022/day/7
-    public class Day_07 : ISolver
+    public class Day_07
     {
         private const string Command = "$";
         private const string Ls = "ls";

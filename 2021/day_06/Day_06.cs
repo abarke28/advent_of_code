@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2021.day_06
 {
     // https://adventofcode.com/2021/day/06
-    public class Day_06 : ISolver
+    public class Day_06
     {
         private const int CycleTime = 6;
         private const int FirstCycleTime = 8;

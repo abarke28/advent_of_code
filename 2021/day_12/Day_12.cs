@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2021.day_12
 {
     // https://adventofcode.com/2021/day/12
-    public class Day_12 : ISolver
+    public class Day_12
     {
         private const string Start = "start";
         private const string End = "end";

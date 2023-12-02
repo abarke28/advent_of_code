@@ -3,7 +3,7 @@ using aoc.common;
 namespace aoc.y2022.day_11
 {
     // https://adventofcode.com/2022/day/11
-    public class Day_11 : ISolver
+    public class Day_11
     {
         private class Monkey
         {

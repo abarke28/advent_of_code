@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_24
 {
     // https://adventofcode.com/2022/day/24
-    public class Day_24 : ISolver
+    public class Day_24
     {
         private const char OpenSpace = '.';
 

@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_18
 {
     // https://adventofcode.com/2022/day/18
-    public class Day_18 : ISolver
+    public class Day_18
     {
         private const int SidesPerCube = 6;
 

@@ -4,7 +4,7 @@ using aoc.utils;
 namespace aoc.y2021.day_10
 {
     // https://adventofcode.com/2021/day/10
-    public class Day_10 : ISolver
+    public class Day_10
     {
         private const long AutoCompleteFactor = 5L;
 

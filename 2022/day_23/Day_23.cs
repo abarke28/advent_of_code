@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_23
 {
     // https://adventofcode.com/2022/day/23
-    public class Day_23 : ISolver
+    public class Day_23
     {
         private static readonly Dictionary<Vector2D, IEnumerable<Vector2D>> _preferenceSequences = new()
         {

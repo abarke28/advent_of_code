@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_17
 {
     // https://adventofcode.com/2022/day/17
-    public class Day_17 : ISolver
+    public class Day_17
     {
         private const int ChamberWidth = 7;
         private const int BottomOffset = 4;

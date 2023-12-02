@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_15
 {
     // https://adventofcode.com/2022/day/15
-    public class Day_15 : ISolver
+    public class Day_15
     {
         private class SensorBeaconPair
         {

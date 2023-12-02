@@ -37,27 +37,18 @@ New-Item -Name $inputName | Out-Null
 New-Item -Name $input2Name | Out-Null
 New-Item -Name $className -Value `
 "using aoc.common;
-using aoc.utils;
 
 namespace aoc.y$year.day_$day
 {
     // https://adventofcode.com/$year/day/$day
-    public class Day_$day : ISolver
+    public class Day_$day
     {
-        public void Solve()
-        {
-            var lines = FileUtils.ReadAllLines(`"$year/day_$day/input.txt`");
-
-            Part1(lines);
-            Part2(lines);
-        }
-
-        public void Part1(List<string> lines)
+        public object Part1(IList<string> lines)
         {
             
         }
 
-        public void Part2(List<string> lines)
+        public object Part2(IList<string> lines)
         {
             
         }

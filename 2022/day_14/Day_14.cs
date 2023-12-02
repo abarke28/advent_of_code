@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_14
 {
     // https://adventofcode.com/2022/day/14
-    public class Day_14 : ISolver
+    public class Day_14
     {
         private static readonly Vector2D SandOrigin = new Vector2D(500, 0);
         private static readonly List<Vector2D> SandMoves = new List<Vector2D>

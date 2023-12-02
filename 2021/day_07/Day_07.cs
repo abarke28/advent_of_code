@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2021.day_07
 {
     // https://adventofcode.com/2021/day/07
-    public class Day_07 : ISolver
+    public class Day_07
     {
         public void Solve()
         {

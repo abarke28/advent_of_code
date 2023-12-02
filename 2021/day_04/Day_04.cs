@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2021.day_04
 {
     // https://adventofcode.com/2021/day/04
-    public class Day_04 : ISolver
+    public class Day_04
     {
         private const int BingoDimension = 5;
         private const int Mark = -1; 

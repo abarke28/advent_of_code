@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace aoc.y2021.day_14
 {
     // https://adventofcode.com/2021/day/14
-    public class Day_14 : ISolver
+    public class Day_14
     {
         public void Solve()
         {

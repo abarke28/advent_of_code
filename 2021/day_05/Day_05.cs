@@ -5,7 +5,7 @@ using aoc.utils.extensions;
 namespace aoc.y2021.day_05
 {
     // https://adventofcode.com/2021/day/05
-    public class Day_05 : ISolver
+    public class Day_05
     {
         private class Vector2DPair
         {

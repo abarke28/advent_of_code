@@ -1,5 +1,4 @@
 using aoc.common;
-using aoc.utils;
 using aoc.utils.extensions;
 
 namespace aoc.y2023.day_02
@@ -39,15 +38,7 @@ namespace aoc.y2023.day_02
             }
         }
 
-        public void Solve()
-        {
-            var lines = FileUtils.ReadAllLines("2023/day_02/input.txt");
-
-            Part1(lines);
-            Part2(lines);
-        }
-
-        private void Part1(List<string> lines)
+        public object Part1(IList<string> lines)
         {
             const int RedCount = 12;
             const int GreenCount = 13;
@@ -57,16 +48,17 @@ namespace aoc.y2023.day_02
 
             var possibleGames = games.Where(g => g.IsPossible(RedCount, GreenCount, BlueCount));
 
-            Console.WriteLine(possibleGames.Sum(g => g.Id));
+
+            return possibleGames.Sum(g => g.Id);
         }
 
-        private void Part2(List<string> lines)
+        public object Part2(IList<string> lines)
         {
             var games = GetGames(lines);
 
             var powers = games.Select(g => g.GetPower());
 
-            Console.WriteLine(powers.Sum());
+            return powers.Sum();
         }
 
         private List<Game> GetGames(IList<string> lines)
