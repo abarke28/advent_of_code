@@ -10,7 +10,18 @@ namespace aoc.y2023.day_02
         {
             var lines = FileUtils.ReadAllLines("2023/day_02/input.txt");
 
-            Console.WriteLine("Hello World");
+            Part1(lines);
+            Part2(lines);
+        }
+
+        private void Part1(List<string> lines)
+        {
+
+        }
+
+        private void Part2(List<string> lines)
+        {
+
         }
     }
 }

@@ -42,7 +42,7 @@ public static class RunnerUtils
         var stopWatch = Stopwatch.StartNew();
         methodInfo!.Invoke(solver, Array.Empty<object>());
 
-        Console.WriteLine($"\nProblem solved in {stopWatch.Elapsed}.");
+        Console.WriteLine($"\nProblem solved in {stopWatch.ElapsedMilliseconds} ms");
     }
 
     private static bool TryParseProblemNumber(string[] input, out string problemString, out string yearString)
