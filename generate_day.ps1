@@ -41,7 +41,7 @@ New-Item -Name $className -Value `
 namespace aoc.y$year.day_$day
 {
     // https://adventofcode.com/$year/day/$day
-    public class Day_$day
+    public class Day_$day : ISolver
     {
         public object Part1(IList<string> lines)
         {
