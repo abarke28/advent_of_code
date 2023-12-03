@@ -9,6 +9,7 @@ namespace aoc.y2023.day_03
     public class Day_03 : ISolver
     {
         private const char Nada = '.';
+        private const char Gear = '*';
 
         public object Part1(IList<string> lines)
         {
@@ -40,7 +41,7 @@ namespace aoc.y2023.day_03
             var input = lines.Select(l => l.ToList()).ToList();
             var grid = new Grid<char>(input)!;
 
-            var gears = grid.FindAll((x, y) => grid[x, y].Equals('*'));
+            var gears = grid.FindAll(v => grid[v].Equals(Gear));
 
             var numsAndPoints = GetNumbersAndPoints(grid);
 
@@ -65,9 +66,9 @@ namespace aoc.y2023.day_03
             return gearRatioSum;
         }
 
-        private List<(int number, List<Vector2D> points)> GetNumbersAndPoints(Grid<char> grid)
+        private static List<(int number, List<Vector2D> points)> GetNumbersAndPoints(Grid<char> grid)
         {
-            var numberStarts = grid.FindAll((x, y) => grid[x, y].IsNumber() && (!grid.IsInBounds(x - 1, y) || !grid[x - 1, y].IsNumber()));
+            var numberStarts = grid.FindAll(v => grid[v].IsNumber() && (!grid.IsInBounds(v + Vector2D.Left) || !grid[v + Vector2D.Left].IsNumber()));
 
             var numsAndPoints = new List<(int number, List<Vector2D> points)>();
 
