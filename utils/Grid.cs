@@ -110,9 +110,19 @@
             _grid[v.X, v.Y] = item;
         }
 
+        public List<T?> Get4Neighbours(Vector2D v)
+        {
+            return Get4Neighbours(v.X, v.Y);
+        }
+
         public List<T?> Get4Neighbours(int x, int y)
         {
             return Get4NeighboursWithCoords(x, y).Select(n => n.Item).ToList();
+        }
+
+        public List<T?> Get4Neighbours(Vector2D v, Func<T?, bool> predicate)
+        {
+            return Get4Neighbours(v.X, v.Y, predicate);
         }
 
         public List<T?> Get4Neighbours(int x, int y, Func<T?, bool> predicate)
@@ -130,9 +140,19 @@
             return Get4NeighboursWithCoordsImplementation(x, y, predicate);
         }
 
+        public List<T?> Get8Neighbours(Vector2D v)
+        {
+            return Get8Neighbours(v.X, v.Y);
+        }
+
         public List<T?> Get8Neighbours(int x, int y)
         {
             return Get8NeighboursWithCoords(x, y).Select(n => n.Item).ToList();
+        }
+
+        public List<T?> Get8Neighbours(Vector2D v, Func<T?, bool> predicate)
+        {
+            return Get8Neighbours(v.X, v.Y, predicate);
         }
 
         public List<T?> Get8Neighbours(int x, int y, Func<T?, bool> predicate)
@@ -343,10 +363,10 @@
         }
 
         /// <summary>
-        /// Fill all spaces in the grid with the supplied value, if the Vector2Ds satisfy a predicate.
+        /// Fill all spaces in the grid with the supplied value, if the coordinates satisfy a predicate.
         /// </summary>
         /// <param name="value">The value to fill with.</param>
-        /// <param name="predicate">Predicate to determine if the grid space should be filled, based on the space Vector2Ds (x, y)</param>
+        /// <param name="predicate">Predicate to determine if the grid space should be filled, based on the space coordinates (x, y)</param>
         public void Fill(T value, Func<int, int, bool> predicate)
         {
             for (int y = 0; y < Height; y++)
