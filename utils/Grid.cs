@@ -395,7 +395,7 @@
         /// <summary>
         /// Finds the Vector2Ds of grid spaces the fulfill a predicate.
         /// </summary>
-        /// <param name="predicate">Predicate which takes Vector2Ds as input (x, y)</param>
+        /// <param name="predicate">Predicate which takes coordinates as input (x, y)</param>
         /// <returns>Enumerable of Vector2Ds.</returns>
         public IEnumerable<Vector2D> FindAll(Func<int, int, bool> predicate)
         {
@@ -404,6 +404,25 @@
                 for (int x = 0; x < Width; x++)
                 {
                     if (predicate(x, y))
+                    {
+                        yield return new Vector2D(x, y);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Finds the Vector2Ds of grid spaces the fulfill a predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate which takes Vector2Ds as input (x, y)</param>
+        /// <returns>Enumerable of Vector2Ds.</returns>
+        public IEnumerable<Vector2D> FindAll(Func<Vector2D, bool> predicate)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (predicate(new Vector2D(x, y)))
                     {
                         yield return new Vector2D(x, y);
                     }

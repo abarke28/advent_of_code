@@ -16,19 +16,19 @@ namespace aoc.y2023.day_03
             var grid = new Grid<char>(input)!;
 
             var partPoints = grid
-                .FindAll((x, y) => !grid[x, y].IsNumber() && grid[x, y] != Nada)
+                .FindAll(v => !grid[v].IsNumber() && grid[v] != Nada)
                 .ToHashSet();
 
             var numsAndPoints = GetNumbersAndPoints(grid);
 
             var validNums = new List<int>();
-            foreach (var numAndPoints in numsAndPoints)
+            foreach (var (number, points) in numsAndPoints)
             {
-                var validatingPoints = numAndPoints.points.SelectMany(p => p.Get8Neighbors());
+                var validatingPoints = points.SelectMany(p => p.Get8Neighbors());
 
-                if (validatingPoints.Any(vp => partPoints.Contains(vp)))
+                if (validatingPoints.Any(partPoints.Contains))
                 {
-                    validNums.Add(numAndPoints.number);
+                    validNums.Add(number);
                 }
             }
 
@@ -54,7 +54,7 @@ namespace aoc.y2023.day_03
                     .Where(np => np.points.Any(p => gearPotentialNeighbors.Contains(p)))
                     .ToArray();
 
-                if (borderingNums.Count() > 1)
+                if (borderingNums.Length > 1)
                 {
                     gearRatioSum += borderingNums
                         .Select(bn => bn.number)
@@ -75,16 +75,13 @@ namespace aoc.y2023.day_03
             {
                 var points = new List<Vector2D> { numberStart };
                 var sb = new StringBuilder(grid.GetValue(numberStart).ToString());
-                var i = 1;
 
-                var nextPoint = numberStart + (i * Vector2D.Right);
+                var nextPoint = numberStart + Vector2D.Right;
                 while (grid.IsInBounds(nextPoint) &&
                        grid.GetValue(nextPoint).IsNumber())
                 {
                     sb.Append(grid.GetValue(nextPoint));
                     points.Add(nextPoint);
-
-                    i++;
                     nextPoint += Vector2D.Right;
                 }
 

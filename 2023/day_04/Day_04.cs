@@ -7,12 +7,12 @@ namespace aoc.y2023.day_04
     {
         public object Part1(IList<string> lines)
         {
-            
+            return 0;
         }
 
         public object Part2(IList<string> lines)
         {
-            
+            return 0;
         }
     }
 }
