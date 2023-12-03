@@ -1,6 +1,5 @@
 ﻿using aoc.common;
 using System.Diagnostics;
-using System.Net;
 using System.Reflection;
 using System.Text.Json;
 
@@ -25,7 +24,14 @@ public static class RunnerUtils
 
         if (!input.Any(i => i.Equals(NoFetch, StringComparison.OrdinalIgnoreCase)))
         {
-            await FetchProblemInput(year, problem);
+            var json = File.ReadAllText("config.json");
+            var config = JsonSerializer.Deserialize<AocConfig>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
+            var fetcher = new InputFetcher(config);
+            await fetcher.FetchInput(year, problem);
         }
 
         var fqTypeName = string.Format(SolutionPath, year, problem);
@@ -89,51 +95,5 @@ public static class RunnerUtils
         problemString = paddedProblem;
 
         return true;
-    }
-
-    private static async Task FetchProblemInput(string year, string day)
-    {
-        var fileInput = string.Format(InputPath, year, day, string.Empty);
-        var inputPath = $"C://git/aoc/{fileInput}";
-
-        if (File.Exists(inputPath))
-        {
-            var currentInputFileContent = File.ReadAllLines(inputPath);
-
-            if (currentInputFileContent.Any(l => !string.IsNullOrWhiteSpace(l)))
-            {
-                Console.WriteLine($"[Input file {inputPath} already has content, will not fetch input]\n");
-                return;
-            }
-        }
-
-        var json = File.ReadAllText("config.json");
-        var config = JsonSerializer.Deserialize<AocConfig>(json, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        })!;
-
-        var baseAddress = new Uri(config.BaseUrl);
-        var cookies = new CookieContainer();
-        var handler = new HttpClientHandler { CookieContainer = cookies };
-        var client = new HttpClient(handler) { BaseAddress = baseAddress };
-
-        cookies.Add(baseAddress, new Cookie(config.CookieName, config.Token));
-
-        var requestPath = string.Format(config.RequestPath, year, int.Parse(day));
-
-        Console.WriteLine($"[Fetching file input - GET - {baseAddress}{requestPath}]\n");
-
-        var response = await client.GetAsync(requestPath);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            Console.WriteLine($"Error fetching problem input: {response.StatusCode}");
-            throw new Exception(response.ToString());
-        }
-        var content = await response.Content.ReadAsStringAsync();
-
-        File.WriteAllText(inputPath, content);
-        var lines = content.Split("\n").Where(l => !string.IsNullOrWhiteSpace(l));
     }
 }
