@@ -13,6 +13,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | --- | --- | --- | --- | --- |
 | 1 | [Trebuchet?!](https://adventofcode.com/2023/day/1) | ⭐ | ⭐⭐ | Clunky string parsing.
 | 2 | [Cube Conundrum](https://adventofcode.com/2023/day/2) | ⭐ | ⭐ | String parsing.
+| 3 | [Gear Ratios](https://adventofcode.com/2023/day/3) | ⭐⭐⭐⭐ | ⭐⭐ | Fun mix of parsing and vector logic.
 
 ## 2022
 

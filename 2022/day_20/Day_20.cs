@@ -5,21 +5,24 @@ using aoc.utils.extensions;
 namespace aoc.y2022.day_20
 {
     // https://adventofcode.com/2022/day/20
-    public class Day_20
+    public class Day_20 : ISolver
     {
         private const int DecryptionKey = 811_589_153;
         private const int Repititions = 1;
         //private const int Repititions = 10;
 
-        public void Solve()
+        public object Part1(IList<string> lines)
         {
-            var lines = FileUtils.ReadAllLines("2022/day_20/input2.txt");
             var nums = lines.Select(l => long.Parse(l)).ToList();
 
             var result = MixNumbers(nums, nums);
             var score = ComputeScore(result);
-            Console.WriteLine(score);
 
+            return score;
+        }
+
+        public object Part2(IList<string> lines)
+        {
             var nums2 = lines.Select(l => long.Parse(l) * DecryptionKey).ToList();
             var mixedNums = new List<long>(nums2);
 
@@ -29,7 +32,8 @@ namespace aoc.y2022.day_20
             }
 
             var score2 = ComputeScore(mixedNums);
-            Console.WriteLine(score2);
+
+            return score2;
         }
 
         private static List<long> MixNumbers(IList<long> numbers, IList<long> startingSequence)
@@ -40,7 +44,7 @@ namespace aoc.y2022.day_20
 
             var mixedNums = new LinkedList<long>(startingSequence);
             
-            Console.WriteLine(string.Join(',', mixedNums.Select(i => i.ToString())));
+            //Console.WriteLine(string.Join(',', mixedNums.Select(i => i.ToString())));
 
             foreach (var (num, originalIndex) in indexedNums)
             {
@@ -49,12 +53,12 @@ namespace aoc.y2022.day_20
                 var currentIndex = indexTracker[originalIndex];
 
                 var (targetIndex, headingLeft) = ComputeTargetIndex(num, currentIndex, length);
-                Console.WriteLine($"{num} is currently at {currentIndex} and moving to {targetIndex}");
+                //Console.WriteLine($"{num} is currently at {currentIndex} and moving to {targetIndex}");
 
                 UpdateAffectedIndices(indexTracker, currentIndex, targetIndex);
 
                 var targetNode = GetNode(mixedNums, targetIndex);
-                Console.WriteLine($"Target node has value {targetNode.Value}\n");
+                //Console.WriteLine($"Target node has value {targetNode.Value}\n");
                 var removalNode = GetNode(mixedNums, currentIndex);
 
                 if (headingLeft)
@@ -68,7 +72,7 @@ namespace aoc.y2022.day_20
 
                 mixedNums.Remove(removalNode);
 
-                Console.WriteLine(string.Join(',', mixedNums.Select(i => i.ToString())));
+                //Console.WriteLine(string.Join(',', mixedNums.Select(i => i.ToString())));
             }
 
             return mixedNums.ToList();
