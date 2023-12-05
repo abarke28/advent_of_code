@@ -75,7 +75,7 @@ namespace aoc.utils.extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <param name="chunkPredicate">Predicate to determine which records to take in each chunk.</param>
-        /// <param name="skipPredicate">Predicate to determine which records to skip between each chunk. If not supplied, will use the negation of the chunkPredicate</param>
+        /// <param name="skipPredicate">Predicate to determine which records to skip between each chunk. If not supplied, will use the negation of the <see cref="chunkPredicate">chunkPredicate</see>.</param>
         /// <returns></returns>
         public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, Func<T, bool> chunkPredicate, Func<T, bool>? skipPredicate = null)
         {
@@ -88,29 +88,18 @@ namespace aoc.utils.extensions
             {
                 var chunk = source
                     .Skip(i)
-                    .TakeWhile(r => chunkPredicate(r))
+                    .TakeWhile(r => chunkPredicate.Invoke(r))
                     .ToList();
 
                 chunks.Add(chunk);
                 i += chunk.Count;
 
-                int recordsToSkip;
-                if (skipPredicate != null)
-                {
-                    recordsToSkip = source
+                var skipCount = source
                     .Skip(i)
-                    .TakeWhile(r => skipPredicate.Invoke(r))
+                    .TakeWhile(r => skipPredicate == null ? !chunkPredicate.Invoke(r) : skipPredicate.Invoke(r))
                     .Count();
-                }
-                else
-                {
-                    recordsToSkip = source
-                    .Skip(i)
-                    .TakeWhile(r => !chunkPredicate.Invoke(r))
-                    .Count();
-                }
 
-                i += recordsToSkip;
+                i += skipCount;
             }
 
             return chunks;
