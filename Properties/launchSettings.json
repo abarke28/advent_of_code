@@ -2,11 +2,11 @@
   "profiles": {
     "aoc": {
       "commandName": "Project",
-      "commandLineArgs": "2023 05"
+      "commandLineArgs": "2023 06"
     },
     "aoc-debug": {
       "commandName": "Project",
-      "commandLineArgs": "2023 05 -Example"
+      "commandLineArgs": "2023 06 -Example"
     },
     "aoc-debug-2021": {
       "commandName": "Project",
