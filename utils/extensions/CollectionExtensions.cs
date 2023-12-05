@@ -68,5 +68,52 @@ namespace aoc.utils.extensions
                 return expandedFirst.Zip(castedSecond);
             }
         }
+
+        /// <summary>
+        /// Chunks the source IEnumerable into chunks based off of a predicate, allowing dynamic & non-uniform chunk size.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="chunkPredicate">Predicate to determine which records to take in each chunk.</param>
+        /// <param name="skipPredicate">Predicate to determine which records to skip between each chunk. If not supplied, will use the negation of the chunkPredicate</param>
+        /// <returns></returns>
+        public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, Func<T, bool> chunkPredicate, Func<T, bool>? skipPredicate = null)
+        {
+            var chunks = new List<List<T>>();
+
+            var i = 0;
+            var length = source.Count();
+
+            while (i < length)
+            {
+                var chunk = source
+                    .Skip(i)
+                    .TakeWhile(r => chunkPredicate(r))
+                    .ToList();
+
+                chunks.Add(chunk);
+                i += chunk.Count;
+
+                int recordsToSkip;
+                if (skipPredicate != null)
+                {
+                    recordsToSkip = source
+                    .Skip(i)
+                    .TakeWhile(r => skipPredicate.Invoke(r))
+                    .Count();
+                }
+                else
+                {
+                    recordsToSkip = source
+                    .Skip(i)
+                    .TakeWhile(r => !chunkPredicate.Invoke(r))
+                    .Count();
+                }
+
+                i += recordsToSkip;
+            }
+
+            return chunks;
+        }
     }
 }

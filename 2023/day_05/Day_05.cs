@@ -88,7 +88,7 @@ namespace aoc.y2023.day_05
             return candidateLocation;
         }
 
-        private long FindSeedLocation(long seedNum, List<List<FarmMap>> farmMapLists)
+        private static long FindSeedLocation(long seedNum, List<List<FarmMap>> farmMapLists)
         {
             var currentNum = seedNum;
 
@@ -105,48 +105,26 @@ namespace aoc.y2023.day_05
             return currentNum;
         }
 
-        private List<List<FarmMap>> ParseMaps(IEnumerable<string> lines)
+        private static List<List<FarmMap>> ParseMaps(IEnumerable<string> lines)
         {
-            var numsAndBlanks = lines.Where(l => !l.Contains(':'));
-
-            var chunks = new List<List<string>>();
-            for (int i = 0; i < numsAndBlanks.Count();)
-            {
-                var chunk = numsAndBlanks.Skip(i).TakeWhile(l => !string.IsNullOrWhiteSpace(l)).ToList();
-                chunks.Add(chunk);
-
-                i += chunk.Count;
-                i++;
-            }
-
-            var result = chunks.Select(c => c.Select(l => FarmMap.FromString(l)).ToList()).ToList();
-
-            return result;
+            return lines
+                .ChunkBy(l => !l.Contains(':') && !string.IsNullOrWhiteSpace(l))
+                .Select(c => c.Select(l => l.ReadAllNumbersLong().ToArray())
+                              .Select(l => new FarmMap(l[DestinationIndex], l[SourceIndex], l[RangeLengthIndex]))
+                              .ToList())
+                .ToList();
         }
 
-        private List<List<FarmMap>> ParseReverseMaps(IEnumerable<string> lines)
+        private static List<List<FarmMap>> ParseReverseMaps(IEnumerable<string> lines)
         {
             var reverseLines = lines.Reverse();
 
-            var numsAndBlanks = reverseLines.Where(l => !l.Contains(':'));
-
-            var chunks = new List<List<string>>();
-            for (int i = 0; i < numsAndBlanks.Count();)
-            {
-                var chunk = numsAndBlanks.Skip(i).TakeWhile(l => !string.IsNullOrWhiteSpace(l)).ToList();
-                chunks.Add(chunk);
-
-                i += chunk.Count;
-                i++;
-            }
-
-            var result = chunks
+            return reverseLines
+                .ChunkBy(l => !l.Contains(':') && !string.IsNullOrWhiteSpace(l))
                 .Select(c => c.Select(l => l.ReadAllNumbersLong().ToArray())
-                              .Select(nums => new FarmMap(nums[SourceIndex], nums[DestinationIndex], nums[RangeLengthIndex]))
+                              .Select(l => new FarmMap(l[SourceIndex], l[DestinationIndex], l[RangeLengthIndex]))
                               .ToList())
                 .ToList();
-
-            return result;
         }
     }
 }
