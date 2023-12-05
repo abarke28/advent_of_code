@@ -16,27 +16,11 @@ namespace aoc.y2023.day_05
             public long SourceStart { get; set; }
             public long RangeLength { get; set; }
 
-            public FarmMap()
-            {
-            }
-
             public FarmMap(long destinationStart, long sourceStart, long rangeLength)
             {
                 DestinationStart = destinationStart;
                 SourceStart = sourceStart;
                 RangeLength = rangeLength;
-            }
-
-            public static FarmMap FromString(string s)
-            {
-                var nums = s.ReadAllNumbersLong().ToArray();
-
-                return new FarmMap
-                {
-                    DestinationStart = nums[DestinationIndex],
-                    SourceStart = nums[SourceIndex],
-                    RangeLength = nums[RangeLengthIndex]
-                };
             }
 
             public bool MapCoversInput(long input)
