@@ -6,11 +6,26 @@ namespace aoc.y2023.day_05
     // https://adventofcode.com/2023/day/05
     public class Day_05 : ISolver
     {
+        private const int DestinationIndex = 0;
+        private const int SourceIndex = 1;
+        private const int RangeLengthIndex = 2;
+
         private class FarmMap
         {
             public long DestinationStart { get; set; }
             public long SourceStart { get; set; }
             public long RangeLength { get; set; }
+
+            public FarmMap()
+            {
+            }
+
+            public FarmMap(long destinationStart, long sourceStart, long rangeLength)
+            {
+                DestinationStart = destinationStart;
+                SourceStart = sourceStart;
+                RangeLength = rangeLength;
+            }
 
             public static FarmMap FromString(string s)
             {
@@ -34,10 +49,6 @@ namespace aoc.y2023.day_05
                 return DestinationStart + (input - SourceStart);
             }
         }
-
-        private const int DestinationIndex = 0;
-        private const int SourceIndex = 1;
-        private const int RangeLengthIndex = 2;
 
         public object Part1(IList<string> lines)
         {
@@ -131,7 +142,8 @@ namespace aoc.y2023.day_05
 
             var result = chunks
                 .Select(c => c.Select(l => l.ReadAllNumbersLong().ToArray())
-                .Select(nums => new FarmMap { RangeLength = nums[RangeLengthIndex], SourceStart = nums[DestinationIndex], DestinationStart = nums[SourceIndex] }).ToList())
+                              .Select(nums => new FarmMap(nums[SourceIndex], nums[DestinationIndex], nums[RangeLengthIndex]))
+                              .ToList())
                 .ToList();
 
             return result;
