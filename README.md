@@ -16,6 +16,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 3 | [Gear Ratios](https://adventofcode.com/2023/day/3) | ⭐⭐⭐⭐ | ⭐⭐ | Fun mix of parsing and vector logic.
 | 4 | [Scratchcards](https://adventofcode.com/2023/day/4) | ⭐⭐ | ⭐⭐ | Simple data structures, linq fun.
 | 5 | [If You Give A Seed A Fertilizer](https://adventofcode.com/2023/day/5) | ⭐⭐ | ⭐⭐⭐⭐ | Brute force.
+| 6 | [Wait For It](https://adventofcode.com/2023/day/6) | ⭐ | ⭐ | Simple math.
 
 ## 2022
 
