@@ -1,4 +1,5 @@
 using aoc.common;
+using aoc.utils;
 using aoc.utils.extensions;
 
 namespace aoc.y2023.day_06
@@ -31,22 +32,16 @@ namespace aoc.y2023.day_06
              * speed       = wait
              * travelTime  = time - wait
              * distance    = speed * travelTime = (wait) * (time - wait)
-             * distance    = wt - w^2
+             * distance    = -w^2 + tw
              * 
              * Therefore...
-             * r < wt - w^2
-             * 0 < w^2 - tw + r
+             * r < -w^2 + tw
+             * 0 < -w^2 + tw - r
              * 
-             * a = 1, b = -t, c = r
+             * a = -1, b = t, c = -r
              */
-            var a = 1;
-            var b = -1 * race.Time;
-            var c = race.Record;
 
-            var preRoot = (b * b) - (4 * a * c);
-
-            var root1 = ((-1.0 * b) - Math.Sqrt(preRoot)) / (2.0 * a);
-            var root2 = ((-1.0 * b) + Math.Sqrt(preRoot)) / (2.0 * a);
+            var (root1, root2) = MathUtils.SolveQuadratic(a: -1, b: race.Time, c: -race.Record);
 
             // If roots are integers, we must exclude them since we need to beat the distance, not match it.
             if ((int)root1 == root1) root1 += 0.01;
@@ -54,7 +49,7 @@ namespace aoc.y2023.day_06
 
             // Need to add one and floor to get integers between roots. E.g: 1.9 & 2.1 has (1) integer between them.
             // But 2.1 - 1.9 = 0.2. 
-            var numWaysToWin = Math.Floor(root2) - Math.Ceiling(root1) + 1;
+            var numWaysToWin = Math.Abs(Math.Floor(root2) - Math.Ceiling(root1) + 1);
 
             return (int)numWaysToWin;
         }
