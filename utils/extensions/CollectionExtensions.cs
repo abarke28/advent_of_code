@@ -104,5 +104,15 @@ namespace aoc.utils.extensions
 
             return chunks;
         }
+
+        public static int Product(this IEnumerable<int> nums)
+        {
+            return nums.Aggregate(1, (n1, n2) => n1 * n2);
+        }
+
+        public static long Product(this IEnumerable<long> nums)
+        {
+            return nums.Aggregate(1L, (n1, n2) => n1 * n2);
+        }
     }
 }
