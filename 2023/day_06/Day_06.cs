@@ -49,8 +49,8 @@ namespace aoc.y2023.day_06
             var root2 = ((-1.0 * b) + Math.Sqrt(preRoot)) / (2.0 * a);
 
             // If roots are integers, we must exclude them since we need to beat the distance, not match it.
-            if ((int)root1 == root1) root1++;
-            if ((int)root2 == root2) root2--;
+            if ((int)root1 == root1) root1 += 0.01;
+            if ((int)root2 == root2) root2 -= 0.01;
 
             // Need to add one and floor to get integers between roots. E.g: 1.9 & 2.1 has (1) integer between them.
             // But 2.1 - 1.9 = 0.2. 
