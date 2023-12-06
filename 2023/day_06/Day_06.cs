@@ -54,7 +54,7 @@ namespace aoc.y2023.day_06
 
             // Need to add one and floor to get integers between roots. E.g: 1.9 & 2.1 has (1) integer between them.
             // But 2.1 - 1.9 = 0.2. 
-            var numWaysToWin = Math.Floor(Math.Floor(root2) - Math.Ceiling(root1) + 1);
+            var numWaysToWin = Math.Floor(root2) - Math.Ceiling(root1) + 1;
 
             return (int)numWaysToWin;
         }
