@@ -104,21 +104,5 @@ namespace aoc.utils.extensions
 
             return chunks;
         }
-
-        public static IEnumerable<TReturn> Synthesize<TReturn, T1, T2>(this IEnumerable<T1> collection1, IEnumerable<T2> collection2, Func<T1, T2, TReturn> synthesizer)
-        {
-            var list1 = collection1.ToList();
-            var list2 = collection2.ToList();
-
-            if (list1.Count != list2.Count)
-            {
-                throw new ArgumentException("Collections must be of equal length.");
-            }
-
-            for (int i = 0; i < list1.Count; i++)
-            {
-                yield return synthesizer.Invoke(list1[i], list2[i]);
-            }
-        }
     }
 }

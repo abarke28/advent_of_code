@@ -20,10 +20,10 @@ namespace aoc.y2023.day_06
 
         public object Part2(IList<string> lines)
         {
-            var time = long.Parse(string.Join(string.Empty, lines[0].ReadAllNumbersLong().Select(n => n.ToString())));
-            var record = long.Parse(string.Join(string.Empty, lines[1].ReadAllNumbersLong().Select(n => n.ToString())));
+            var t = long.Parse(new string(lines[0].Where(c => c.IsNumber()).ToArray()));
+            var r = long.Parse(new string(lines[1].Where(c => c.IsNumber()).ToArray()));
 
-            return GetWaysToWin(new Race(time, record)).Count;
+            return GetWaysToWin(new Race(t, r)).Count;
         }
 
         private static List<(long TimeHeld, long Distance)> GetWaysToWin(Race race)
@@ -48,7 +48,7 @@ namespace aoc.y2023.day_06
             var times = lines[0].ReadAllNumbersLong().ToArray();
             var records = lines[1].ReadAllNumbersLong().ToArray();
 
-            var races = times.Synthesize(records, (t, r) => new Race(t, r));
+            var races = times.Zip(records, (t, r) => new Race(t, r));
 
             return races.ToList();
         }
