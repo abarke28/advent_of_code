@@ -12,11 +12,8 @@ namespace aoc.y2023.day_06
         {
             var races = ParseRaces(lines);
 
-            var waysToWin = races.Select(r => GetWaysToWin(r)).ToList();
-
-            var result = waysToWin.Select(w => w.Count).Aggregate(1, (r1, r2) => r1 * r2);
-
             var numWaysToWin = races.Select(r => GetNumWaysToWin(r));
+
             return numWaysToWin.Product();
         }
 
