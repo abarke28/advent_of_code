@@ -33,5 +33,51 @@ namespace aoc.utils
 
             return (root1, root2);
         }
+
+        public static T GCD<T>(T a, T b) where T : INumber<T>
+        {
+            while (b != T.Zero)
+            {
+                var temp = b;
+                b = a % b;
+                a = temp;
+            }
+
+            return a;
+        }
+
+        public static T GCD<T>(params T[] numbers) where T : INumber<T>
+        {
+            if (numbers == null || numbers.Length == 0) return T.Zero;
+
+            var result = numbers[0];
+
+            for (int i = 1; i < numbers.Length; i++)
+            {
+                result = GCD(result, numbers[i]);
+            }
+
+            return result;
+        }
+
+        public static T LCM<T>(T a, T b) where T : INumber<T>
+        {
+            return (a / GCD(a, b)) * b;
+        }
+
+        public static T LCM<T>(params T[] numbers) where T : INumber<T>
+        {
+            if (numbers == null || numbers.Length == 0) return T.Zero;
+            if (numbers.Length == 1) return numbers[0];
+
+            var result = numbers[0];
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                result = LCM(result, numbers[i]);
+            }
+
+            return result;
+        }
     }
 }
