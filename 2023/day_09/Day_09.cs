@@ -36,11 +36,8 @@ namespace aoc.y2023.day_09
 
             for (int i = diffs.Count; i > 0; i--)
             {
-                var nextDiff = diffs[i - 1].Last() + nextExtrapolation;
-
-                diffs[i - 1].Add(nextDiff);
-
-                nextExtrapolation = nextDiff;
+                nextExtrapolation = diffs[i - 1].Last() + nextExtrapolation;
+                diffs[i - 1].Add(nextExtrapolation);
             }
 
             return diffs.First().Last();
