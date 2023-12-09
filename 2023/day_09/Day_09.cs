@@ -1,4 +1,5 @@
 using aoc.common;
+using aoc.utils.extensions;
 
 namespace aoc.y2023.day_09
 {
@@ -7,12 +8,74 @@ namespace aoc.y2023.day_09
     {
         public object Part1(IList<string> lines)
         {
-            return 0;
+            var lists = ParseLines(lines);
+
+            var differenceListsList = lists.Select(l => ComputeDifferenceLists(l));
+
+            var extrapolatedNums = differenceListsList.Select(dll => ComputeDifferenceListMissingNumber(dll));
+
+            return extrapolatedNums.Sum();
         }
 
         public object Part2(IList<string> lines)
         {
-            return 0;
+            var lists = ParseLines(lines);
+
+            lists.ForEach(l => l.Reverse());
+
+            var differenceListsList = lists.Select(l => ComputeDifferenceLists(l));
+
+            var extrapolatedNums = differenceListsList.Select(dll => ComputeDifferenceListMissingNumber(dll));
+
+            return extrapolatedNums.Sum();
+        }
+
+        private static int ComputeDifferenceListMissingNumber(List<List<int>> diffs)
+        {
+            var nextExtrapolation = 0;
+
+            for (int i = diffs.Count; i > 0; i--)
+            {
+                var nextDiff = diffs[i - 1].Last() + nextExtrapolation;
+
+                diffs[i - 1].Add(nextDiff);
+
+                nextExtrapolation = nextDiff;
+            }
+
+            return diffs.First().Last();
+        }
+
+        private static List<List<int>> ComputeDifferenceLists(List<int> nums)
+        {
+            var resultLists = new List<List<int>>
+            {
+                nums
+            };
+
+            var currentList = nums;
+
+            while (!currentList.All(n => n == 0))
+            {
+                var newList = new List<int>(currentList.Count - 1);
+
+                for (int i = 1; i < currentList.Count; i++)
+                {
+                    newList.Add(currentList[i] - currentList[i - 1]);
+                }
+
+                resultLists.Add(newList);
+                currentList = newList;
+            }
+
+            return resultLists;
+        }
+
+        private static List<List<int>> ParseLines(IList<string> lines)
+        {
+            return lines
+                .Select(l => l.ReadAllNumbers<int>().ToList())
+                .ToList();
         }
     }
 }
