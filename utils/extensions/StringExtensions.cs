@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Numerics;
+using System.Text.RegularExpressions;
 
 namespace aoc.utils.extensions
 {
@@ -6,26 +7,13 @@ namespace aoc.utils.extensions
     {
         public const char Space = ' ';
 
-        public static IEnumerable<int> ReadAllNumbers(this string s, char delimiter = Space)
+        public static IEnumerable<T> ReadAllNumbers<T>(this string s, char delimiter = Space) where T : INumber<T>
         {
             var words = s.Split(delimiter);
 
             foreach (var word in words)
             {
-                if (int.TryParse(word, out var num))
-                {
-                    yield return num;
-                }
-            }
-        }
-
-        public static IEnumerable<long> ReadAllNumbersLong(this string s, char delimiter = Space)
-        {
-            var words = s.Split(delimiter);
-
-            foreach (var word in words)
-            {
-                if (long.TryParse(word, out var num))
+                if (T.TryParse(word.AsSpan(), provider: null, out var num))
                 {
                     yield return num;
                 }

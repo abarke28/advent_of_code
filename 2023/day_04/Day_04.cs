@@ -68,9 +68,9 @@ namespace aoc.y2023.day_04
             return lines
                 .Select(l => l.Split(':').Last())
                 .Select(l => l.Split("|"))
-                .Select(l => (l[0].ReadAllNumbers().ToList(), l[1].ReadAllNumbers().ToList()))
+                .Select(l => (l[0].ReadAllNumbers<int>().ToList(), l[1].ReadAllNumbers<int>().ToList()))
                 .WithIndex()
-                .Select(c => new Card { Id = c.index + 1, WinningNums = c.item.Item1, ActualNums = c.item.Item2 })
+                .Select(c => new Card { Id = c.Index + 1, WinningNums = c.Item.Item1, ActualNums = c.Item.Item2 })
                 .ToList();
         }
     }

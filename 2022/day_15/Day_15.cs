@@ -196,7 +196,7 @@ namespace aoc.y2022.day_15
 
         private static IEnumerable<SensorBeaconPair> ParseSensorBeaconPairs(IEnumerable<string> lines)
         {
-            var sensorBeacons = lines.Select(l => l.Split(',', ':', ' ', '=').SelectMany(ls => ls.ReadAllNumbers()).ToList())
+            var sensorBeacons = lines.Select(l => l.Split(',', ':', ' ', '=').SelectMany(ls => ls.ReadAllNumbers<int>()).ToList())
                                      .Select(l => new SensorBeaconPair(l[0], l[1], l[2], l[3]));
 
             return sensorBeacons;

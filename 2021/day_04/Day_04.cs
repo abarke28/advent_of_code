@@ -14,7 +14,7 @@ namespace aoc.y2021.day_04
         {
             var lines = FileUtils.ReadAllLines("2021/day_04/input.txt");
 
-            var bingoNums = lines[0].ReadAllNumbers(',');
+            var bingoNums = lines[0].ReadAllNumbers<int>(',');
 
             var bingoBoards = GenerateBoards(lines.TakeLast(lines.Count - 1));
 
@@ -92,7 +92,7 @@ namespace aoc.y2021.day_04
             {
                 var boardLines = trimmedLines.Skip(i)
                                              .Take(BingoDimension)
-                                             .Select(l => l.ReadAllNumbers().ToList())
+                                             .Select(l => l.ReadAllNumbers<int>().ToList())
                                              .ToList()!;
 
                 var board = new Grid<int>(boardLines)!;

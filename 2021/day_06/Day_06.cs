@@ -1,4 +1,3 @@
-using aoc.common;
 using aoc.utils;
 using aoc.utils.extensions;
 
@@ -15,7 +14,7 @@ namespace aoc.y2021.day_06
             var lines = FileUtils.ReadAllLines("2021/day_06/input.txt");
 
             var fish = lines.Single()
-                            .ReadAllNumbers(',')
+                            .ReadAllNumbers<int>(',')
                             .ToList();
 
             var newPop = SimulateGrowth(fish, 80);

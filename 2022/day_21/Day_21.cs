@@ -1,4 +1,3 @@
-using aoc.common;
 using aoc.utils;
 using aoc.utils.extensions;
 
@@ -104,8 +103,8 @@ namespace aoc.y2022.day_21
         {
             // We want the other monkey - the one where we know the value of it (or it's branch).
             // Then we can use that to compute the needed score of the unknown child, where the humn monkey is.
-            var unknownMonkey = monkey.PredicateMonkeys.WithIndex().Single((mi) => mi.item == unknownMonkeyName);
-            var unknownMonkeyIndex = unknownMonkey.index;
+            var unknownMonkey = monkey.PredicateMonkeys.WithIndex().Single((mi) => mi.Item == unknownMonkeyName);
+            var unknownMonkeyIndex = unknownMonkey.Index;
 
             switch (monkey.Operation)
             {

@@ -37,7 +37,7 @@ namespace aoc.y2021.day_02
         private static Vector2D ParseInstruction(string s)
         {
             var direction = s.GetWords().First();
-            var distance = s.ReadAllNumbers().Single();
+            var distance = s.ReadAllNumbers<int>().Single();
 
             return distance * DirectionVectorMap2D[direction];
         }
@@ -45,7 +45,7 @@ namespace aoc.y2021.day_02
         private static Vector3D ExecuteDirection(string s, Vector3D currentPosition)
         {
             var direction = s.GetWords().First();
-            var distance = s.ReadAllNumbers().Single();
+            var distance = s.ReadAllNumbers<int>().Single();
 
             return direction switch
             {

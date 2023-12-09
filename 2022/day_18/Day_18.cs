@@ -153,7 +153,7 @@ namespace aoc.y2022.day_18
 
         private static IList<Vector3D> ParseInput(IEnumerable<string> lines)
         {
-            return lines.Select(l => l.ReadAllNumbers(',').ToList())
+            return lines.Select(l => l.ReadAllNumbers<int>(',').ToList())
                         .Select(ns => new Vector3D(ns[0], ns[1], ns[2]))
                         .ToList();
         }

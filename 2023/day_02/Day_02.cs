@@ -69,7 +69,7 @@ namespace aoc.y2023.day_02
             {
                 var game = new Game();
 
-                game.Id = l.Split(':')[0].ReadAllNumbers().Single();
+                game.Id = l.Split(':')[0].ReadAllNumbers<int>().Single();
 
                 var handStrings = l.Split(':')[1].Split(';');
 
@@ -80,7 +80,7 @@ namespace aoc.y2023.day_02
 
                     foreach (var ballCount in ballCounts)
                     {
-                        var count = ballCount.ReadAllNumbers().Single();
+                        var count = ballCount.ReadAllNumbers<int>().Single();
                         
                         if (ballCount.Contains("red"))
                         {

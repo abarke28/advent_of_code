@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Numerics;
 
 namespace aoc.utils.extensions
 {
@@ -11,14 +12,14 @@ namespace aoc.utils.extensions
             return bitArray.ConvertToInt();
         }
 
-        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> source, int indexOffset = 0)
+        public static IEnumerable<(T Item, int Index)> WithIndex<T>(this IEnumerable<T> source, int indexOffset = 0)
         {
-            return source.Select<T, (T item, int index)>((item, index) => new(item, index + indexOffset));
+            return source.Select<T, (T Item, int Index)>((item, index) => new(item, index + indexOffset));
         }
 
         public static IDictionary<int, T> ToIndexedDictionary<T>(this IEnumerable<T> source, int indexOffset = 0)
         {
-            var dict = source.WithIndex(indexOffset).ToDictionary(i => i.index, i => i.item);
+            var dict = source.WithIndex(indexOffset).ToDictionary(i => i.Index, i => i.Item);
 
             return dict;
         }
@@ -105,14 +106,14 @@ namespace aoc.utils.extensions
             return chunks;
         }
 
-        public static int Product(this IEnumerable<int> nums)
+        public static T Product<T>(this IEnumerable<T> nums) where T : INumber<T>
         {
-            return nums.Aggregate(1, (n1, n2) => n1 * n2);
+            return nums.Aggregate(T.One, (n1, n2) => n1 * n2);
         }
 
-        public static long Product(this IEnumerable<long> nums)
+        public static IEnumerable<IEnumerable<T>> CartesianProduct<T>(this IEnumerable<IEnumerable<T>> source) where T : INumber<T>
         {
-            return nums.Aggregate(1L, (n1, n2) => n1 * n2);
+            return MathUtils.CartesianProduct(source);
         }
     }
 }

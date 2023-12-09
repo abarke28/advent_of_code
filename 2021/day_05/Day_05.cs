@@ -1,4 +1,3 @@
-using aoc.common;
 using aoc.utils;
 using aoc.utils.extensions;
 
@@ -142,7 +141,7 @@ namespace aoc.y2021.day_05
         private static Vector2DPair ParseVectors(string s)
         {
             var words = s.GetWords();
-            var coords = words.SelectMany(w => w.ReadAllNumbers(',')).ToList();
+            var coords = words.SelectMany(w => w.ReadAllNumbers<int>(',')).ToList();
 
             return new Vector2DPair
             {

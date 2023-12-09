@@ -31,7 +31,7 @@ namespace aoc.y2023.day_08
 
             var mappedEntries = entries.ToDictionary(e => e.Node, e => (e.Left, e.Right));
 
-            var steps = CountSteps4(instructions, mappedEntries);
+            var steps = CountSteps2(instructions, mappedEntries);
 
             return steps;
         }
@@ -50,7 +50,7 @@ namespace aoc.y2023.day_08
             return i;
         }
 
-        private static long CountSteps4(string instructions, Dictionary<string, (string Left, string Right)> entries)
+        private static long CountSteps2(string instructions, Dictionary<string, (string Left, string Right)> entries)
         {
             var startingNodes = entries.Keys.Where(n => n.EndsWith('A')).ToHashSet();
 

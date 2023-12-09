@@ -1,4 +1,3 @@
-using aoc.common;
 using aoc.utils;
 using aoc.utils.extensions;
 
@@ -11,7 +10,7 @@ namespace aoc.y2021.day_07
         {
             var lines = FileUtils.ReadAllLines("2021/day_07/input.txt");
 
-            var positions = lines.Single().ReadAllNumbers(',');
+            var positions = lines.Single().ReadAllNumbers<int>(',');
 
             var fuelCosts = CalculateFuelCosts(positions, d => d);
             Console.WriteLine(fuelCosts.Min());

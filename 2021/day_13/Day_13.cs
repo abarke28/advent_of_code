@@ -1,4 +1,3 @@
-using aoc.common;
 using aoc.utils;
 using aoc.utils.extensions;
 
@@ -78,7 +77,7 @@ namespace aoc.y2021.day_13
         private static IEnumerable<Vector2D> GetDots(IEnumerable<string> lines)
         {
             var dotLines = lines.TakeWhile(l => !string.IsNullOrWhiteSpace(l));
-            var dotNums = dotLines.Select(dl => dl.ReadAllNumbers(',').ToList());
+            var dotNums = dotLines.Select(dl => dl.ReadAllNumbers<int>(',').ToList());
             var dots = dotNums.Select(d => new Vector2D(d[0], d[1]));
 
 

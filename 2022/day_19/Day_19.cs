@@ -272,7 +272,7 @@ namespace aoc.y2022.day_19
 
         private static IList<BluePrint> ParseInput(IList<string> lines)
         {
-            var blueprints = lines.Select(l => l.ReadAllNumbers().ToList())
+            var blueprints = lines.Select(l => l.ReadAllNumbers<int>().ToList())
                                   .Select(b => new BluePrint
                                   {
                                       Id = b[0],

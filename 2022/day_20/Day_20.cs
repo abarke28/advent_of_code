@@ -1,5 +1,4 @@
 using aoc.common;
-using aoc.utils;
 using aoc.utils.extensions;
 
 namespace aoc.y2022.day_20
@@ -40,7 +39,7 @@ namespace aoc.y2022.day_20
         {
             var length = numbers.Count;
             var indexedNums = startingSequence.WithIndex().ToList();
-            var indexTracker = indexedNums.ToDictionary(n => n.index, n => n.index);
+            var indexTracker = indexedNums.ToDictionary(n => n.Index, n => n.Index);
 
             var mixedNums = new LinkedList<long>(startingSequence);
             

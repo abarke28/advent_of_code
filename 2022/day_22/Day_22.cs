@@ -46,7 +46,7 @@ namespace aoc.y2022.day_22
 
             var (grid, instructions) = ParseInput(lines);
 
-            var startingPosition = grid.GetRow(0).WithIndex().First(rwi => rwi.item == Valid).index;
+            var startingPosition = grid.GetRow(0).WithIndex().First(rwi => rwi.Item == Valid).Index;
             var startingVector = new Vector2D(startingPosition, 0);
             var startingHeading = Vector2D.Right;
 
@@ -275,8 +275,8 @@ namespace aoc.y2022.day_22
 
                 var nextXCoord = currentHeading ==
                     Vector2D.Right
-                        ? indexedRow.Where(ir => ir.item != InValid).Min(ir => ir.index)
-                        : indexedRow.Where(ir => ir.item != InValid).Max(ir => ir.index);
+                        ? indexedRow.Where(ir => ir.Item != InValid).Min(ir => ir.Index)
+                        : indexedRow.Where(ir => ir.Item != InValid).Max(ir => ir.Index);
 
                 var nextTarget = new Vector2D(nextXCoord, currentPosition.Y);
 
@@ -294,8 +294,8 @@ namespace aoc.y2022.day_22
 
                 var nextYCoord = currentHeading ==
                     Vector2D.Up
-                        ? indexedColumn.Where(ic => ic.item != InValid).Min(ic => ic.index)
-                        : indexedColumn.Where(ic => ic.item != InValid).Max(ic => ic.index);
+                        ? indexedColumn.Where(ic => ic.Item != InValid).Min(ic => ic.Index)
+                        : indexedColumn.Where(ic => ic.Item != InValid).Max(ic => ic.Index);
 
                 var nextTarget = new Vector2D(currentPosition.X, nextYCoord);
 

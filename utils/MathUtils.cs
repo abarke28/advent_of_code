@@ -79,5 +79,15 @@ namespace aoc.utils
 
             return result;
         }
+
+        public static IEnumerable<IEnumerable<T>> CartesianProduct<T>(IEnumerable<IEnumerable<T>> sequences) where T : INumber<T>
+        {
+            IEnumerable<IEnumerable<T>> emptyProduct = new[] { Enumerable.Empty<T>()};
+
+            return sequences.Aggregate(
+                emptyProduct,
+                (accumulator, sequence) => accumulator.SelectMany(accSeq => sequence,
+                                                                  (accSeq, item) => accSeq.Concat(new[] { item })));
+        }
     }
 }

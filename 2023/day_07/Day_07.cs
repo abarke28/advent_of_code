@@ -1,6 +1,5 @@
 using aoc.common;
 using aoc.utils.extensions;
-using System.ComponentModel.DataAnnotations;
 
 namespace aoc.y2023.day_07
 {
@@ -238,7 +237,7 @@ namespace aoc.y2023.day_07
             sortedCards.AddRange(fiveOfAKinds);
 
             var rankedCards = sortedCards.WithIndex(indexOffset: 1);
-            var winnings = rankedCards.Select(c => c.index * c.item.Bid);
+            var winnings = rankedCards.Select(c => c.Index * c.Item.Bid);
 
             return winnings.Sum();
         }
@@ -287,7 +286,7 @@ namespace aoc.y2023.day_07
             sortedCards.AddRange(fiveOfAKinds);
 
             var rankedCards = sortedCards.WithIndex(indexOffset: 1);
-            var winnings = rankedCards.Select(c => c.index * c.item.Bid);
+            var winnings = rankedCards.Select(c => c.Index * c.Item.Bid);
 
             return winnings.Sum();
         }

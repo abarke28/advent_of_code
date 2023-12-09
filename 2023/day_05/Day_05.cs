@@ -36,7 +36,7 @@ namespace aoc.y2023.day_05
 
         public object Part1(IList<string> lines)
         {
-            var seeds = lines[0].ReadAllNumbersLong();
+            var seeds = lines[0].ReadAllNumbers<long>();
 
             var farmMapLists = ParseMaps(lines.Skip(2));
 
@@ -47,7 +47,7 @@ namespace aoc.y2023.day_05
 
         public object Part2(IList<string> lines)
         {
-            var seedRanges = lines[0].ReadAllNumbersLong().Chunk(2);
+            var seedRanges = lines[0].ReadAllNumbers<long>().Chunk(2);
             var reverseLists = ParseReverseMaps(lines.Skip(2));
 
             var candidateLocation = 0;
@@ -93,7 +93,7 @@ namespace aoc.y2023.day_05
         {
             return lines
                 .ChunkBy(l => !l.Contains(':') && !string.IsNullOrWhiteSpace(l))
-                .Select(c => c.Select(l => l.ReadAllNumbersLong().ToArray())
+                .Select(c => c.Select(l => l.ReadAllNumbers<long>().ToArray())
                               .Select(l => new FarmMap(l[DestinationIndex], l[SourceIndex], l[RangeLengthIndex]))
                               .ToList())
                 .ToList();
@@ -105,7 +105,7 @@ namespace aoc.y2023.day_05
 
             return reverseLines
                 .ChunkBy(l => !l.Contains(':') && !string.IsNullOrWhiteSpace(l))
-                .Select(c => c.Select(l => l.ReadAllNumbersLong().ToArray())
+                .Select(c => c.Select(l => l.ReadAllNumbers<long>().ToArray())
                               .Select(l => new FarmMap(l[SourceIndex], l[DestinationIndex], l[RangeLengthIndex]))
                               .ToList())
                 .ToList();

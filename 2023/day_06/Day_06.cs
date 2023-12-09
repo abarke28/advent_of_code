@@ -56,8 +56,8 @@ namespace aoc.y2023.day_06
 
         private static List<Race> ParseRaces(IList<string> lines)
         {
-            var times = lines[0].ReadAllNumbersLong().ToArray();
-            var records = lines[1].ReadAllNumbersLong().ToArray();
+            var times = lines[0].ReadAllNumbers<long>().ToArray();
+            var records = lines[1].ReadAllNumbers<long>().ToArray();
 
             var races = times.Zip(records, (t, r) => new Race(t, r));
 

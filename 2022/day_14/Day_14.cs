@@ -1,4 +1,3 @@
-using aoc.common;
 using aoc.utils;
 using aoc.utils.extensions;
 
@@ -120,7 +119,7 @@ namespace aoc.y2022.day_14
             {
                 var pathNodes = line.Split("->")
                                     .Select(p => p.Trim())
-                                    .Select(p => p.ReadAllNumbers(',').ToList())
+                                    .Select(p => p.ReadAllNumbers<int>(',').ToList())
                                     .Select(pc => new Vector2D(pc[0], pc[1]));
 
                 yield return new SandPath { PathNodes = pathNodes.ToList() };
