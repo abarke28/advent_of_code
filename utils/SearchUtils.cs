@@ -7,36 +7,47 @@ namespace aoc.utils
 {
     public static class SearchUtils
     {
-        public static HashSet<Vector2D> FloodFill(
-            Vector2D start,
-            Func<Vector2D, bool> insidePredicate,
-            Func<Vector2D, IEnumerable<Vector2D>> neighborSelector)
+        public static HashSet<T> FloodFill<T>(
+            T start,
+            Func<T, bool> insidePredicate,
+            Func<T, IEnumerable<T>> neighborSelector,
+            out int maxDepth)
         {
-            var insideSet = new HashSet<Vector2D>();
+            var insideSet = new HashSet<T>();
 
-            var toProcess = new Queue<Vector2D>();
-            var processed = new HashSet<Vector2D>();
+            var unvisited = new Queue<T>();
+            var visited = new HashSet<T>();
+            var depth = -1;
 
-            toProcess.Enqueue(start);
+            unvisited.Enqueue(start);
 
-            while (toProcess.Count > 0)
+            while (unvisited.Count > 0)
             {
-                var candidate = toProcess.Dequeue();
+                var nodesAtDepth = unvisited.Count;
 
-                if (insidePredicate.Invoke(candidate))
+                while (nodesAtDepth-- > 0)
                 {
-                    insideSet.Add(candidate);
+                    var candidate = unvisited.Dequeue();
 
-                    var neighbors = neighborSelector.Invoke(candidate);
-
-                    foreach (var neighbor in neighbors.Where(n => !processed.Contains(n)))
+                    if (insidePredicate.Invoke(candidate))
                     {
-                        toProcess.Enqueue(neighbor);
+                        insideSet.Add(candidate);
+
+                        var neighbors = neighborSelector.Invoke(candidate);
+
+                        foreach (var neighbor in neighbors.Where(n => !visited.Contains(n)))
+                        {
+                            unvisited.Enqueue(neighbor);
+                        }
                     }
+
+                    visited.Add(candidate);
                 }
 
-                processed.Add(candidate);
+                depth++;
             }
+
+            maxDepth = depth;
 
             return insideSet;
         }
