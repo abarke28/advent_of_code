@@ -64,7 +64,7 @@
             {
                 for (var x = 0; x < width; x++)
                 {
-                    SetValue(x, y, inputLists[y][x]);
+                    SetValue(x, y, inputLists[height - y -1][x]);
                 }
             }
         }
