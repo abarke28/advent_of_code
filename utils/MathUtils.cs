@@ -89,5 +89,10 @@ namespace aoc.utils
                 (accumulator, sequence) => accumulator.SelectMany(accSeq => sequence,
                                                                   (accSeq, item) => accSeq.Concat(new[] { item })));
         }
+
+        public static bool IsCoprime<T>(params T[] numbers) where T : INumber<T>
+        {
+            return GCD(numbers) == T.One;
+        }
     }
 }

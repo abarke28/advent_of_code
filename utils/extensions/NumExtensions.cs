@@ -1,7 +1,19 @@
-﻿namespace aoc.utils.extensions
+﻿using System.Numerics;
+
+namespace aoc.utils.extensions
 {
     public static class NumExtensions
     {
+        public static bool IsEven<T> (this T value) where T : INumber<T>
+        {
+            return value % (T.One + T.One) == T.Zero;
+        }
+
+        public static bool IsOdd<T>(this T value) where T : INumber<T>
+        {
+            return !IsEven(value);
+        }
+
         public static int MathMod(this int a, int b)
         {
             return ((a % b) + b) % b;

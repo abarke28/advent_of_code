@@ -21,7 +21,7 @@ namespace aoc.y2023.day_09
         {
             var lists = ParseLines(lines);
 
-            lists.ForEach(l => l.Reverse());
+            lists.ForEach(l => l.Reverse());    
 
             var differenceListsList = lists.Select(l => ComputeDifferenceLists(l));
 

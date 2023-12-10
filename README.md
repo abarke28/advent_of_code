@@ -20,6 +20,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 7 | [Camel Cards](https://adventofcode.com/2023/day/7) | ⭐⭐ | ⭐⭐ | Comparators, funcs.
 | 8 | [Haunted Wasteland](https://adventofcode.com/2023/day/8) | ⭐⭐ | ⭐⭐⭐ | LCM.
 | 9 | [Mirage Maintenance](https://adventofcode.com/2023/day/9) | ⭐ | ⭐⭐ | Lists
+| 10 | [Pipe Maze](https://adventofcode.com/2023/day/10) | ⭐⭐⭐ | ⭐⭐⭐⭐ | Pipe Maze
 
 ## 2022
 
