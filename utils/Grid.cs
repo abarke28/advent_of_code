@@ -255,7 +255,7 @@
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    var value = GetValue(x, y);
+                    var value = GetValue(x, Height - y - 1);
 
                     var printValue = printer == null
                         ? value?.ToString() ?? "NULL"
@@ -317,7 +317,7 @@
             {
                 for (int y = 0; y < height; y++)
                 {
-                    var inputChar = input[y][x];
+                    var inputChar = input[height - 1 - y][x];
 
                     grid.SetValue(x, y, mapper(inputChar));
                 }

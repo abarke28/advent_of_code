@@ -47,7 +47,7 @@ namespace aoc.y2023.day_10
             ReplaceStartingPoint(grid, loop);
             var interiorSize = CalculateLoopInterior(grid, loop.ToHashSet());
 
-            return interiorSize;
+                return interiorSize;
         }
 
         private static int CalculateLoopInterior(Grid<char> map, HashSet<Vector2D> loopPipeLocations)
@@ -94,27 +94,26 @@ namespace aoc.y2023.day_10
 
             switch (delta.X, delta.Y)
             {
-                case (0, 1):
                 case (0, -1):
+                case (0, 1):
                     map.SetValue(startingPoint, '|');
                     break;
                 case (1, 0):
                 case (-1, 0):
                     map.SetValue(startingPoint, '-');
                     break;
-                case (1, -1):
+                case (1, 1):
                     map.SetValue(startingPoint, 'F');
                     break;
-                case (1, 1):
+                case (1, -1):
                     map.SetValue(startingPoint, 'L');
                     break;
-                case (-1, -1):
+                case (-1, 1):
                     map.SetValue(startingPoint, '7');
                     break;
-                case (-1, 1):
+                case (-1, -1):
                     map.SetValue(startingPoint, 'J');
                     break;
-
             }
         }
 
@@ -152,13 +151,13 @@ namespace aoc.y2023.day_10
                 case '-':
                     return new Vector2D(targetLocation.X + (targetLocation.X - currentLocation.X), targetLocation.Y);
                 case 'L':
-                    return currentLocation.IsOnSameColumn(targetLocation) ? targetLocation + Vector2D.Right : targetLocation + Vector2D.Down;
-                case 'J':
-                    return currentLocation.IsOnSameColumn(targetLocation) ? targetLocation + Vector2D.Left : targetLocation + Vector2D.Down;
-                case '7':
-                    return currentLocation.IsOnSameColumn(targetLocation) ? targetLocation + Vector2D.Left : targetLocation + Vector2D.Up;
-                case 'F':
                     return currentLocation.IsOnSameColumn(targetLocation) ? targetLocation + Vector2D.Right : targetLocation + Vector2D.Up;
+                case 'J':
+                    return currentLocation.IsOnSameColumn(targetLocation) ? targetLocation + Vector2D.Left : targetLocation + Vector2D.Up;
+                case '7':
+                    return currentLocation.IsOnSameColumn(targetLocation) ? targetLocation + Vector2D.Left : targetLocation + Vector2D.Down;
+                case 'F':
+                    return currentLocation.IsOnSameColumn(targetLocation) ? targetLocation + Vector2D.Right : targetLocation + Vector2D.Down;
                 case 'S':
                     return targetLocation;
                 case '.':
@@ -182,13 +181,13 @@ namespace aoc.y2023.day_10
                 case '-':
                     return currentLocation.IsOnSameRow(nextLocation);
                 case 'L':
-                    return (currentLocation + Vector2D.Up == nextLocation) || (currentLocation +Vector2D.Left == nextLocation);
+                    return (currentLocation + Vector2D.Down == nextLocation) || (currentLocation +Vector2D.Left == nextLocation);
                 case 'J':
-                    return (currentLocation + Vector2D.Up == nextLocation) || (currentLocation +Vector2D.Right == nextLocation);
+                    return (currentLocation + Vector2D.Down == nextLocation) || (currentLocation +Vector2D.Right == nextLocation);
                 case '7':
-                    return (currentLocation + Vector2D.Down == nextLocation) || (currentLocation + Vector2D.Right == nextLocation);
+                    return (currentLocation + Vector2D.Up == nextLocation) || (currentLocation + Vector2D.Right == nextLocation);
                 case 'F':
-                    return (currentLocation + Vector2D.Down == nextLocation) || (currentLocation + Vector2D.Left == nextLocation);
+                    return (currentLocation + Vector2D.Up == nextLocation) || (currentLocation + Vector2D.Left == nextLocation);
                 case 'S':
                     return true;
                 default:
