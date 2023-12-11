@@ -1,7 +1,7 @@
 using Aoc.Common;
 using Aoc.Utils.Extensions;
 
-namespace Aoc.y2023.day_05
+namespace Aoc.Y2023.Day_05
 {
     // https://adventofcode.com/2023/day/05
     public class Day_05 : ISolver
