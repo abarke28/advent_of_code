@@ -1,7 +1,7 @@
-using aoc.common;
-using aoc.utils.extensions;
+using Aoc.Common;
+using Aoc.Utils.Extensions;
 
-namespace aoc.y2022.day_20
+namespace Aoc.y2022.day_20
 {
     // https://adventofcode.com/2022/day/20
     public class Day_20 : ISolver

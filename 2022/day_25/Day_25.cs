@@ -1,9 +1,9 @@
-using aoc.common;
-using aoc.utils;
-using aoc.utils.extensions;
+using Aoc.Common;
+using Aoc.Utils;
+using Aoc.Utils.Extensions;
 using System.Text;
 
-namespace aoc.y2022.day_25
+namespace Aoc.y2022.day_25
 {
     // https://adventofcode.com/2022/day/25
     public class Day_25

@@ -1,4 +1,4 @@
-﻿namespace aoc.utils
+﻿namespace Aoc.Utils
 {
     public class VertexComparer: IComparer<int>
     {

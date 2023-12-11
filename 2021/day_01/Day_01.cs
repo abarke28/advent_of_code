@@ -1,7 +1,7 @@
-using aoc.common;
-using aoc.utils;
+using Aoc.Common;
+using Aoc.Utils;
 
-namespace aoc.y2021.day_01
+namespace Aoc.y2021.day_01
 {
     // https://adventofcode.com/2021/day/01
     public class Day_01

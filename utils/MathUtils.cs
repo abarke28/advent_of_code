@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace aoc.utils
+namespace Aoc.Utils
 {
     public static class MathUtils
     {

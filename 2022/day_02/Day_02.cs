@@ -1,6 +1,6 @@
-﻿using aoc.common;
+﻿using Aoc.Common;
 
-namespace aoc.y2022.day_02
+namespace Aoc.y2022.day_02
 {
     // https://adventofcode.com/2022/day/2
     public class Day_02

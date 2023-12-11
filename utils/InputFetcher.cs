@@ -1,11 +1,11 @@
-﻿using aoc.common;
+﻿using Aoc.Common;
 using System.Net;
 
-namespace aoc.utils
+namespace Aoc.Utils
 {
     public class InputFetcher
     {
-        private const string InputPath = "{0}/day_{1}/input{2}.txt";
+        private const string InputPath = "{0}/Day_{1}/input{2}.txt";
 
         private readonly AocConfig _config;
 

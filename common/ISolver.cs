@@ -1,4 +1,4 @@
-﻿namespace aoc.common
+﻿namespace Aoc.Common
 {
     public interface ISolver
     {

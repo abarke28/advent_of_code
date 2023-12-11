@@ -1,8 +1,8 @@
-using aoc.common;
-using aoc.utils;
-using aoc.utils.extensions;
+using Aoc.Common;
+using Aoc.Utils;
+using Aoc.Utils.Extensions;
 
-namespace aoc.y2023.day_11
+namespace Aoc.Y2023.Day_11
 {
     // https://adventofcode.com/2023/day/11
     public class Day_11 : ISolver
@@ -83,8 +83,7 @@ namespace aoc.y2023.day_11
 
             var galaxyPairs = 
                 MathUtils.CartesianProduct(Enumerable.Repeat(galaxies, 2))
-                .Select(pair => pair.ToArray())
-                .Where(pair => pair[0] != pair[1]);
+                .Select(pair => pair.ToArray());
 
             return (galaxyPairs, emptyRows, emptyColumns);
         }

@@ -7,8 +7,8 @@ param(
 
 Write-Output "Generating files for problem $year-$day...`n"
 
-$projectPath = "C:\git\aoc"
-$folderName = "day_$day"
+$projectPath = "C:\git\Aoc"
+$folderName = "Day_$day"
 $className = "Day_$day.cs"
 $inputName = "input.txt"
 $input2Name = "input2.txt"
@@ -36,9 +36,9 @@ Push-Location $folderName
 New-Item -Name $inputName | Out-Null
 New-Item -Name $input2Name | Out-Null
 New-Item -Name $className -Value `
-"using aoc.common;
+"using Aoc.Common;
 
-namespace aoc.y$year.day_$day
+namespace Aoc.Y$year.Day_$day
 {
     // https://adventofcode.com/$year/day/$day
     public class Day_$day : ISolver

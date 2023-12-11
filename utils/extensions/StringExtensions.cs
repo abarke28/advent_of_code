@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Text.RegularExpressions;
 
-namespace aoc.utils.extensions
+namespace Aoc.Utils.Extensions
 {
     public static class StringUtils
     {

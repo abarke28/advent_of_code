@@ -1,4 +1,4 @@
-﻿namespace aoc.utils
+﻿namespace Aoc.Utils
 {
     public readonly struct Vector2D : IEquatable<Vector2D>, IComparable<Vector2D>
     {

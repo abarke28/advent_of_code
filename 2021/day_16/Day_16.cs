@@ -1,6 +1,6 @@
-using aoc.common;
+using Aoc.Common;
 
-namespace aoc.y2021.day_16
+namespace Aoc.y2021.day_16
 {
     // https://adventofcode.com/2021/day/16
     public class Day_16 : ISolver

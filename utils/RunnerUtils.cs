@@ -1,17 +1,17 @@
-﻿using aoc.common;
+﻿using Aoc.Common;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;
 
-namespace aoc.utils;
+namespace Aoc.Utils;
 
 public static class RunnerUtils
 {
     private const string DefaultYear = "2023";
     private const string Part1Method = "Part1";
     private const string Part2Method = "Part2";
-    private const string SolutionPath = "aoc.y{0}.day_{1}.Day_{1}";
-    private const string InputPath = "{0}/day_{1}/input{2}.txt";
+    private const string SolutionPath = "Aoc.Y{0}.Day_{1}.Day_{1}";
+    private const string InputPath = "{0}/Day_{1}/input{2}.txt";
     private const string Example = "-Example";
     private const string NoFetch = "-NoFetch";
 

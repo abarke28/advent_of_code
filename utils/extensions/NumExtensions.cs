@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace aoc.utils.extensions
+namespace Aoc.Utils.Extensions
 {
     public static class NumExtensions
     {

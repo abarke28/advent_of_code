@@ -1,8 +1,8 @@
-using aoc.common;
-using aoc.utils;
+using Aoc.Common;
+using Aoc.Utils;
 using System.Collections;
 
-namespace aoc.y2022.day_16
+namespace Aoc.y2022.day_16
 {
     // https://adventofcode.com/2022/day/16
     public class Day_16

@@ -1,4 +1,4 @@
-﻿using aoc.utils;
+﻿using Aoc.Utils;
 
 Console.WriteLine("Advent Of Code\n");
 
