@@ -44,77 +44,54 @@ namespace aoc.y2023.day_10
                 if (length > loop.Count) loop = candidateLoop;
             }
 
-            ReplaceStartingPoint(grid, loop);
-            var interiorSize = CalculateLoopInterior(grid, loop.ToHashSet());
+            var interiorSize = CalculateLoopInterior(grid, loop);
 
-                return interiorSize;
+            return interiorSize;
         }
 
-        private static int CalculateLoopInterior(Grid<char> map, HashSet<Vector2D> loopPipeLocations)
+        private static int CalculateLoopInterior(Grid<char> map, List<Vector2D> loop)
         {
-            var potentialInternalPoints = map.GetAllPoints().Where(p => !loopPipeLocations.Contains(p));
-            var internalPoints = new HashSet<Vector2D>();
+            // Shoelace Formula:
+            // A = 1/2 (v0 ^ v1 + v1 ^ v2 + ... vn-1 ^ v0)
+            // Where A ^ B = A.x * B.y - B.x * A.y
+            var shoeLaceSum = 0;
 
-
-            foreach (var potentialPoint in potentialInternalPoints)
+            while (shoeLaceSum <= 0)
             {
-                var charCountsToLeft = map
-                    .FindAll(p => p.X < potentialPoint.X && p.Y == potentialPoint.Y)
-                    .Where(p => loopPipeLocations.Contains(p))
-                    .Select(p => map.GetValue(p))
-                    .GroupBy(c => c)
-                    .ToDictionary(g => g.Key, g => g.Count());
-
-                if (charCountsToLeft.Any())
+                for (int i = 0; i < loop.Count - 1; i++)
                 {
-                    var verticalPipeCount = charCountsToLeft.TryGetValue('|', out var vert) ? vert : 0;
-                    var fCount = charCountsToLeft.TryGetValue('F', out var q1) ? q1 : 0;
-                    var sevCount = charCountsToLeft.TryGetValue('7', out var q2) ? q2 : 0;
-                    
-                    var totalCrossings = verticalPipeCount + fCount + sevCount;
+                    var v1 = loop[i];
+                    var v2 = loop[i + 1];
 
-                    if (totalCrossings.IsOdd())
-                    {
-                        internalPoints.Add(potentialPoint);
-                    }
+                    var wedge = v1.X * v2.Y - v2.X * v1.Y;
+
+                    shoeLaceSum += wedge;
+                }
+
+                var finalShoeLace = loop.Last().X * loop.First().Y - loop.Last().Y * loop.First().X;
+
+                shoeLaceSum += finalShoeLace;
+                shoeLaceSum /= 2;
+
+                if (shoeLaceSum > 0)
+                {
+                    break;
+                }
+                else
+                {
+                    // Shoelace Forumla needs to run counter clockwise, just try both ways.
+                    shoeLaceSum = 0;
+                    loop.Reverse();
                 }
             }
 
-            return internalPoints.Count;
-        }
+            // Pick's Theorem:
+            // A = i + b/2 - 1
+            // => i = A + 1 - b/2
 
-        private static void ReplaceStartingPoint(Grid<char> map, List<Vector2D> loop)
-        {
-            var startingPoint = loop.First();
+            var picksInteriorPoints = shoeLaceSum + 1 - loop.Count / 2;
 
-            var firstStep = loop.Skip(1).Take(1).Single();
-            var lastStep = loop.Last();
-
-            var delta = lastStep - firstStep;
-
-            switch (delta.X, delta.Y)
-            {
-                case (0, -1):
-                case (0, 1):
-                    map.SetValue(startingPoint, '|');
-                    break;
-                case (1, 0):
-                case (-1, 0):
-                    map.SetValue(startingPoint, '-');
-                    break;
-                case (1, 1):
-                    map.SetValue(startingPoint, 'F');
-                    break;
-                case (1, -1):
-                    map.SetValue(startingPoint, 'L');
-                    break;
-                case (-1, 1):
-                    map.SetValue(startingPoint, '7');
-                    break;
-                case (-1, -1):
-                    map.SetValue(startingPoint, 'J');
-                    break;
-            }
+            return picksInteriorPoints;
         }
 
         private static int GetPipeLoopLength(Vector2D startingPoint, Vector2D firstStep, Grid<char> map, out List<Vector2D> loopPipeSegments)
