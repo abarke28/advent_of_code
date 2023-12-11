@@ -80,7 +80,7 @@ namespace aoc.utils
             return result;
         }
 
-        public static IEnumerable<IEnumerable<T>> CartesianProduct<T>(IEnumerable<IEnumerable<T>> sequences) where T : INumber<T>
+        public static IEnumerable<IEnumerable<T>> CartesianProduct<T>(IEnumerable<IEnumerable<T>> sequences)
         {
             IEnumerable<IEnumerable<T>> emptyProduct = new[] { Enumerable.Empty<T>()};
 

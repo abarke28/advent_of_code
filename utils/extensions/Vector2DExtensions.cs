@@ -91,5 +91,10 @@
                 }
             }
         }
+
+        public static int ManhattanDistance(this Vector2D source, Vector2D other)
+        {
+            return Vector2D.ManhattanDistance(source, other);
+        }
     }
 }

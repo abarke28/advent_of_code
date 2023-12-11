@@ -19,8 +19,9 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 6 | [Wait For It](https://adventofcode.com/2023/day/6) | ⭐ | ⭐ | Simple math.
 | 7 | [Camel Cards](https://adventofcode.com/2023/day/7) | ⭐⭐ | ⭐⭐ | Comparators, funcs.
 | 8 | [Haunted Wasteland](https://adventofcode.com/2023/day/8) | ⭐⭐ | ⭐⭐⭐ | LCM.
-| 9 | [Mirage Maintenance](https://adventofcode.com/2023/day/9) | ⭐ | ⭐⭐ | Lists
-| 10 | [Pipe Maze](https://adventofcode.com/2023/day/10) | ⭐⭐⭐ | ⭐⭐⭐⭐ | Pipe Maze
+| 9 | [Mirage Maintenance](https://adventofcode.com/2023/day/9) | ⭐ | ⭐⭐ | Lists.
+| 10 | [Pipe Maze](https://adventofcode.com/2023/day/10) | ⭐⭐⭐ | ⭐⭐⭐⭐ | Shoelace formula, Pick's Theorem.
+| 11 | [Cosmic Expansion](https://adventofcode.com/2023/day/11) | ⭐⭐⭐⭐⭐ | ⭐⭐ | Super fun vectors and math.
 
 ## 2022
 
@@ -78,7 +79,7 @@ To solve a problem, run:
 
 To use the example input (helpful for debugging), run:
 
-`dotnet run [year_number] <day_number> -example`
+`dotnet run [year_number] <day_number> -Example`
 
 The default year is 2023.
 
