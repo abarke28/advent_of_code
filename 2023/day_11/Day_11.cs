@@ -61,7 +61,7 @@ namespace Aoc.Y2023.Day_11
             return nominalDistance + extraRowStretchedDistance + extraColumnStretchedDistance;
         }
 
-        private static (IEnumerable<Vector2D[]> Pairs, IList<int> Rows, IList<int> Columns) GetGalaxyPairsAndEmptyIndexes(IList<string> lines)
+        private static (IList<Vector2D[]> Pairs, IList<int> Rows, IList<int> Columns) GetGalaxyPairsAndEmptyIndexes(IList<string> lines)
         {
             var grid = Grid<char>.FromStrings(lines, c => c);
 
@@ -83,7 +83,8 @@ namespace Aoc.Y2023.Day_11
 
             var galaxyPairs = 
                 MathUtils.CartesianProduct(Enumerable.Repeat(galaxies, 2))
-                .Select(pair => pair.ToArray());
+                .Select(pair => pair.ToArray())
+                .ToList();
 
             return (galaxyPairs, emptyRows, emptyColumns);
         }
