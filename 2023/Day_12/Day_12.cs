@@ -8,16 +8,20 @@ namespace Aoc.Y2023.Day_12
     {
         private class ConditionRecord
         {
-            public List<int> Nums { get; set; } = new List<int>();
+            public int[] Nums { get; set; }
             public string Springs { get; set; } = string.Empty;
+
+            public ConditionRecord(string s, IEnumerable<int> nums)
+            {
+                Nums = nums.ToArray();
+                Springs = s;
+            }
 
             public ConditionRecord Expand()
             {
-                return new ConditionRecord
-                {
-                    Nums = Enumerable.Repeat(this.Nums, 5).SelectMany(n => n).ToList(),
-                    Springs = string.Join(Unknown, Enumerable.Repeat(this.Springs, ExpansionFactor)) + Operational
-                };
+                return new ConditionRecord(
+                    string.Join(Unknown, Enumerable.Repeat(this.Springs, ExpansionFactor)) + Operational,
+                    Enumerable.Repeat(this.Nums, 5).SelectMany(n => n).ToArray());
             }
         }
 
@@ -34,7 +38,7 @@ namespace Aoc.Y2023.Day_12
             var records = ParseRecords(lines);
             records.ForEach(r => r.Springs  += Operational);
 
-            var solutions = records.Select(r => NumSolutions(r.Springs, r.Nums, positionInCurrentGroup: 0));
+            var solutions = records.Select(r => NumSolutions(r.Springs, r.Nums.ToArray(), positionInCurrentGroup: 0));
 
             var sum = solutions.Sum();
 
@@ -46,14 +50,14 @@ namespace Aoc.Y2023.Day_12
             var records = ParseRecords(lines);
             var expandedRecords = records.Select(r => r.Expand()).ToList();
 
-            var solutions = expandedRecords.Select(r => NumSolutions(r.Springs, r.Nums, positionInCurrentGroup: 0));
+            var solutions = expandedRecords.Select(r => NumSolutions(r.Springs, r.Nums.ToArray(), positionInCurrentGroup: 0));
 
             var sum = solutions.Sum();
 
             return sum;
         }
 
-        private static long NumSolutions(string stringLeftToProcess, List<int> lengthsLeftToProcess, int positionInCurrentGroup)
+        private static long NumSolutions(string stringLeftToProcess, int[] lengthsLeftToProcess, int positionInCurrentGroup)
         {
             var key = $"{stringLeftToProcess}-{string.Join(',', lengthsLeftToProcess)}-{positionInCurrentGroup}";
 
@@ -61,7 +65,7 @@ namespace Aoc.Y2023.Day_12
 
             if (string.IsNullOrWhiteSpace(stringLeftToProcess))
             {
-                var result = lengthsLeftToProcess.Count == 0 ? 1 : 0;
+                var result = lengthsLeftToProcess.Length == 0 ? 1 : 0;
 
                 FunctionCache.Add(key, result);
                 return result;
@@ -75,20 +79,20 @@ namespace Aoc.Y2023.Day_12
             {
                 if (possibleChar == Damaged)
                 {
-                    numSolutions += NumSolutions(stringLeftToProcess.Substring(1), lengthsLeftToProcess, positionInCurrentGroup + 1);
+                    numSolutions += NumSolutions(stringLeftToProcess[1..], lengthsLeftToProcess, positionInCurrentGroup + 1);
                 }
                 else
                 {
                     if (positionInCurrentGroup > 0)
                     {
-                        if (lengthsLeftToProcess.Count > 0 && lengthsLeftToProcess[0] == positionInCurrentGroup)
+                        if (lengthsLeftToProcess.Length > 0 && lengthsLeftToProcess[0] == positionInCurrentGroup)
                         {
-                            numSolutions += NumSolutions(stringLeftToProcess.Substring(1), lengthsLeftToProcess.Skip(1).ToList(), positionInCurrentGroup: 0);
+                            numSolutions += NumSolutions(stringLeftToProcess[1..], lengthsLeftToProcess[1..], positionInCurrentGroup: 0);
                         }
                     }
                     else
                     {
-                        numSolutions += NumSolutions(stringLeftToProcess.Substring(1), lengthsLeftToProcess, positionInCurrentGroup: 0);
+                        numSolutions += NumSolutions(stringLeftToProcess[1..], lengthsLeftToProcess, positionInCurrentGroup: 0);
                     }
                 }
             }
@@ -106,11 +110,7 @@ namespace Aoc.Y2023.Day_12
                 var nums = line.ReadAllNumbers<int>(new[] { ' ', ',' });
                 var springs = line.Split(' ')[0];
 
-                var record = new ConditionRecord
-                {
-                    Nums = nums.ToList(),
-                    Springs = springs
-                };
+                var record = new ConditionRecord(springs, nums);
 
                 records.Add(record);
             }
