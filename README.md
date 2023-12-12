@@ -22,6 +22,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 9 | [Mirage Maintenance](https://adventofcode.com/2023/day/9) | ⭐ | ⭐⭐ | Lists.
 | 10 | [Pipe Maze](https://adventofcode.com/2023/day/10) | ⭐⭐⭐ | ⭐⭐⭐⭐ | Shoelace formula, Pick's Theorem.
 | 11 | [Cosmic Expansion](https://adventofcode.com/2023/day/11) | ⭐⭐⭐⭐⭐ | ⭐⭐ | Super fun vectors and math.
+| 12 | [Hot Springs](https://adventofcode.com/2023/day/12) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Dynamic Programming.
 
 ## 2022
 

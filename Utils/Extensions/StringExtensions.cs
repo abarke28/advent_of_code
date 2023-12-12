@@ -20,6 +20,19 @@ namespace Aoc.Utils.Extensions
             }
         }
 
+        public static IEnumerable<T> ReadAllNumbers<T>(this string s, char[] delimiters) where T : INumber<T>
+        {
+            var words = s.Split(delimiters);
+
+            foreach (var word in words)
+            {
+                if (T.TryParse(word.AsSpan(), provider: null, out var num))
+                {
+                    yield return num;
+                }
+            }
+        }
+
         public static IEnumerable<string> GetWords(this string s, char delimiter = Space)
         {
             return s.Split(delimiter);
