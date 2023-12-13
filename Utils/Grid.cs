@@ -350,7 +350,7 @@
         {
             for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x <= Width; x++)
+                for (int x = 0; x < Width; x++)
                 {
                     var currentValue = GetValue(x, y);
 
@@ -371,7 +371,7 @@
         {
             for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x <= Width; x++)
+                for (int x = 0; x < Width; x++)
                 {
                     if (predicate(x, y))
                     {
@@ -389,7 +389,7 @@
         {
             for (int y = 0; y < Height; y++)
             {
-                for (int x = 0; x <= Width; x++)
+                for (int x = 0; x < Width; x++)
                 {
                     SetValue(x, y, generator(x, y));
                 }

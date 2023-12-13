@@ -59,5 +59,10 @@
 
             return closest;
         }
+
+        public static Grid<T> Copy<T>(this Grid<T> source)
+        {
+            return new Grid<T>(source.Width, source.Height, (x, y) => source.GetValue(x, y));
+        }
     }
 }
