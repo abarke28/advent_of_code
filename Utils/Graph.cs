@@ -72,7 +72,7 @@
 
         public void Print()
         {
-            _vertexMatrix.PrintGrid();
+            _vertexMatrix.Print();
         }
 
         public Dictionary<int, int> GetMinDistances(int start)

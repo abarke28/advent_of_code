@@ -71,7 +71,7 @@ namespace Aoc.y2021.day_13
                 grid[dot] = '#';
             }
 
-            grid.PrintGrid();
+            grid.Print();
         }
 
         private static IEnumerable<Vector2D> GetDots(IEnumerable<string> lines)

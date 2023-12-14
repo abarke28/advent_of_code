@@ -24,6 +24,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 11 | [Cosmic Expansion](https://adventofcode.com/2023/day/11) | ⭐⭐⭐⭐⭐ | ⭐⭐ | Super fun vectors and math.
 | 12 | [Hot Springs](https://adventofcode.com/2023/day/12) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Dynamic Programming.
 | 13 | [Point of Incidence](https://adventofcode.com/2023/day/13) | ⭐ | ⭐⭐⭐ | Multidimensional arrays.
+| 14 | [Parabolic Reflector Dish](https://adventofcode.com/2023/day/14) | ⭐⭐⭐⭐ | ⭐⭐ | Cycle detection, vectors.
 
 ## 2022
 

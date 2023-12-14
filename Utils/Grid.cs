@@ -249,7 +249,7 @@
             return ((v.X >= 0 && v.X < Width) && (v.Y >= 0 && v.Y < Height));
         }
 
-        public void PrintGrid(Func<T?, string>? printer = null)
+        public void Print(Func<T?, string>? printer = null)
         {
             for (int y = 0; y < Height; y++)
             {
