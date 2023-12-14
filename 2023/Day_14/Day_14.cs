@@ -65,7 +65,6 @@ namespace Aoc.Y2023.Day_14
             var i = 0;
 
             var state = string.Join('-', map.FindAll(c => c == Rock));
-
             stateDictionary.Add(state, i);
 
             while (true)
@@ -82,7 +81,6 @@ namespace Aoc.Y2023.Day_14
                 if (stateDictionary.ContainsKey(state))
                 {
                     var leadIn = stateDictionary[state];
-
                     var cycleLength = i - leadIn;
 
                     return (leadIn, cycleLength);
@@ -101,21 +99,14 @@ namespace Aoc.Y2023.Day_14
 
             switch ((tiltDirection.X, tiltDirection.Y))
             {
-                case (0, 1):
-                    rocks = rocks.OrderByDescending(r => r.Y);
+                case (0, _):
+                    rocks = rocks.OrderByDescending(r =>  Math.Sign(tiltDirection.Y) * r.Y);
                     break;
-                case (-1, 0):
-                    rocks = rocks.OrderBy(r => r.X);
-                    break;
-                case (0, -1):
-                    rocks = rocks.OrderBy(r => r.Y);
-                    break;
-                case (1, 0):
-                    rocks = rocks.OrderByDescending(r => r.X);
+                case (_, 0):
+                    rocks = rocks.OrderByDescending(r => Math.Sign(tiltDirection.X) * r.X);
                     break;
                 default:
                     throw new Exception($"Unexpected tilt direction: {tiltDirection}");
-
             }
                
             foreach (var rock in rocks)
