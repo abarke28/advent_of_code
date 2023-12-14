@@ -61,11 +61,11 @@ public static class RunnerUtils
 
         var stopWatch = Stopwatch.StartNew();
         var result1 = p1!.Invoke(solver, new object[] { problemInput });
-        Console.WriteLine($"[{year}-{problem} Part 1] [{stopWatch.ElapsedMilliseconds} ms] - {result1?.ToString()}");
+        Console.WriteLine($"[{year}-{problem} Part 1] [{stopWatch.ElapsedMilliseconds} ms] => {result1?.ToString()}");
 
         stopWatch.Restart();
         var result2 = p2!.Invoke(solver, new object[] { problemInput });
-        Console.WriteLine($"[{year}-{problem} Part 2] [{stopWatch.ElapsedMilliseconds} ms] - {result2?.ToString()}");
+        Console.WriteLine($"[{year}-{problem} Part 2] [{stopWatch.ElapsedMilliseconds} ms] => {result2?.ToString()}");
     }
 
     private static bool TryParseProblemNumber(string[] input, out string problemString, out string yearString)
