@@ -450,6 +450,25 @@
             }
         }
 
+        /// <summary>
+        /// Finds the Vector2Ds of grid spaces the fulfill a predicate.
+        /// </summary>
+        /// <param name="predicate">Predicate which takes the grid value as input Grid[x, y]</param>
+        /// <returns>Enumerable of Vector2Ds.</returns>
+        public IEnumerable<Vector2D> FindAll(Func<T?, bool> predicate)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (predicate(GetValue(x, y)))
+                    {
+                        yield return new Vector2D(x, y);
+                    }
+                }
+            }
+        }
+
         public bool TryFind(T value, out Vector2D location)
         {
             for (int y = 0; y < Height; y++)

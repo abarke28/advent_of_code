@@ -2,6 +2,11 @@
 {
     public static class GridExtensions
     {
+        public static Grid<T> Copy<T>(this Grid<T> source)
+        {
+            return new Grid<T>(source.Width, source.Height, (x, y) => source.GetValue(x, y));
+        }
+
         public static IDictionary<Vector2D, int> GetMinDistances<T>(this Grid<T> source, Vector2D start, Func<T, T, int> weightSelector)
         {
             var allNodes = new List<Vector2D>(source.Width * source.Height);
@@ -58,11 +63,6 @@
             }
 
             return closest;
-        }
-
-        public static Grid<T> Copy<T>(this Grid<T> source)
-        {
-            return new Grid<T>(source.Width, source.Height, (x, y) => source.GetValue(x, y));
         }
     }
 }
