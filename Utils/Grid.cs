@@ -230,6 +230,26 @@ namespace Aoc.Utils
             return rows;
         }
 
+        public IEnumerable<Vector2D> GetColumnVectors(int columnIndex)
+        {
+            if (columnIndex >= Width) throw new ArgumentOutOfRangeException(nameof(columnIndex));
+
+            for (int y = 0; y < Height; y++)
+            {
+                yield return new Vector2D(columnIndex, y);
+            }
+        }
+
+        public IEnumerable<Vector2D> GetRowVectors(int rowIndex)
+        {
+            if (rowIndex >= Height) throw new ArgumentOutOfRangeException(nameof(rowIndex));
+
+            for (int x = 0; x < Width; x++)
+            {
+                yield return new Vector2D(x, rowIndex);
+            }
+        }
+
         public IEnumerable<Vector2D> GetAllPoints()
         {
             for (var y = 0; y < Height; y++)

@@ -33,30 +33,30 @@ namespace Aoc.Y2023.Day_16
 
         private static List<Pose> GetAllPossibleStarts(Grid<char> map)
         {
-            var possibleStartPositions = map.FindAll((x, y) => x == 0 || y == 0 || x == (map.Width - 1) || y == (map.Height - 1));
+            var perimeter = new List<Vector2D>();
+            perimeter.AddRange(map.GetColumnVectors(0));
+            perimeter.AddRange(map.GetColumnVectors(map.Width - 1));
+            perimeter.AddRange(map.GetRowVectors(0));
+            perimeter.AddRange(map.GetRowVectors(map.Height - 1));
 
-            var poses = new List<Pose>(possibleStartPositions.Count() + 4);
+            var poses = new List<Pose>(perimeter.Count + 4);
 
-            foreach (var possibleStart in possibleStartPositions)
+            foreach (var possibleStart in perimeter)
             {
                 if (possibleStart.X == 0)
                 {
-                    // Left edge => face right
                     poses.Add(new Pose(possibleStart, Vector2D.Right));
                 }
                 if (possibleStart.X == map.Width - 1)
                 {
-                    // Right edge => face left
                     poses.Add(new Pose(possibleStart, Vector2D.Left));
                 }
                 if (possibleStart.Y == 0)
                 {
-                    // Bottom edge => face up
                     poses.Add(new Pose(possibleStart, Vector2D.Up));
                 }
                 if (possibleStart.Y == map.Height - 1)
                 {
-                    // Top edge => face down
                     poses.Add(new Pose(possibleStart, Vector2D.Down));
                 }
             }
