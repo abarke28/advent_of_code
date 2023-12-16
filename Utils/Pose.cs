@@ -3,17 +3,20 @@
     public class Pose
     {
         public Vector2D Pos { get; set; }
-        public Vector2D Ahead { get; set; }
+        public Vector2D Face { get; set; }
 
-        public Pose(Vector2D pos, Vector2D ahead)
+        public Vector2D Ahead => Pos + Face;
+        public Vector2D Behind => Pos - Face;
+
+        public Pose(Vector2D pos, Vector2D face)
         {
             Pos = pos;
-            Ahead = ahead;
+            Face = face;
         }
 
         public string GetRepresentativeString()
         {
-            return $"{Pos}-{Ahead}";
+            return $"Pos={Pos}, Face={Face}";
         }
     }
 }
