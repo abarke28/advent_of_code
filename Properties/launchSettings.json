@@ -2,11 +2,11 @@
   "profiles": {
     "Aoc": {
       "commandName": "Project",
-      "commandLineArgs": "2023 16 -NoFetch"
+      "commandLineArgs": "2023 17 -NoFetch"
     },
     "Aoc-debug": {
       "commandName": "Project",
-      "commandLineArgs": "2023 16 -Example"
+      "commandLineArgs": "2023 17 -Example"
     },
     "Aoc-debug-2021": {
       "commandName": "Project",
