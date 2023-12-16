@@ -64,8 +64,7 @@ namespace Aoc.Y2023.Day_14
             var stateDictionary = new Dictionary<string, int>();
             var i = 0;
 
-            var state = string.Join('-', map.FindAll(c => c == Rock));
-            stateDictionary.Add(state, i);
+            stateDictionary.Add(map.GetRepresentativeString(), i);
 
             while (true)
             {
@@ -76,11 +75,10 @@ namespace Aoc.Y2023.Day_14
 
                 i++;
 
-                state = string.Join('-', map.FindAll(c => c == Rock));
+                var state = map.GetRepresentativeString();
 
-                if (stateDictionary.ContainsKey(state))
+                if (stateDictionary.TryGetValue(state, out var leadIn))
                 {
-                    var leadIn = stateDictionary[state];
                     var cycleLength = i - leadIn;
 
                     return (leadIn, cycleLength);

@@ -1,4 +1,6 @@
-﻿namespace Aoc.Utils
+﻿using System.Text;
+
+namespace Aoc.Utils
 {
     public class Grid<T>
     {
@@ -268,6 +270,21 @@
             }
 
             Console.WriteLine();
+        }
+
+        public string GetRepresentativeString()
+        {
+            var sb = new StringBuilder();
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    sb.Append($"({x},{y})={GetValue(x, y)}\n");
+                }
+            }
+
+            return sb.ToString();
         }
 
         public Dictionary<string, int> CountDistinct() 

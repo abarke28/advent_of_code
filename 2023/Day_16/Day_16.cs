@@ -100,20 +100,20 @@ namespace Aoc.Y2023.Day_16
 
             var targets = (currentGridElement, pose.Face.X, pose.Face.Y) switch
             {
-                ('.', _, _) => new[] { new Pose(pose.Pos + pose.Face, pose.Face) },
-                ('/', 0, 1) => new[] { new Pose(pose.Pos + Vector2D.Right, Vector2D.Right) },
-                ('/', -1, 0) => new[] { new Pose(pose.Pos + Vector2D.Down, Vector2D.Down) },
-                ('/', 0, -1) => new[] { new Pose(pose.Pos + Vector2D.Left, Vector2D.Left) },
-                ('/', 1, 0) => new[] { new Pose(pose.Pos + Vector2D.Up, Vector2D.Up) },
-                ('\\', 0, 1) => new[] { new Pose(pose.Pos + Vector2D.Left, Vector2D.Left) },
-                ('\\', -1, 0) => new[] { new Pose(pose.Pos + Vector2D.Up, Vector2D.Up) },
-                ('\\', 0, -1) => new[] { new Pose(pose.Pos + Vector2D.Right, Vector2D.Right) },
-                ('\\', 1, 0) => new[] { new Pose(pose.Pos + Vector2D.Down, Vector2D.Down) },
-                ('-', _, 0) => new[] { new Pose(pose.Pos + pose.Face, pose.Face) },
-                ('-', 0, _) => new[] { new Pose(pose.Pos + Vector2D.Left, Vector2D.Left), new Pose(pose.Pos + Vector2D.Right, Vector2D.Right) },
-                ('|', _, 0) => new[] { new Pose(pose.Pos + Vector2D.Up, Vector2D.Up), new Pose(pose.Pos + Vector2D.Down, Vector2D.Down) },
-                ('|', 0, _) => new[] { new Pose(pose.Pos + pose.Face, pose.Face) },
-                (_, _, _) => throw new Exception($"Can not compute next pose for position {pose.Pos} with heading {pose.Face} on square {currentGridElement}")
+                ('.',   _,  _) => new[] { new Pose(pose.Pos + pose.Face, pose.Face) },
+                ('/',   0,  1) => new[] { new Pose(pose.Pos + Vector2D.Right, Vector2D.Right) },
+                ('/',  -1,  0) => new[] { new Pose(pose.Pos + Vector2D.Down, Vector2D.Down) },
+                ('/',   0, -1) => new[] { new Pose(pose.Pos + Vector2D.Left, Vector2D.Left) },
+                ('/',   1,  0) => new[] { new Pose(pose.Pos + Vector2D.Up, Vector2D.Up) },
+                ('\\',  0,  1) => new[] { new Pose(pose.Pos + Vector2D.Left, Vector2D.Left) },
+                ('\\', -1,  0) => new[] { new Pose(pose.Pos + Vector2D.Up, Vector2D.Up) },
+                ('\\',  0, -1) => new[] { new Pose(pose.Pos + Vector2D.Right, Vector2D.Right) },
+                ('\\',  1,  0) => new[] { new Pose(pose.Pos + Vector2D.Down, Vector2D.Down) },
+                ('-',   _,  0) => new[] { new Pose(pose.Pos + pose.Face, pose.Face) },
+                ('-',   0,  _) => new[] { new Pose(pose.Pos + Vector2D.Left, Vector2D.Left), new Pose(pose.Pos + Vector2D.Right, Vector2D.Right) },
+                ('|',   _,  0) => new[] { new Pose(pose.Pos + Vector2D.Up, Vector2D.Up), new Pose(pose.Pos + Vector2D.Down, Vector2D.Down) },
+                ('|',   0,  _) => new[] { new Pose(pose.Pos + pose.Face, pose.Face) },
+                (_,     _,  _) => throw new Exception($"Can not compute next pose for position {pose.Pos} with heading {pose.Face} on square {currentGridElement}")
             };
 
             var validTargets = targets.Where(t => map.IsInBounds(t.Pos));
