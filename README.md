@@ -27,6 +27,8 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 14 | [Parabolic Reflector Dish](https://adventofcode.com/2023/day/14) | ⭐⭐⭐⭐ | ⭐⭐ | Cycle detection, vectors.
 | 15 | [Lens Library](https://adventofcode.com/2023/day/15) |  | ⭐ | Reading comprehension.
 | 16 | [The Floor Will Be Lava](https://adventofcode.com/2023/day/16) | ⭐⭐⭐ | ⭐⭐ | 2D Pose, vectors.
+| 17 | [Clumsy Crucible](https://adventofcode.com/2023/day/17) | ⭐ | ⭐ | Foo.
+| 18 | [Lavaduct Lagoon](https://adventofcode.com/2023/day/18) | ⭐⭐ | ⭐⭐ | Shoelace formuka, Pick's Theroem.
 
 ## 2022
 

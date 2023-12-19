@@ -52,38 +52,25 @@ namespace Aoc.Y2023.Day_10
         private static int CalculateLoopInterior(Grid<char> map, List<Vector2D> loop)
         {
             // Shoelace Formula:
-            // A = 1/2 (v0 ^ v1 + v1 ^ v2 + ... vn-1 ^ v0)
+            // A = 1/2 |(v0 ^ v1 + v1 ^ v2 + ... vn-1 ^ v0)|
             // Where A ^ B = A.x * B.y - B.x * A.y
             var shoeLaceSum = 0;
 
-            while (shoeLaceSum <= 0)
+            for (int i = 0; i < loop.Count - 1; i++)
             {
-                for (int i = 0; i < loop.Count - 1; i++)
-                {
-                    var v1 = loop[i];
-                    var v2 = loop[i + 1];
+                var v1 = loop[i];
+                var v2 = loop[i + 1];
 
-                    var wedge = v1.X * v2.Y - v2.X * v1.Y;
+                var wedge = v1.X * v2.Y - v2.X * v1.Y;
 
-                    shoeLaceSum += wedge;
-                }
-
-                var finalShoeLace = loop.Last().X * loop.First().Y - loop.Last().Y * loop.First().X;
-
-                shoeLaceSum += finalShoeLace;
-                shoeLaceSum /= 2;
-
-                if (shoeLaceSum > 0)
-                {
-                    break;
-                }
-                else
-                {
-                    // Shoelace Forumla needs to run counter clockwise, just try both ways.
-                    shoeLaceSum = 0;
-                    loop.Reverse();
-                }
+                shoeLaceSum += wedge;
             }
+
+            var finalShoeLace = loop.Last().X * loop.First().Y - loop.Last().Y * loop.First().X;
+
+            shoeLaceSum += finalShoeLace;
+            shoeLaceSum /= 2;
+            shoeLaceSum = Math.Abs(shoeLaceSum);
 
             // Pick's Theorem:
             // A = i + b/2 - 1

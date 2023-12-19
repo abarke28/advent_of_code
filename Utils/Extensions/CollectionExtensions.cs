@@ -115,5 +115,28 @@ namespace Aoc.Utils.Extensions
         {
             return MathUtils.CartesianProduct(source);
         }
+
+        public static long CalculatePolygonArea(this IEnumerable<Vector2D> vertices)
+        {
+            // Shoelace Formula:
+            // A = 1/2 |(v0 ^ v1 + v1 ^ v2 + ... vn-1 ^ v0)|
+            // Where A ^ B = A.x * B.y - B.x * A.y
+            var shoeLaceSum = 0L;
+            var loop = vertices.ToList();
+
+            for (int i = 0; i < loop.Count; i++)
+            {
+                var v1 = loop[i];
+                var v2 = loop[(i + 1) % loop.Count];
+
+                var wedge = (long)v1.X * (long)v2.Y - (long)v2.X * (long)v1.Y;
+
+                shoeLaceSum += wedge;
+            }
+
+            shoeLaceSum /= 2;
+
+            return Math.Abs(shoeLaceSum);
+        }
     }
 }
