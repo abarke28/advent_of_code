@@ -7,12 +7,21 @@ namespace Aoc.Y2023.Day_19
     {
         public object Part1(IList<string> lines)
         {
+
+
             return 0;
         }
 
         public object Part2(IList<string> lines)
         {
+
+
             return 0;
+        }
+
+        private static void ParseLines(IList<string> lines)
+        {
+
         }
     }
 }
