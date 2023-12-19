@@ -1,14 +1,17 @@
 using Aoc.Common;
 using Aoc.Utils;
-using Aoc.Utils.Extensions;
 
 namespace Aoc.Y2023.Day_17
 {
     // https://adventofcode.com/2023/day/17
     public class Day_17 : ISolver
     {
-        private const int Max = int.MaxValue / 2;
-        private const int MaxStraight = 3;
+        private const int MaxDistance = int.MaxValue / 2;
+
+        private const int MaxStraightP1 = 3;
+        private const int MaxStraightP2 = 10;
+        private const int MinStraightP1 = 0;
+        private const int MinStraightP2 = 4;
 
         private struct StateNode : IEquatable<StateNode>
         {
@@ -21,7 +24,7 @@ namespace Aoc.Y2023.Day_17
                 HeadingCount = headingCount;
             }
 
-            public IEnumerable<StateNode> GetAdjacent(ISet<Vector2D> validPoints, int maxStraight)
+            public IEnumerable<StateNode> GetAdjacent(ISet<Vector2D> validPoints, int minStraight, int maxStraight)
             {
                 var nodes = new List<StateNode>();
 
@@ -35,20 +38,23 @@ namespace Aoc.Y2023.Day_17
                     }
                 }
 
-                var leftFace = new Vector2D(-1 * this.Pose.Face.Y, this.Pose.Face.X);
-                var leftNode = new StateNode(new Pose(this.Pose.Pos + leftFace, leftFace), 1);
-
-                var rightFace = new Vector2D(this.Pose.Face.Y, -1 * this.Pose.Face.X);
-                var rightNode = new StateNode(new Pose(this.Pose.Pos + rightFace, rightFace), 1);
-
-                if (validPoints.Contains(leftNode.Pose.Pos))
+                if (HeadingCount >= minStraight)
                 {
-                    nodes.Add(leftNode);
-                }
+                    var leftFace = new Vector2D(-1 * this.Pose.Face.Y, this.Pose.Face.X);
+                    var leftNode = new StateNode(new Pose(this.Pose.Pos + leftFace, leftFace), 1);
 
-                if (validPoints.Contains(rightNode.Pose.Pos))
-                {
-                    nodes.Add(rightNode);
+                    var rightFace = new Vector2D(this.Pose.Face.Y, -1 * this.Pose.Face.X);
+                    var rightNode = new StateNode(new Pose(this.Pose.Pos + rightFace, rightFace), 1);
+
+                    if (validPoints.Contains(leftNode.Pose.Pos))
+                    {
+                        nodes.Add(leftNode);
+                    }
+
+                    if (validPoints.Contains(rightNode.Pose.Pos))
+                    {
+                        nodes.Add(rightNode);
+                    }
                 }
 
                 return nodes;
@@ -77,7 +83,7 @@ namespace Aoc.Y2023.Day_17
             var startingPoint = new Vector2D(0, map.Height - 1);
             var goal = new Vector2D(map.Width - 1, 0);
 
-            var min = GetLowestHeat(startingPoint, goal, map);
+            var min = GetLowestHeat(startingPoint, goal, map, MinStraightP1, MaxStraightP1);
 
             return min;
         }
@@ -86,57 +92,77 @@ namespace Aoc.Y2023.Day_17
         {
             var map = Grid<int>.FromStrings(lines, c => int.Parse(c.ToString()));
 
-            return 0;
+            var startingPoint = new Vector2D(0, map.Height - 1);
+            var goal = new Vector2D(map.Width - 1, 0);
+
+            var min = GetLowestHeat(startingPoint, goal, map, MinStraightP2, MaxStraightP2);
+
+            return min;
         }
 
-        private static int GetLowestHeat(Vector2D startingPoint, Vector2D goal, Grid<int> map)
+        private static int GetLowestHeat(Vector2D startingPoint, Vector2D goal, Grid<int> map, int minStraight, int maxStraight)
         {
-            var start = new StateNode(new Pose(startingPoint, Vector2D.Down), 1);
+            var starts = new List<StateNode>
+            {
+                new StateNode(new Pose(startingPoint, Vector2D.Right), 1),
+                new StateNode(new Pose(startingPoint, Vector2D.Down), 1)
+            };
+
+            var minHeat = MaxDistance;
 
             var validPoints = map.GetAllPoints().Except(new[] { startingPoint }).ToHashSet();
             var nodes = new List<StateNode>();
-                
+
             foreach (var v in map.GetAllPoints())
             {
                 foreach (var face in new[] { Vector2D.Up, Vector2D.Left, Vector2D.Down, Vector2D.Right })
                 {
-                    foreach (var headingCount in new[] { 1, 2, 3 })
+                    foreach (var headingCount in Enumerable.Range(1, maxStraight))
                     {
-                        //if (v == startingPoint && face != Vector2D.Right && headingCount != 1) continue;
-
                         var stateNode = new StateNode(new Pose(v, face), headingCount);
                         nodes.Add(stateNode);
                     }
                 }
             }
 
-            var nodeDistances = nodes.ToDictionary(n => n, _ => Max);
-            nodeDistances[start] = 0;
-
-            var toProcess = new PriorityQueue<StateNode, int>(items: new List<(StateNode, int)> { new (start, 0) });
-
-            while (toProcess.Count > 0)
+            foreach (var start in starts)
             {
-                var current = toProcess.Dequeue();
+                var nodeDistances = nodes.ToDictionary(n => n, _ => MaxDistance);
+                nodeDistances[start] = 0;
 
-                if (current.Pose.Pos == goal)
+                var toProcess = new PriorityQueue<StateNode, int>(items: new List<(StateNode, int)> { new(start, 0) });
+
+                var pathFound = false;
+                while (toProcess.Count > 0)
                 {
-                    return nodeDistances[current];
+                    var current = toProcess.Dequeue();
+
+                    if (current.Pose.Pos == goal && current.HeadingCount >= minStraight)
+                    {
+                        minHeat = Math.Min(minHeat, nodeDistances[current]);
+                        pathFound = true;
+                        break;
+                    }
+
+                    foreach (var adjacentNode in current.GetAdjacent(validPoints, minStraight, maxStraight))
+                    {
+                        var distance = nodeDistances[current] + map.GetValue(adjacentNode.Pose.Pos);
+
+                        if (distance < nodeDistances[adjacentNode])
+                        {
+                            nodeDistances[adjacentNode] = distance;
+                            toProcess.Enqueue(adjacentNode, distance);
+                        }
+                    }
                 }
 
-                foreach (var adjacentNode in current.GetAdjacent(validPoints, MaxStraight))
+                if (!pathFound)
                 {
-                    var distance = nodeDistances[current] + map.GetValue(adjacentNode.Pose.Pos);
-
-                    if (distance < nodeDistances[adjacentNode])
-                    {
-                        nodeDistances[adjacentNode] = distance;
-                        toProcess.Enqueue(adjacentNode, distance);
-                    }
+                    throw new Exception("Could not find path");
                 }
             }
 
-            throw new Exception("Could not find path");
+            return minHeat;
         }
     }
 }
