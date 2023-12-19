@@ -7,9 +7,10 @@ namespace Aoc.Y2023.Day_17
     // https://adventofcode.com/2023/day/17
     public class Day_17 : ISolver
     {
+        private const int Max = int.MaxValue / 2;
         private const int MaxStraight = 3;
 
-        private class StateNode : IEquatable<StateNode>
+        private struct StateNode : IEquatable<StateNode>
         {
             public Pose Pose { get; set; }
             public int HeadingCount { get; set; }
@@ -20,11 +21,11 @@ namespace Aoc.Y2023.Day_17
                 HeadingCount = headingCount;
             }
 
-            public IEnumerable<StateNode> GetAdjacent(ISet<Vector2D> validPoints)
+            public IEnumerable<StateNode> GetAdjacent(ISet<Vector2D> validPoints, int maxStraight)
             {
                 var nodes = new List<StateNode>();
 
-                if (HeadingCount < MaxStraight)
+                if (HeadingCount < maxStraight)
                 {
                     var aheadNode = new StateNode(new Pose(this.Pose.Ahead, this.Pose.Face), HeadingCount + 1);
 
@@ -58,10 +59,8 @@ namespace Aoc.Y2023.Day_17
                 return $"{this.Pose.GetRepresentativeString()}-{this.HeadingCount}";
             }
 
-            public bool Equals(StateNode? other)
+            public bool Equals(StateNode other)
             {
-                if (other is null) return false;
-
                 return GetRepresentativeString().Equals(other.GetRepresentativeString());
             }
 
@@ -92,100 +91,52 @@ namespace Aoc.Y2023.Day_17
 
         private static int GetLowestHeat(Vector2D startingPoint, Vector2D goal, Grid<int> map)
         {
-            var startingPoints = new List<StateNode>
-            {
-                new StateNode(new Pose(startingPoint, Vector2D.Right), 1),
-                //new StateNode(new Pose(startingPoint, Vector2D.Down), 1)
-            };
+            var start = new StateNode(new Pose(startingPoint, Vector2D.Down), 1);
 
-            var goals = new List<StateNode>
-            {
-                new StateNode(new Pose(goal, Vector2D.Right), 1),
-                new StateNode(new Pose(goal, Vector2D.Right), 2),
-                new StateNode(new Pose(goal, Vector2D.Right), 3),
-                new StateNode(new Pose(goal, Vector2D.Down), 1),
-                new StateNode(new Pose(goal, Vector2D.Down), 2),
-                new StateNode(new Pose(goal, Vector2D.Down), 3),
-            }.ToHashSet();
-
-            var validPoints = map.GetAllPoints().ToHashSet();
+            var validPoints = map.GetAllPoints().Except(new[] { startingPoint }).ToHashSet();
             var nodes = new List<StateNode>();
-
-            foreach (var v in validPoints)
+                
+            foreach (var v in map.GetAllPoints())
             {
                 foreach (var face in new[] { Vector2D.Up, Vector2D.Left, Vector2D.Down, Vector2D.Right })
                 {
-                    //if (v == startingPoint && (face == Vector2D.Up || face == Vector2D.Left)) continue;
-
                     foreach (var headingCount in new[] { 1, 2, 3 })
                     {
+                        //if (v == startingPoint && face != Vector2D.Right && headingCount != 1) continue;
+
                         var stateNode = new StateNode(new Pose(v, face), headingCount);
                         nodes.Add(stateNode);
                     }
                 }
             }
 
-            var min = int.MaxValue / 2;
+            var nodeDistances = nodes.ToDictionary(n => n, _ => Max);
+            nodeDistances[start] = 0;
 
-            foreach (var possibleStart in startingPoints)
+            var toProcess = new PriorityQueue<StateNode, int>(items: new List<(StateNode, int)> { new (start, 0) });
+
+            while (toProcess.Count > 0)
             {
-                var start = possibleStart;
+                var current = toProcess.Dequeue();
 
-                var unvisistedNotes = nodes.Select(n => n.GetRepresentativeString()).ToHashSet();
-                var nodeDistances = nodes.ToDictionary(n => n, _ => int.MaxValue);
-
-                nodeDistances[start] = 0;
-
-                while (unvisistedNotes.Any())
+                if (current.Pose.Pos == goal)
                 {
-                    var current = GetMinUnvisited(nodeDistances, unvisistedNotes);
+                    return nodeDistances[current];
+                }
 
-                    if (current.HeadingCount == 0) break;
+                foreach (var adjacentNode in current.GetAdjacent(validPoints, MaxStraight))
+                {
+                    var distance = nodeDistances[current] + map.GetValue(adjacentNode.Pose.Pos);
 
-                    unvisistedNotes.Remove(current.GetRepresentativeString());
-
-                    var adjacentNodes = current.GetAdjacent(validPoints);
-
-                    foreach (var adjacentNode in adjacentNodes)
+                    if (distance < nodeDistances[adjacentNode])
                     {
-                        //if (nodeDistances[current] == int.MaxValue / 10)
-                        //{
-
-                        //}
-
-                        var newDistanceToAdjacentNode = nodeDistances[current] + map.GetValue(adjacentNode.Pose.Pos);
-
-                        nodeDistances[adjacentNode] = Math.Min(nodeDistances[adjacentNode], newDistanceToAdjacentNode);
+                        nodeDistances[adjacentNode] = distance;
+                        toProcess.Enqueue(adjacentNode, distance);
                     }
                 }
-
-                var minDistanceForStart = nodeDistances
-                    .Where(n => goals.Contains(n.Key))
-                    .Select(kvp => kvp.Value)
-                    .Min();
-
-                min = Math.Min(minDistanceForStart, min);
-
             }
 
-            return min;
-        }
-
-        private static StateNode GetMinUnvisited(IDictionary<StateNode, int> distances, HashSet<string> unvisitedNodes)
-        {
-            var min = int.MaxValue / 2;
-            StateNode closest = new StateNode(new Pose(Vector2D.Zero, Vector2D.Zero), 0);
-
-            foreach (var (node, distance) in distances)
-            {
-                if (unvisitedNodes.Contains(node.GetRepresentativeString()) && distance <= min)
-                {
-                    min = distance;
-                    closest = node;
-                }
-            }
-
-            return closest!;
+            throw new Exception("Could not find path");
         }
     }
 }
