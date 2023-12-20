@@ -74,11 +74,6 @@ namespace Aoc.Y2023.Day_20
                 else
                 {
                     // None - noop
-                    if (!high)
-                    {
-
-                    }
-
                     return Enumerable.Empty<Pulse>();
                 }
             }
@@ -116,7 +111,7 @@ namespace Aoc.Y2023.Day_20
                 cycles.Add(cycleList.Value[^1] - cycleList.Value[^2]);
             }
 
-            return MathUtils.LCM<long>(cycles.Select(c => (long)c).ToArray());
+            return MathUtils.LCM(cycles.Select(c => (long)c).ToArray());
         }
 
         private static (int LowPulses, int HighPulses) SimulateNButtonPresses(int n, ISet<Module> modulesSet, Dictionary<string, List<int>>? cycleWatch = null)
