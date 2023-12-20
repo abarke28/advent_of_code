@@ -29,6 +29,8 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 16 | [The Floor Will Be Lava](https://adventofcode.com/2023/day/16) | ⭐⭐⭐ | ⭐⭐ | 2D Pose, vectors.
 | 17 | [Clumsy Crucible](https://adventofcode.com/2023/day/17) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Dijkstra's algorithm.
 | 18 | [Lavaduct Lagoon](https://adventofcode.com/2023/day/18) | ⭐⭐⭐ | ⭐⭐ | Shoelace formula, Pick's Theroem.
+| 19 | [Aplenty](https://adventofcode.com/2023/day/19) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Recursion, parsing.
+| 20 | [Pulse Propagation](https://adventofcode.com/2023/day/20) | ⭐⭐⭐ | ⭐⭐⭐ | Queues, cycles.
 
 ## 2022
 

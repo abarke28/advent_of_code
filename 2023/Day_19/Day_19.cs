@@ -1,6 +1,5 @@
 using Aoc.Common;
 using System.Data;
-using System.Linq;
 
 namespace Aoc.Y2023.Day_19
 {
@@ -211,7 +210,6 @@ namespace Aoc.Y2023.Day_19
             if (rule.Unconditional && rule.SendTo == "R")
             {
                 // No-op
-                //ranges.Add(new string[] { "x", "m", "a", "s" }.ToDictionary(c => c, _ => new AttributeRange(0, 0)));
             }
             else if (rule.Unconditional && rule.SendTo == "A")
             {
@@ -245,7 +243,7 @@ namespace Aoc.Y2023.Day_19
                 }
                 else if (nextDestination == "R")
                 {
-                    // no-op for passing.
+                    // No-op for passing.
 
                     var failingCopy = currentRanges.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
                     failingCopy[partAttribute] = failingRange;
