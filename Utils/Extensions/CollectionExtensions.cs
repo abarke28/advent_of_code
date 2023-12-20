@@ -138,5 +138,10 @@ namespace Aoc.Utils.Extensions
 
             return Math.Abs(shoeLaceSum);
         }
+
+        public static IList<T> InList<T>(this T source)
+        {
+            return new List<T> { source };
+        }
     }
 }
