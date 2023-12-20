@@ -1,4 +1,5 @@
 using Aoc.Common;
+using Aoc.Utils.Extensions;
 using System.Data;
 
 namespace Aoc.Y2023.Day_19
@@ -19,8 +20,15 @@ namespace Aoc.Y2023.Day_19
                 UpperBound = upperBound;
             }
 
+            public override string ToString()
+            {
+                return $"[{LowerBound}, {UpperBound})";
+            }
+
             public AttributeRange GetPassingRange(int num, bool greaterThan)
             {
+                if (num == 0) return new AttributeRange(LowerBound, UpperBound);
+
                 if (greaterThan)
                 {
                     if (num >= UpperBound) return new AttributeRange(0, 0);
@@ -35,19 +43,21 @@ namespace Aoc.Y2023.Day_19
 
                     if (num <= LowerBound) return new AttributeRange(0, 0);
 
-                    return new AttributeRange(LowerBound, num - 1);
+                    return new AttributeRange(LowerBound, num);
                 }
             }
 
             public AttributeRange GetFailingRange(int num, bool greaterThan)
             {
+                if (num == 0) return new AttributeRange(0, 0);
+
                 if (greaterThan)
                 {
                     if (num >= UpperBound) return new AttributeRange(LowerBound, UpperBound);
 
                     if (num <= LowerBound) return new AttributeRange(0, 0);
 
-                    return new AttributeRange(LowerBound, num);
+                    return new AttributeRange(LowerBound, num + 1);
                 }
                 else
                 {
