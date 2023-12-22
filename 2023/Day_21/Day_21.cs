@@ -1,6 +1,7 @@
 using Aoc.Common;
 using Aoc.Utils;
 using Aoc.Utils.Extensions;
+using System.Numerics;
 
 namespace Aoc.Y2023.Day_21
 {
@@ -31,8 +32,9 @@ namespace Aoc.Y2023.Day_21
 
             var numSteps = 26_501_365L;
             var periodicity = map.Width;
-            var cycles = numSteps / periodicity;
-            var stepsToSimulate = periodicity * 4;
+            var offset = numSteps % periodicity;
+            var cycles = (numSteps - offset) / periodicity;
+            var stepsToSimulate = (int)(offset + periodicity * 3);
 
             var counts = GetNumberOfInfiniteLocations(stepsToSimulate, map, start);
 
@@ -40,9 +42,9 @@ namespace Aoc.Y2023.Day_21
 
             // y = ax^2 + bx + c
             //
-            // 2a = d2          => a = d2/2
-            // 3a + b = y2 - y1 => b = y2 - y1 - 3a
-            // a + b + c = y1   => c = y1 - a - b
+            // y'' = 2a = d2 => a = d2/2
+            // y2 - y1 = 4a + 2b + c - (a + b + c) => b = y2 - y1 -3a
+            // a*(0)^2 + b*(0) + c = y0   => c = y1
 
             var d1_1 = interestingSteps[2].Value - interestingSteps[1].Value;
             var d1_2 = interestingSteps[3].Value - interestingSteps[2].Value;
@@ -50,10 +52,10 @@ namespace Aoc.Y2023.Day_21
             var d2 = d1_2 - d1_1;
 
             var a = d2 / 2;
-            var b = counts[2] - counts[1] - 3 * a;
-            var c = counts[1] - a - b;
+            var b = interestingSteps[2].Value - interestingSteps[1].Value - 3 * a;
+            var c = interestingSteps[0].Value;
 
-            return (long)a * cycles * cycles + (long)b * cycles + c;
+            return a * cycles * cycles + b * cycles + c;
         }
 
         private static Dictionary<int, int> GetNumberOfLocations(int numSteps, Grid<char> map, Vector2D start)
