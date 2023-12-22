@@ -32,6 +32,7 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 19 | [Aplenty](https://adventofcode.com/2023/day/19) | ⭐⭐ | ⭐⭐⭐⭐⭐ | Recursion, parsing.
 | 20 | [Pulse Propagation](https://adventofcode.com/2023/day/20) | ⭐⭐⭐ | ⭐⭐⭐ | Queues, cycles.
 | 21 | [Step Counter](https://adventofcode.com/2023/day/21) | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | BFS, math.
+| 22 | [Sand Slabs](https://adventofcode.com/2023/day/22) | ⭐⭐⭐ | ⭐⭐ | 3D vectors.
 
 ## 2022
 
