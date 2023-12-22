@@ -18,10 +18,10 @@ namespace Aoc.Y2023.Day_23
 
             return 0;
         }
-    }
 
-    private static void ParseLines(IList<string> lines)
-    {
+        private static void ParseLines(IList<string> lines)
+        {
 
+        }
     }
 }
