@@ -24,12 +24,12 @@ namespace Aoc.Y2023.Day_23
         {
             var map = Grid<char>.FromStrings(lines, c => c);
 
-            var start = map.GetRowVectors(map.Height - 1).Single(v => map.GetValue(v).Equals(Path));
+            var start = map.GetRowVectors(map.Height - 1).Single(v => map.GetValue(v).Equals(Path)) + Vector2D.Down;
             var end = map.GetRowVectors(0).Single(v => map.GetValue(v).Equals(Path));
 
-            var paths = FindPaths(map, start.AsList(), end, new HashSet<Vector2D>());
+            var paths = FindPaths(map, start, end);
 
-            var pathLengths = paths.Select(p => p.Count - 1).ToList();
+            var pathLengths = paths.Select(p => p.Count).ToList();
 
             return pathLengths.Max();
         }
@@ -45,64 +45,189 @@ namespace Aoc.Y2023.Day_23
                 map.SetValue(slope, Path);
             }
 
-            var start = map.GetRowVectors(map.Height - 1).Single(v => map.GetValue(v).Equals(Path));
+            var start = map.GetRowVectors(map.Height - 1).Single(v => map.GetValue(v).Equals(Path)) + Vector2D.Down;
             var end = map.GetRowVectors(0).Single(v => map.GetValue(v).Equals(Path));
 
-            var paths = FindPaths(map, start.AsList(), end, new HashSet<Vector2D>());
+            var graph = ParseGraph(map, start, end);
 
-            var pathLengths = paths.Select(p => p.Count - 1).ToList();
+            var paths = FindPaths(graph, start, end);
 
-            return pathLengths.Max();
+            var scores = paths.Select(p => CalculatePathCost(p, graph) - 1);
+
+            var max = scores.Max();
+
+            return max;
         }
 
         private static IEnumerable<List<Vector2D>> FindPaths(
-            Grid<char> map, List<Vector2D> currentPath, Vector2D goal, HashSet<Vector2D> visited)
+            Grid<char> map, Vector2D start, Vector2D goal)
         {
+            var initialVisited = new HashSet<Vector2D>((start + Vector2D.Up).AsList());
             var paths = new List<List<Vector2D>>();
+            var initialPath = start.AsList();
 
-            var currentPosition = currentPath.Last();
-            var newVisited = visited.ToHashSet();
-            newVisited.Add(currentPosition);
+            var pathsToProcess = new Stack<(List<Vector2D> CurrentPath, HashSet<Vector2D> Visited)>();
 
-            if (currentPosition == goal)
+            pathsToProcess.Push(new(initialPath, initialVisited));
+
+            while (pathsToProcess.Count > 0)
             {
-                paths.Add(currentPath);
-                return paths;
-            }
+                var currentState = pathsToProcess.Pop();
+                var currentPath = currentState.CurrentPath;
+                var visited = currentState.Visited.ToHashSet();
 
-            var nextPosibleSteps = new List<Vector2D>();
+                var currentPosition = currentPath.Last();
+                visited.Add(currentPosition);
 
-            var current = map.GetValue(currentPosition);
+                if (currentPosition == goal)
+                {
+                    paths.Add(currentPath);
+                    continue;
+                }
 
-            if (SlopeMap.TryGetValue(current, out var slope))
-            {
-                nextPosibleSteps.Add(currentPosition + slope);
-            }
-            else
-            {
-                var adjacents = currentPosition
-                    .Get4Neighbors()
-                    .Where(n => map.IsInBounds(n) && map.GetValue(n) != Forest);
+                var nextPosibleSteps = new List<Vector2D>();
 
-                nextPosibleSteps.AddRange(adjacents);
-            }
+                var current = map.GetValue(currentPosition);
 
-            var validNextPossibleSteps = nextPosibleSteps.Where(nps => !visited.Contains(nps));
+                if (SlopeMap.TryGetValue(current, out var slope))
+                {
+                    nextPosibleSteps.Add(currentPosition + slope);
+                }
+                else
+                {
+                    var adjacents = currentPosition
+                        .Get4Neighbors()
+                        .Where(n => map.GetValue(n) != Forest);
 
-            if (!validNextPossibleSteps.Any())
-            {
-                return paths;
-            }
+                    nextPosibleSteps.AddRange(adjacents);
+                }
 
-            foreach (var validNextPossibleStep in validNextPossibleSteps)
-            {
-                var newPath = currentPath.ToList();
-                newPath.Add(validNextPossibleStep);
+                var validNextPossibleSteps = nextPosibleSteps.Where(nps => !visited.Contains(nps));
 
-                paths.AddRange(FindPaths(map, newPath, goal, newVisited));
+                if (!validNextPossibleSteps.Any())
+                {
+                    continue;
+                }
+
+                foreach (var validNextPossibleStep in validNextPossibleSteps)
+                {
+                    var newPath = currentPath.ToList();
+                    newPath.Add(validNextPossibleStep);
+
+                    var newState = (newPath, visited);
+                    pathsToProcess.Push(newState);
+                }
             }
 
             return paths;
+        }
+
+        private static IEnumerable<List<Vector2D>> FindPaths(
+            NodeGraph<Vector2D> map, Vector2D start, Vector2D goal)
+        {
+            var junctionBeforeGoal = map.GetAdjacentNodes(goal).Single(n => n != goal);
+            var costForFinalSegment = map.GetEdgeWeight(junctionBeforeGoal, goal);
+
+            var initialVisited = new HashSet<Vector2D>((start).AsList());
+            var paths = new List<List<Vector2D>>();
+            var initialPath = start.AsList();
+
+            var pathsToProcess = new Stack<(List<Vector2D> CurrentPath, HashSet<Vector2D> Visited)>();
+
+            pathsToProcess.Push(new(initialPath, initialVisited));
+
+            while (pathsToProcess.Count > 0)
+            {
+                var currentState = pathsToProcess.Pop();
+                var currentPath = currentState.CurrentPath;
+                var visited = currentState.Visited.ToHashSet();
+
+                var currentPosition = currentPath.Last();
+                visited.Add(currentPosition);
+
+                if (currentPosition == junctionBeforeGoal)
+                {
+                    currentPath.Add(goal);
+                    paths.Add(currentPath);
+                    continue;
+                }
+
+                var nextPossibleSteps = map.GetAdjacentNodes(currentPosition);
+                var validNextPossibleSteps = nextPossibleSteps.Where(nps => !visited.Contains(nps));
+
+                if (!validNextPossibleSteps.Any())
+                {
+                    continue;
+                }
+
+                foreach (var validNextPossibleStep in validNextPossibleSteps)
+                {
+                    var newPath = currentPath.ToList();
+                    newPath.Add(validNextPossibleStep);
+
+                    var newState = (newPath, visited);
+                    pathsToProcess.Push(newState);
+                }
+            }
+
+            return paths;
+        }
+
+        private static int CalculatePathCost(List<Vector2D> path, NodeGraph<Vector2D> map)
+        {
+            var cost = 0;
+
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                cost += map.GetEdgeWeight(path[i], path[i + 1]);
+            }
+
+            return cost;
+        }
+
+        private static NodeGraph<Vector2D> ParseGraph(Grid<char> map, Vector2D start, Vector2D end)
+        {
+            var junctions = map
+                .FindAll(v => map.GetValue(v).Equals(Path) && v.Get4Neighbors().Count(n => map.IsInBounds(n) &&
+                                                                                           map.GetValue(n).Equals(Path)) > 2)
+                .Union(new List<Vector2D> { start, end })
+                .ToList();
+
+            var graph = new NodeGraph<Vector2D>(junctions.Count);
+
+            foreach (var junction in junctions)
+            {
+                graph.AddNode(junction);
+
+                var pathsFromJunction = junction.Get4Neighbors().Where(n => map.IsInBounds(n) && map.GetValue(n).Equals(Path));
+
+                foreach (var pathFromJunction in pathsFromJunction)
+                {
+                    var visited = new HashSet<Vector2D>(junction.AsList());
+                    var current = pathFromJunction;
+                    var pathLength = 1;
+
+                    var optionsFromCurrent = current
+                        .Get4Neighbors()
+                        .Where(n => map.IsInBounds(n) && map.GetValue(n).Equals(Path) && !visited.Contains(n));
+
+                    while (optionsFromCurrent.Count() == 1)
+                    {
+                        pathLength++;
+                        visited.Add(current);
+                        current = optionsFromCurrent.Single();
+
+                        optionsFromCurrent = current
+                            .Get4Neighbors()
+                            .Where(n => map.IsInBounds(n) && map.GetValue(n).Equals(Path) && !visited.Contains(n));
+                    }
+
+                    graph.AddNode(current);
+                    graph.AddEdge(junction, current, pathLength, directed: false);
+                }
+            }
+
+            return graph;
         }
     }
 }
