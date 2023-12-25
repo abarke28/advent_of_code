@@ -116,6 +116,17 @@ namespace Aoc.Utils.Extensions
             return MathUtils.CartesianProduct(source);
         }
 
+        /// <summary>
+        /// Returns all unique combinations (disregarding order) of length <see cref="k"/> from the source sequence, 
+        /// </summary>
+        /// <param name="k">Number of elements per comibination</param>
+        public static IEnumerable<IEnumerable<T>> Combinations<T>(this IEnumerable<T> elements, int k)
+        {
+            return k == 0 ? new[] { new T[0] } :
+              elements.SelectMany((e, i) =>
+                elements.Skip(i + 1).Combinations(k - 1).Select(c => (new[] { e }).Concat(c)));
+        }
+
         public static long CalculatePolygonArea(this IEnumerable<Vector2D> vertices)
         {
             // Shoelace Formula:
