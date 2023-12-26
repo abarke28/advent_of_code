@@ -2,6 +2,8 @@
 {
     public class NodeGraph<TNodeKey> where TNodeKey : notnull
     {
+        private const int Infinity = int.MaxValue / 2;
+
         private readonly HashSet<TNodeKey> _nodeKeys;
         private readonly Dictionary<TNodeKey, Dictionary<TNodeKey, int>> _adjacencyLists;
 
@@ -51,6 +53,16 @@
             }
         }
 
+        public void RemoveEdge(TNodeKey n1, TNodeKey n2, bool directed = true)
+        {
+            _adjacencyLists[n1].Remove(n2);
+
+            if (!directed)
+            {
+                _adjacencyLists[n2].Remove(n1);
+            }
+        }
+
         public int GetEdgeWeight(TNodeKey n1, TNodeKey n2)
         {
             var n1Adjacencies = GetAdjacentNodesWithWeights(n1);
@@ -63,16 +75,122 @@
             return _nodeKeys.ToList();
         }
 
-        public IDictionary<TNodeKey, int> GetAdjacentNodesWithWeights(TNodeKey n)
+        public IList<NodeGraphEdge<TNodeKey>> GetAllEdges()
         {
-            return _adjacencyLists.TryGetValue(n, out var values) ? values : new Dictionary<TNodeKey, int>();
+            var edges = new List<NodeGraphEdge<TNodeKey>>();
+
+            foreach (var node in GetAllNodes())
+            {
+                var adjacents = GetAdjacentNodes(node).Where(a => !a.Equals(node));
+
+                foreach (var adj in adjacents)
+                {
+                    var weight = GetEdgeWeight(node, adj);
+                    var oppositeWeight = GetEdgeWeight(adj, node);
+                    var isDirected = weight != oppositeWeight;
+
+                    edges.Add(new NodeGraphEdge<TNodeKey>(node, adj, weight, isDirected));
+                }
+            }
+
+            return edges;
         }
 
-        public IEnumerable<TNodeKey> GetAdjacentNodes(TNodeKey n)
+        public IDictionary<TNodeKey, int> GetAdjacentNodesWithWeights(TNodeKey n, bool includeSelf = false)
         {
-            var nodesWithWeights =  GetAdjacentNodesWithWeights(n);
+            return _adjacencyLists.TryGetValue(n, out var values) 
+                ? values.Where(adj => !adj.Key.Equals(n) || includeSelf).ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                : new Dictionary<TNodeKey, int>();
+        }
+
+        public IEnumerable<TNodeKey> GetAdjacentNodes(TNodeKey n, bool includeSelf = false)
+        {
+            var nodesWithWeights = GetAdjacentNodesWithWeights(n).Where(aj => !aj.Key.Equals(n) || includeSelf);
 
             return nodesWithWeights.Select(n => n.Key);
+        }
+
+        public IEnumerable<NodeGraphEdge<TNodeKey>> GetNodeEdges(TNodeKey n)
+        {
+            var adjs = GetAdjacentNodesWithWeights(n);
+
+            foreach (var adj in adjs)
+            {
+                var isDirected = GetEdgeWeight(n, adj.Key) != GetEdgeWeight(adj.Key, n);
+
+                yield return new NodeGraphEdge<TNodeKey>(n, adj.Key, adj.Value, isDirected);
+            }
+        }
+
+        public IEnumerable<NodeGraphEdge<TNodeKey>> GetPathEdges(IList<TNodeKey> nodes)
+        {
+            var edges = new List<NodeGraphEdge<TNodeKey>>(nodes.Count - 1);
+
+            for (int i = 1; i < nodes.Count; i++)
+            {
+                var n1 = nodes[i - 1];
+                var n2 = nodes[i];
+
+                var weight = GetEdgeWeight(n1, n2);
+                var isDirected = weight != GetEdgeWeight(n2, n1);
+
+                var edge = new NodeGraphEdge<TNodeKey>(n1, n2, weight, isDirected);
+
+                edges.Add(edge);
+            }
+
+            return edges;
+        }
+
+        public IEnumerable<TNodeKey> GetShortestPath(TNodeKey start, TNodeKey goal)
+        {
+            var (_, predecessors) = GetDistancesAndPredecssors(start);
+
+            var path = new List<TNodeKey>();
+
+            var predecessor = predecessors[goal];
+
+            while (!predecessor.Equals(start))
+            {
+                path.Add(predecessor);
+                predecessor = predecessors[predecessor];
+            }
+
+            path.Add(start);
+            path.Reverse();
+
+            return path;
+        }
+
+        public (IDictionary<TNodeKey, int> Distances, IDictionary<TNodeKey, TNodeKey> Predecessors) GetDistancesAndPredecssors(TNodeKey start)
+        {
+            var nodeDistances = _nodeKeys.ToDictionary(n => n, _ => Infinity);
+            nodeDistances[start] = 0;
+
+            var predecessors = _nodeKeys.ToDictionary(n => n, _ => start);
+
+            var toProcess = new PriorityQueue<TNodeKey, int>();
+            toProcess.Enqueue(start, 0);
+
+            while (toProcess.Count > 0)
+            {
+                var current = toProcess.Dequeue();
+
+                foreach (var adj in GetAdjacentNodes(current))
+                {
+                    var potentialDistance = nodeDistances[current] + GetEdgeWeight(current, adj);
+
+                    if (potentialDistance < nodeDistances[adj])
+                    {
+                        nodeDistances[adj] = potentialDistance;
+                        predecessors[adj] = current;
+
+                        toProcess.Enqueue(adj, potentialDistance);
+                    }
+                }
+            }
+
+            return (nodeDistances, predecessors);
         }
 
         public IDictionary<TNodeKey, int> GetMinDistances(TNodeKey start)

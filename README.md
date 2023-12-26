@@ -34,6 +34,8 @@ A daily coding challenge for each day in December leading up to Christmas. Each 
 | 21 | [Step Counter](https://adventofcode.com/2023/day/21) | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | BFS, math.
 | 22 | [Sand Slabs](https://adventofcode.com/2023/day/22) | ⭐⭐⭐ | ⭐⭐ | 3D vectors.
 | 23 | [A Long Walk](https://adventofcode.com/2023/day/23) | ⭐⭐⭐ | ⭐⭐⭐ | DFS, graphs.
+| 24 | [Never Tell Me The Odds](https://adventofcode.com/2023/day/24) | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | TBD.
+| 25 | [Snowverload](https://adventofcode.com/2023/day/25) | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Probablistic solutions, graphs, min-cuts.
 
 ## 2022
 
